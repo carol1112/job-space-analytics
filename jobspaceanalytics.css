@@ -177,6 +177,8 @@ footer a:hover {
 
 /* Mission Section */
 
+/* Mission Section */
+
 #Mission {
   display: flex;
   justify-content: center;
@@ -212,24 +214,37 @@ footer a:hover {
 }
 
 .mission-container h1 {
-  font-size: 2.5rem;
+
   color: #333;
   margin-bottom: 1rem;
+  font-size: 1.8rem;
 }
 
 .mission-container h2 {
-  font-size: 2rem;
+  
   color: #007BFF;
   margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .mission {
-  font-size: 1.2rem;
+  
   color: #555;
   line-height: 1.7;
   max-width: 800px;
   margin: 0 auto;
+  font-size: 1.1rem;
 }
+  @media (max-width: 480px) {
+    .mission-container {
+      padding: 2.5rem 1.5rem;
+      width: 95%;
+    }
+} 
+
+
+
+  
 
 /* Services Section */
 #services {
@@ -270,13 +285,14 @@ footer a:hover {
   margin: 2rem auto 0;
   /* Ensure grid doesn't exceed container */
   width: 100%;
+
 }
 
 
 .service-card {
   background: #fff;
   border-radius: 12px;
-  padding: 2rem;
+
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
@@ -284,6 +300,7 @@ footer a:hover {
   /* Ensure cards don't affect section height */
   height: 100%;
   box-sizing: border-box;
+  padding: 1.5rem;
 }
 
 
@@ -312,14 +329,16 @@ footer a:hover {
 
 .card-title {
   color: var(--dark);
-  font-size: 1.4rem;
+ 
   margin-bottom: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .card-description {
   color: #555;
-  font-size: 1rem;
+  
   line-height: 1.5;
+  font-size: 0.9rem;
 }
 
 .analytics { --secondary: #00c853; }
@@ -328,12 +347,11 @@ footer a:hover {
 .value-added { --secondary: #c62828; }
 
 
-/* Responsive adjustments */
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .services-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     /* Add some bottom padding */
     padding-bottom: 10px;
   }
@@ -353,34 +371,40 @@ footer a:hover {
 
 #faqs {
 /* Add margin-top to create space */
-margin-top: 130px;
+margin-top: 50px;
 /* Clear previous floats */
 clear: both;
 /* Ensure proper stacking */
 position: relative;
 z-index: 1;
   width: 100%;
-  padding: 100px 20px;
+  padding: 80px 20px;
   background: #f8f9fa;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid #ddd;
+
 }
 
 .faq-container {
-  margin-top: 130px;
-  width: 90%;
+  margin-top: 40px;
   max-width: 800px;
   background: white;
   border-radius: 8px;
-  padding: 50px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+  width: 95%;
+    padding: 30px;
+  }
+
 
 .faq-container h2 {
-  font-size: 2rem;
+
   color: #333;
   margin-bottom: 30px;
+ 
+  font-size: 1.6rem;
+  
 }
 
 .faq {
@@ -394,14 +418,17 @@ z-index: 1;
   border: none;
   width: 100%;
   text-align: left;
-  font-size: 18px;
-  padding: 15px;
   font-weight: bold;
   cursor: pointer;
   outline: none;
   position: relative;
   transition: background 0.3s ease;
-}
+    font-size: 15px;
+    padding: 10px;
+  
+  }
+  
+
 
 .faq-question::after {
   content: "▼";
@@ -420,10 +447,12 @@ z-index: 1;
   max-height: 0;
   overflow: hidden;
   padding: 0 15px;
-  font-size: 16px;
+
   color: #333;
   background: #e8f5e9;
   transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  font-size: 14px;
+ 
 }
 
 .faq.active .faq-answer {
@@ -435,110 +464,6 @@ z-index: 1;
 .faq:last-child {
   border-bottom: none;
 }
-
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .services-container {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-  
-  .faq-container {
-    width: 95%;
-    padding: 30px;
-  }
-  
-  .faq-container h2 {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .mission-container {
-    padding: 3rem 2rem;
-    width: 95%;
-  }
-  
-  .mission-container h1 {
-    font-size: 2rem;
-  }
-  
-  .mission-container h2 {
-    font-size: 1.7rem;
-  }
-  
-  .mission {
-    font-size: 1.1rem;
-  }
-  
-  .services-container {
-    grid-template-columns: 1fr;
-  }
-
-  .service-card {
-    padding: 1.5rem;
-  }
-
-  .card-title {
-    font-size: 1.3rem;
-  }
-
-  .card-description {
-    font-size: 0.95rem;
-  }
-  
-  .faq-section {
-    padding: 40px 10px;
-  }
-
-  .faq-question {
-    font-size: 16px;
-    padding: 12px;
-  }
-
-  .faq-answer {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .mission-container {
-    padding: 2.5rem 1.5rem;
-  }
-  
-  .mission-container h1 {
-    font-size: 1.8rem;
-  }
-  
-  .mission-container h2 {
-    font-size: 1.5rem;
-  }
-  
-  .mission {
-    font-size: 1rem;
-  }
-  
-  .card-title {
-    font-size: 1.2rem;
-  }
-
-  .card-description {
-    font-size: 0.9rem;
-  }
-  
-  .faq-container h2 {
-    font-size: 1.6rem;
-  }
-
-  .faq-question {
-    font-size: 15px;
-    padding: 10px;
-  }
-
-  .faq-answer {
-    font-size: 14px;
-  }
-}
-
 /* General Section Styling */
 #testimonials {
   width: 100%;
