@@ -315,46 +315,66 @@ section {
   background-color: #333;
 }
 /* about us */
-.about-us{
+.about-us {
   background-image: url(bg3.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  padding: 30px 10px;
+  text-align: center;
 }
-/*hr*/
-.about-us
-{ padding-top: 30px;
-  padding-bottom: 10px; /* Adjust based on header height */}
 
-.container1 img {
-  
-  max-width: 700px;
+.container1 {
+  max-width: 90%;
   margin: auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content:baseline;
+  text-align: justify;
+}
+
+.container1 img {
+  width: 100%;
+  max-width: 500px; /* Prevents oversizing on larger screens */
+  height: auto;
   border-radius: 50%;
   border: 5px double black;
+  margin-bottom: 20px;
 }
-
 
 .container1 h2 {
-  font-size: 32px;
+  font-size: 2rem;
   color: #007bff;
-  
+  margin-bottom: 15px;
 }
 
- .container1 p {
-  
+.container1 p {
+  font-size: 1rem;
   line-height: 1.6;
-  margin-top: 10px;
   font-style: italic;
-  text-justify: auto;
-  font-size: 20px;
-  text-align: justify; /* Justifies the text */
-  text-indent: 2em; /* Adds an indentation of 2em (adjust as needed) */
-  
-    
+  text-indent: 1.5em;
+  margin-bottom: 15px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .about-us {
+    padding: 20px 5px;
+    background-attachment: scroll; /* Prevents background issues on mobile */
+  }
+
+  .container1 h2 {
+    font-size: 1.8rem;
+  }
+
+  .container1 p {
+    font-size: 0.95rem;
+    text-indent: 1em;
+  }
+
+  .container1 img {
+    max-width: 90%; /* Ensures better scaling on smaller screens */
+  }
 }
 
 
@@ -507,145 +527,266 @@ section {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  height: 100vh;
-
-  display: flex; /* Enables flexbox */
-  justify-content: center; /* Centers .container horizontally */
-  align-items: center; /* Centers .container vertically */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 10px;
+  text-align: center;
 }
 
-h1 {
-  color: #333;
+.container {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .value {
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 15px;
   background: #007BFF;
   color: white;
-  border-radius: 5px;
-  font-size: 18px;
-  width: 100%; /* Ensures it takes full width */
-  max-width: 600px; /* Prevents excessive stretching */
-}
-
-
-/*mission*/
-#Mission {
-  height: 100vh; /* Takes up full viewport height */
-  display: flex;
-  justify-content: center; /* Centers container horizontally */
-  align-items: center; /* Centers container vertically */
-}
-
-.mission-container {
+  border-radius: 8px;
+  font-size: 1rem;
   width: 100%;
-  max-width: 1500px; /* Prevents it from getting too wide */
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  #core-value {
+    background-attachment: scroll; /* Fixes background issues on mobile */
+    padding: 30px 10px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .value {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .value {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+/* Mission Section */
+#Mission {
+  min-height: 100vh; /* Ensures full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 10px;
+  text-align: center;
+}
+
+/* Mission Container */
+.mission-container {
+  width: 90%;
+  max-width: 1200px;
   background-image: url(bg4.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  padding: 30px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  
-  display: flex; /* Enables flexbox */
-  flex-direction: column; /* Stacks content vertically */
-  justify-content: center; /* Centers content inside */
-  align-items: center; /* Centers content inside */
-  text-align: center; /* Centers text */
+  padding: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Header Styles */
 h1 {
+  font-size: 2.2rem;
   color: #333;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #007BFF;
   margin-bottom: 20px;
 }
 
+/* Mission Text */
 .mission {
-  font-size: 20px;
+  font-size: 1.1rem;
   color: #555;
-  margin-top: 20px;
+  max-width: 800px;
   line-height: 1.6;
+  margin-top: 15px;
+  text-align: justify;
 }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  #Mission {
+    padding: 30px 5px;
+    background-attachment: scroll; /* Fixes background issues on mobile */
+  }
+
+  .mission-container {
+    padding: 30px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .mission {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .mission {
+    font-size: 0.95rem;
+    padding: 0 10px;
+  }
+}
+
 /*services*/
-
 :root {
-    --primary: #2a2a72;
-    --secondary: #009ffd;
-    --dark: #1a1a1a;
-    --light: #f8f9fa;
+  --primary: #2a2a72;
+  --secondary: #009ffd;
+  --dark: #1a1a1a;
+  --light: #f8f9fa;
 }
 
+/* Services Section */
+#services {
+  padding: 50px 20px;
+  background: var(--light);
+  text-align: center;
+}
+
+/* Services Container */
 .services-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    overflow: visible !important;
-    min-height: 100px;
-    height: 100vh;
-
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
+/* Service Cards */
 .service-card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 2rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
+/* Category Label */
 .card-category {
-    position: relative;
-    top: 15px;
-    right: -30px;
-    background: var(--secondary);
-    color: #fff;
-    padding: 5px 30px;
-    transform: rotate(45deg);
-    font-size: 0.8rem;
-    text-transform: uppercase;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--secondary);
+  color: #fff;
+  padding: 5px 15px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  border-radius: 5px;
 }
 
+/* Icons */
 .card-icon {
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
 }
 
+/* Titles & Descriptions */
 .card-title {
-    color: var(--dark);
-    margin: 0.5rem 0;
-    font-size: 1.3rem;
+  color: var(--dark);
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-description {
-    color: #666;
-    line-height: 1.6;
-    font-size: 0.9rem;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
-/* Category Color Variations */
+/* Category Colors */
 .analytics { --secondary: #00c853; }
 .premium { --secondary: #d500f9; }
 .tech { --secondary: #ff6d00; }
 .value-added { --secondary: #c62828; }
 
-@media (max-width: 768px) {
-    .services-container {
-        grid-template-columns: 1fr;
-    }
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .services-container {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 
+@media (max-width: 768px) {
+  .services-container {
+      grid-template-columns: 1fr;
+  }
+
+  .service-card {
+      padding: 1.5rem;
+  }
+
+  .card-title {
+      font-size: 1.3rem;
+  }
+
+  .card-description {
+      font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-title {
+      font-size: 1.2rem;
+  }
+
+  .card-description {
+      font-size: 0.9rem;
+  }
+}
 /*services */
 
 /* General Reset */
