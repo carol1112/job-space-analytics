@@ -757,7 +757,9 @@ h2 {
     font-size: 0.9rem;
     padding: 10px;
   }
-}/* Mission Section */
+}
+
+/* Mission Section */
 #Mission {
   display: flex;
   justify-content: center;
