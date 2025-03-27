@@ -237,24 +237,28 @@ footer a:hover {
 }
 
 /* Services Section */
+/* Services Section */
 #services {
   padding: 50px 20px;
   background: var(--light);
   text-align: center;
   position: relative;
-  margin-bottom: 50px; /* Added margin bottom */
+  margin-bottom: 50px;
   z-index: 1;
+  overflow: hidden;
 }
 
 .services-wrapper {
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
 #services h1 {
   margin-bottom: 2.5rem;
   font-size: 2.5rem;
   color: var(--primary);
+  padding-top: 0.1px;
 }
 
 .services-container {
@@ -263,6 +267,8 @@ footer a:hover {
   gap: 1.5rem;
   margin: 2rem auto 0;
   width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
 .service-card {
@@ -275,6 +281,7 @@ footer a:hover {
   height: 100%;
   box-sizing: border-box;
   padding: 1.5rem;
+  min-width: 0;
 }
 
 .service-card:hover {
@@ -317,17 +324,86 @@ footer a:hover {
 .tech { --secondary: #ff6d00; }
 .value-added { --secondary: #c62828; }
 
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
   .services-container {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    padding-bottom: 10px;
+    padding: 0 20px 10px;
+    gap: 1.2rem;
+  }
+  
+  .service-card {
+    padding: 1.3rem;
   }
 }
 
 @media (max-width: 768px) {
+  #services h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
   .services-container {
-    grid-template-columns: 1fr;
-    padding-bottom: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 15px 20px;
+    gap: 1rem;
+  }
+
+  .service-card {
+    padding: 1.2rem;
+    margin: 0 5px;
+  }
+
+  .card-icon {
+    font-size: 2.2rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #services {
+    padding: 40px 10px;
+  }
+
+  #services h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .services-container {
+    padding: 0 10px 15px;
+    gap: 0.8rem;
+  }
+
+  .service-card {
+    padding: 1rem;
+    margin: 0 2px;
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-description {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .card-category {
+    font-size: 0.7rem;
+    padding: 4px 12px;
   }
 }
 
