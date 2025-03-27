@@ -175,7 +175,7 @@ footer a:hover {
   background-color: #f9f9f9;
   box-sizing: border-box;
   /* Add margin-bottom to create space */
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   z-index: 2;
 }
 
@@ -341,7 +341,7 @@ footer a:hover {
 
 #faqs {
 /* Add margin-top to create space */
-margin-top: 50px;
+margin-top: 30px;
 /* Clear previous floats */
 clear: both;
 /* Ensure proper stacking */
