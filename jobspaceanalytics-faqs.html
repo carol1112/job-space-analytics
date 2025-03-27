@@ -61,62 +61,83 @@
     </nav>
 </header>
 <!-- FAQ Section -->
-<section>
-    <div class="faq-container" id = "faqs">
+<section id="faqs" class="faq-section">
+    <div class="faq-container">
       <h2>Frequently Asked Questions</h2>
+    
       <div class="faq">
-          <button class="faq-question">1. What is Job Space Analytics?</button>
-          <div class="faq-answer">Job Space Analytics is a remote staffing solution that helps businesses find and manage top remote talent efficiently.</div>
+        <button class="faq-question">1. What is Job Space Analytics?</button>
+        <div class="faq-answer">Job Space Analytics is a remote staffing solution that helps businesses find and manage top remote talent efficiently.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">2. How does your remote staffing process work?</button>
-          <div class="faq-answer">We match businesses with skilled remote professionals based on their needs and industry requirements.</div>
+        <button class="faq-question">2. How does your remote staffing process work?</button>
+        <div class="faq-answer">We match businesses with skilled remote professionals based on their needs and industry requirements.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">3. What industries do you specialize in?</button>
-          <div class="faq-answer">We serve industries such as IT, customer support, marketing, finance, and more.</div>
+        <button class="faq-question">3. What industries do you specialize in?</button>
+        <div class="faq-answer">We serve industries such as IT, customer support, marketing, finance, and more.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">4. What are the benefits of hiring remote staff?</button>
-          <div class="faq-answer">Remote staffing reduces overhead costs, provides access to global talent, and enhances flexibility.</div>
+        <button class="faq-question">4. What are the benefits of hiring remote staff?</button>
+        <div class="faq-answer">Remote staffing reduces overhead costs, provides access to global talent, and enhances flexibility.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">5. How do you ensure the quality of remote employees?</button>
-          <div class="faq-answer">We conduct a rigorous screening process, including skill assessments, interviews, and background checks.</div>
+        <button class="faq-question">5. How do you ensure the quality of remote employees?</button>
+        <div class="faq-answer">We conduct a rigorous screening process, including skill assessments, interviews, and background checks.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">6. Is there a trial period for hiring remote workers?</button>
-          <div class="faq-answer">Yes, we offer a trial period to ensure the remote employee meets your expectations.</div>
+        <button class="faq-question">6. Is there a trial period for hiring remote workers?</button>
+        <div class="faq-answer">Yes, we offer a trial period to ensure the remote employee meets your expectations.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">7. How do you handle payroll and contracts?</button>
-          <div class="faq-answer">We provide end-to-end payroll management and legal compliance for smooth remote staffing.</div>
+        <button class="faq-question">7. How do you handle payroll and contracts?</button>
+        <div class="faq-answer">We provide end-to-end payroll management and legal compliance for smooth remote staffing.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">8. Can I scale my team up or down easily?</button>
-          <div class="faq-answer">Yes, our flexible staffing model allows businesses to scale their workforce as needed.</div>
+        <button class="faq-question">8. Can I scale my team up or down easily?</button>
+        <div class="faq-answer">Yes, our flexible staffing model allows businesses to scale their workforce as needed.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">9. What time zones do your remote staff work in?</button>
-          <div class="faq-answer">Our remote professionals are available across multiple time zones to meet your business needs.</div>
+        <button class="faq-question">9. What time zones do your remote staff work in?</button>
+        <div class="faq-answer">Our remote professionals are available across multiple time zones to meet your business needs.</div>
       </div>
+    
       <div class="faq">
-          <button class="faq-question">10. How do I get started with Job Space Analytics?</button>
-          <div class="faq-answer">Simply contact us through our website, and our team will guide you through the hiring process.</div>
+        <button class="faq-question">10. How do I get started with Job Space Analytics?</button>
+        <div class="faq-answer">Simply contact us through our website, and our team will guide you through the hiring process.</div>
       </div>
     </div>
+  
+<script>
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const faq = button.parentElement;
+        const answer = faq.querySelector('.faq-answer');
     
-    <script>
-      document.querySelectorAll('.faq-question').forEach(button => {
-          button.addEventListener('click', () => {
-              const faq = button.parentElement;
-              faq.classList.toggle('active');
-          });
+        // Toggle the answer visibility
+        answer.style.display = (answer.style.display === "block") ? "none" : "block";
+    
+        // Smooth animation
+        if (answer.style.display === "block") {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        } else {
+          answer.style.maxHeight = "0px";
+        }
+    
+        // Toggle active state
+        faq.classList.toggle('active');
       });
-    </script>
-    
-      <script src="script.js"></script>
-    </section>
+    });
+  </script>
+  </section>
     
     </body>
     </html>
