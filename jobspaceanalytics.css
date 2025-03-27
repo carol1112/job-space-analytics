@@ -153,7 +153,131 @@ footer a:hover {
   text-decoration: underline;
   transform: translateX(5px);
 }
+/* FAQ Section */
+.faq-section {
+  width: 100%;
+  padding: 60px 20px;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+/* FAQ Container */
+.faq-container {
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* FAQ Heading */
+h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* FAQ Items */
+.faq {
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+/* FAQ Question Button */
+.faq-question {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+  padding: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+/* Add an arrow icon */
+.faq-question::after {
+  content: "▼";
+  position: absolute;
+  right: 15px;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+/* When active, rotate the arrow */
+.faq.active .faq-question::after {
+  transform: rotate(180deg);
+}
+
+/* FAQ Answer */
+.faq-answer {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  background: #e8f5e9;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+
+/* Last FAQ item should not have a border */
+.faq:last-child {
+  border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .faq-container {
+    width: 95%;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq-section {
+    padding: 40px 10px;
+  }
+
+  .faq-container {
+    width: 100%;
+  }
+
+  .faq-question {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .faq-answer {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .faq-question {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .faq-answer {
+    font-size: 14px;
+  }
+}
 
 /*faqs*/
 /* Full-height section */
@@ -236,52 +360,39 @@ h2 {
 }
 
 
-
-/* Testimonial Section */
-section {
-  padding: 50px;
-  text-align: center;
-}
-
+/* General Section Styling */
 #testimonials {
- 
-  height: 100vh;
-  color: white;
-  padding: 50px;
+  width: 100%;
+  padding: 50px 20px;
+  text-align: center;
+  background: #f8f9fa;
   position: relative;
-  display: flex; /* Enables flexbox */
-  justify-content: center; /* Centers .testimonial-container horizontally */
-  align-items: center; /* Centers .testimonial-container vertically */
-  text-align: center; /* Centers text inside the section */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Testimonial Container */
 .testimonial-container {
-  width: 50vw;
-  height: 50vh;
-  position: relative;
-  padding: 60px;
-  background: rgba(255, 255, 255, 0.1); /* Optional: Adds a slight background */
+  width: 80%;
+  max-width: 600px;
+  min-height: 200px;
+  background: white;
   border-radius: 10px;
-  
-  display: flex; /* Enables flexbox */
-  flex-direction: column; /* Stacks content vertically */
-  align-items: center; /* Centers content inside */
-  justify-content: center; /* Centers content inside */
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 /* Testimonial Box */
 .testimonial {
-  display: none; /* Hide all testimonials initially */
+  display: none;
   font-size: 18px;
-  padding: 20px;
-  background: white;
   color: #333;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center; /* Ensures text inside testimonial is centered */
-  width: 100%; /* Ensures proper width */
-  max-width: 600px; /* Prevents excessive stretching */
+  width: 100%;
 }
 
 .testimonial h4 {
@@ -289,31 +400,93 @@ section {
   color: #2088ef;
 }
 
-.testimonial h2 {
-  margin-top: 10px;
-  color: #010509;
+/* Navigation Buttons */
+.prev, .next {
+  background: #2088ef;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  font-size: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background 0.3s ease;
+}
+
+.prev:hover, .next:hover {
+  background: #0a66c2;
+}
+
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
 }
 
 /* Navigation Dots */
 .testimonial-dots {
   margin-top: 20px;
-  text-align: center;
 }
 
 .dot {
+  width: 12px;
+  height: 12px;
+  margin: 5px;
+  background: #bbb;
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 5px;
-  background-color: #ccc;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .dot.active {
-  background-color: #333;
+  background: #2088ef;
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .testimonial-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonial-container {
+    width: 95%;
+  }
+
+  .prev, .next {
+    font-size: 18px;
+    padding: 8px 12px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial {
+    font-size: 16px;
+  }
+
+  .prev, .next {
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+
 /* about us */
 .about-us {
   background-image: url(bg3.png);
@@ -787,54 +960,8 @@ h2 {
       font-size: 0.9rem;
   }
 }
-/*services */
 
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
-}
 
-/* Form Header */
-.container-form{
-max-width: 600px;
-width: 100%;
-display: flex;
-align-items: left;
-justify-content:baseline;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-animation: gradient 5s ease infinite;
-background: linear-gradient(#efefed, #adf58e) padding-box,
-            linear-gradient(145deg, transparent 35%,#ec8d3f, hwb(58 29% 7%)) border-box;
-border: 7px solid transparent;
-padding: 32px 24px;
-font-size: 14px;
-font-family: inherit;
-color: white;
-display: flex;
-flex-direction: column;
-gap: 20px;
-box-sizing: border-box;
-border-radius: 20px;
-background-size: 300% 200%;
-animation: gradient 5s ease infinite;
-}
-
-@keyframes gradient {
-0% {
-  background-position: 0% 50%;
-}
-
-50% {
-  background-position: 100% 50%;
-}
-
-100% {
-  background-position: 0% 50%;
-}
-}
 #sheetform {
   display: flex;
   justify-content: center;
