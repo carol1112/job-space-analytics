@@ -162,6 +162,7 @@ footer a:hover {
 }
 
 /* Mission Section */
+
 #Mission {
   display: flex;
   justify-content: center;
@@ -173,6 +174,9 @@ footer a:hover {
   position: relative;
   background-color: #f9f9f9;
   box-sizing: border-box;
+  /* Add margin-bottom to create space */
+  margin-bottom: 30px;
+  z-index: 2;
 }
 
 .mission-container {
@@ -219,27 +223,41 @@ footer a:hover {
   background: var(--light);
   text-align: center;
   position: relative;
+  /* Clear any floats or weird positioning */
+  clear: both;
+  /* Ensure proper stacking */
+  z-index: 1;
+  /* Prevent margin collapse */
+  overflow: hidden;
 }
-
-
 
 .services-wrapper {
   max-width: 1200px;
   margin: 0 auto;
+  /* Contain all child elements */
+  position: relative;
 }
+
+
 
 
 #services h1 {
   margin-bottom: 2.5rem;
   font-size: 2.5rem;
   color: var(--primary);
+  /* Prevent margin collapse */
+  padding-top: 0.1px;
 }
+
+
 
 .services-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Exactly 3 columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin-top: 2rem;
+  margin: 2rem auto 0;
+  /* Ensure grid doesn't exceed container */
+  width: 100%;
 }
 
 
@@ -251,7 +269,11 @@ footer a:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  /* Ensure cards don't affect section height */
+  height: 100%;
+  box-sizing: border-box;
 }
+
 
 .service-card:hover {
   transform: translateY(-5px);
@@ -294,24 +316,37 @@ footer a:hover {
 .value-added { --secondary: #c62828; }
 
 
-/* Rest of your existing CSS remains the same */
+/* Responsive adjustments */
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .services-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    grid-template-columns: repeat(2, 1fr);
+    /* Add some bottom padding */
+    padding-bottom: 10px;
   }
 }
 
 @media (max-width: 768px) {
   .services-container {
-    grid-template-columns: 1fr; /* 1 column on mobile */
+    grid-template-columns: 1fr;
+    /* Increase bottom padding */
+    padding-bottom: 20px;
   }
+
 }
 
 
 /* FAQ Section */
+
 #faqs {
+/* Add margin-top to create space */
+margin-top: 30px;
+/* Clear previous floats */
+clear: both;
+/* Ensure proper stacking */
+position: relative;
+z-index: 1;
   width: 100%;
   padding: 80px 20px;
   background: #f8f9fa;
