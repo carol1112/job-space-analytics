@@ -147,126 +147,169 @@
     </div>
   </section>
   
-
 <!-- FAQ Section -->
-<section>
-<div class="faq-container" id = "faqs">
-  <h2>Frequently Asked Questions</h2>
-  <div class="faq">
-      <button class="faq-question">1. What is Job Space Analytics?</button>
-      <div class="faq-answer">Job Space Analytics is a remote staffing solution that helps businesses find and manage top remote talent efficiently.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">2. How does your remote staffing process work?</button>
-      <div class="faq-answer">We match businesses with skilled remote professionals based on their needs and industry requirements.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">3. What industries do you specialize in?</button>
-      <div class="faq-answer">We serve industries such as IT, customer support, marketing, finance, and more.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">4. What are the benefits of hiring remote staff?</button>
-      <div class="faq-answer">Remote staffing reduces overhead costs, provides access to global talent, and enhances flexibility.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">5. How do you ensure the quality of remote employees?</button>
-      <div class="faq-answer">We conduct a rigorous screening process, including skill assessments, interviews, and background checks.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">6. Is there a trial period for hiring remote workers?</button>
-      <div class="faq-answer">Yes, we offer a trial period to ensure the remote employee meets your expectations.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">7. How do you handle payroll and contracts?</button>
-      <div class="faq-answer">We provide end-to-end payroll management and legal compliance for smooth remote staffing.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">8. Can I scale my team up or down easily?</button>
-      <div class="faq-answer">Yes, our flexible staffing model allows businesses to scale their workforce as needed.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">9. What time zones do your remote staff work in?</button>
-      <div class="faq-answer">Our remote professionals are available across multiple time zones to meet your business needs.</div>
-  </div>
-  <div class="faq">
-      <button class="faq-question">10. How do I get started with Job Space Analytics?</button>
-      <div class="faq-answer">Simply contact us through our website, and our team will guide you through the hiring process.</div>
-  </div>
-</div>
-
-<script>
-  document.querySelectorAll('.faq-question').forEach(button => {
+<section class="faq-section" id="faqs">
+    <div class="faq-container">
+      <h2>Frequently Asked Questions</h2>
+  
+      <div class="faq">
+        <button class="faq-question">1. What is Job Space Analytics?</button>
+        <div class="faq-answer">Job Space Analytics is a remote staffing solution that helps businesses find and manage top remote talent efficiently.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">2. How does your remote staffing process work?</button>
+        <div class="faq-answer">We match businesses with skilled remote professionals based on their needs and industry requirements.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">3. What industries do you specialize in?</button>
+        <div class="faq-answer">We serve industries such as IT, customer support, marketing, finance, and more.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">4. What are the benefits of hiring remote staff?</button>
+        <div class="faq-answer">Remote staffing reduces overhead costs, provides access to global talent, and enhances flexibility.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">5. How do you ensure the quality of remote employees?</button>
+        <div class="faq-answer">We conduct a rigorous screening process, including skill assessments, interviews, and background checks.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">6. Is there a trial period for hiring remote workers?</button>
+        <div class="faq-answer">Yes, we offer a trial period to ensure the remote employee meets your expectations.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">7. How do you handle payroll and contracts?</button>
+        <div class="faq-answer">We provide end-to-end payroll management and legal compliance for smooth remote staffing.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">8. Can I scale my team up or down easily?</button>
+        <div class="faq-answer">Yes, our flexible staffing model allows businesses to scale their workforce as needed.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">9. What time zones do your remote staff work in?</button>
+        <div class="faq-answer">Our remote professionals are available across multiple time zones to meet your business needs.</div>
+      </div>
+  
+      <div class="faq">
+        <button class="faq-question">10. How do I get started with Job Space Analytics?</button>
+        <div class="faq-answer">Simply contact us through our website, and our team will guide you through the hiring process.</div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- JavaScript for FAQ Toggle -->
+  <script>
+    document.querySelectorAll('.faq-question').forEach(button => {
       button.addEventListener('click', () => {
-          const faq = button.parentElement;
-          faq.classList.toggle('active');
+        const faq = button.parentElement;
+        const answer = faq.querySelector('.faq-answer');
+  
+        // Toggle the answer visibility
+        answer.style.display = (answer.style.display === "block") ? "none" : "block";
+  
+        // Smooth animation
+        if (answer.style.display === "block") {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        } else {
+          answer.style.maxHeight = "0px";
+        }
+  
+        // Toggle active state
+        faq.classList.toggle('active');
       });
-  });
-</script>
-
-  <script src="script.js"></script>
-</section>
-
-
-   <hr> 
-
-    
+    });
+  </script>
+</section>  
 <!-- Testimonial Section -->
- <section id="testimonials">
-  <h2>What Our Clients Say</h2>
-
-  <div class="testimonial-container">
+<section id="testimonials">
+    <h2>What Our Clients Say</h2>
+  
+    <div class="testimonial-container">
       <div class="testimonial">
-          <p>“Job Space Analytics helped me find the perfect remote job. The hiring process was seamless and professional..”</p>
-          <h4>- John Doe</h4>
+        <p>“Job Space Analytics helped me find the perfect remote job. The hiring process was seamless and professional.”</p>
+        <h4>- John Doe</h4>
       </div>
       <div class="testimonial">
-          <p>“Great experience! The team matched me with a company that perfectly fits my skills.”</p>
-          <h4>- Sarah Lee</h4>
-      </div>
-      <div class="testimonial">
-          <p>“Thanks to Job Space Analytics, I now work remotely for a top company and love the flexibility.”</p>
-          <h4>- Mark Wilson</h4>
+        <p>“Great experience! The team matched me with a company that perfectly fits my skills.”</p>
+        <h4>- Sarah Lee</h4>
       </div>
       <div class="testimonial">
         <p>“Thanks to Job Space Analytics, I now work remotely for a top company and love the flexibility.”</p>
-        <h4>-Wilson</h4>
+        <h4>- Mark Wilson</h4>
+      </div>
+      <div class="testimonial">
+        <p>“Job Space Analytics made my remote job search easy and stress-free.”</p>
+        <h4>- Wilson</h4>
+      </div>
     </div>
-  </div>
-
-  <!-- Navigation Buttons -->
-  <button class="prev" onclick="changeTestimonial(-1)">❮</button>
-  <button class="next" onclick="changeTestimonial(1)">❯</button>
- <script>
-  let currentTestimonial = 0;
-  const testimonials = document.querySelectorAll(".testimonial");
   
-  function showTestimonial(index) {
+    <!-- Navigation Buttons -->
+    <button class="prev" onclick="changeTestimonial(-1)">❮</button>
+    <button class="next" onclick="changeTestimonial(1)">❯</button>
+  
+    <!-- Navigation Dots -->
+    <div class="testimonial-dots"></div>
+  </section>
+  
+  <!-- JavaScript for Testimonial Slider -->
+  <script>
+    let currentTestimonial = 0;
+    const testimonials = document.querySelectorAll(".testimonial");
+    const dotsContainer = document.querySelector(".testimonial-dots");
+  
+    function showTestimonial(index) {
       testimonials.forEach((testimonial, i) => {
-          testimonial.style.display = i === index ? "block" : "none";
+        testimonial.style.display = i === index ? "block" : "none";
       });
-  }
   
-  // Change testimonial on button click
-  function changeTestimonial(step) {
+      updateDots(index);
+    }
+  
+    function changeTestimonial(step) {
       currentTestimonial += step;
   
       if (currentTestimonial >= testimonials.length) {
-          currentTestimonial = 0;
+        currentTestimonial = 0;
       } else if (currentTestimonial < 0) {
-          currentTestimonial = testimonials.length - 1;
+        currentTestimonial = testimonials.length - 1;
       }
   
       showTestimonial(currentTestimonial);
-  }
+    }
   
-  // Show the first testimonial by default
-  showTestimonial(currentTestimonial);
+    function updateDots(index) {
+      document.querySelectorAll(".dot").forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+      });
+    }
   
-  // Auto-slide testimonials every 5 seconds
-  setInterval(() => changeTestimonial(1), 5000);
-</script>
-</section>
-<hr>
+    function createDots() {
+      for (let i = 0; i < testimonials.length; i++) {
+        let dot = document.createElement("span");
+        dot.classList.add("dot");
+        dot.addEventListener("click", () => {
+          currentTestimonial = i;
+          showTestimonial(i);
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+  
+    // Initialize dots and show first testimonial
+    createDots();
+    showTestimonial(currentTestimonial);
+  
+    // Auto-slide every 5 seconds
+    setInterval(() => changeTestimonial(1), 5000);
+  </script>
+  </section>
 
  <!-- Application Form Section -->
  <section id="sheetform">
