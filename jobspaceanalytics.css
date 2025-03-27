@@ -237,43 +237,44 @@ footer a:hover {
 }
 
 /* Services Section */
-/* Services Section Styling */
+/* Services Section */
 #services {
-  padding: 40px 0;
+  padding: 40px 15px;
   background: var(--light);
-  margin-bottom: 30px;
+  text-align: center;
   position: relative;
   box-sizing: border-box;
   max-width: 100%;
-  margin-top: 5px; /* Reduced spacing */
+  overflow: hidden; /* Prevents content overflow */
 }
 
 .services-wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  width: 90%;
-  padding: 0 15px;
+  width: 100%;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
+/* Title Styling */
 #services h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--primary);
-  margin: 0 auto 10px; /* Adjusted spacing */
-  padding: 0 10px;
+  margin-bottom: 20px;
   text-align: center;
-  line-height: 1.3;
-  max-width: 800px;
+  line-height: 1.4;
+  padding: 0 10px;
 }
 
 /* Responsive Grid Layout */
 .services-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adapts to screen */
+  gap: 1.2rem;
   width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
@@ -281,13 +282,12 @@ footer a:hover {
 .service-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  padding: 1.5rem;
-  margin: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 1.2rem;
   max-width: 100%;
   position: relative;
   box-sizing: border-box;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 .service-card:hover {
@@ -304,34 +304,27 @@ footer a:hover {
   padding: 5px 12px;
   font-size: 0.75rem;
   border-radius: 20px;
-  max-width: 85%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* Card Icons */
 .card-icon {
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: var(--primary);
-  margin: 1rem 0 1.5rem;
-  display: block;
+  margin: 0.8rem 0 1.2rem;
 }
 
 /* Card Title */
 .card-title {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--dark);
-  margin-bottom: 0.8rem;
-  line-height: 1.4;
+  margin-bottom: 0.6rem;
 }
 
 /* Card Description */
 .card-description {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #555;
-  line-height: 1.6;
-  margin-bottom: 0.5rem;
+  line-height: 1.5;
 }
 
 /* Category Colors */
@@ -340,78 +333,74 @@ footer a:hover {
 .tech { --secondary: #ff6d00; }
 .value-added { --secondary: #c62828; }
 
-/* Responsive Styling */
+/* RESPONSIVENESS */
+
+/* Tablets (Portrait) */
 @media (max-width: 1024px) {
   #services h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .services-container {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 
-  .card-icon {
-    font-size: 2rem;
-  }
-
   .card-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .card-description {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }
 
+/* Mobile Devices */
 @media (max-width: 768px) {
   #services {
-    padding: 35px 0;
+    padding: 30px 10px;
   }
 
   #services h1 {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 
   .services-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stacks all cards */
     gap: 1rem;
     padding: 0 10px;
   }
 
   .service-card {
-    padding: 1.2rem;
-    border-radius: 10px;
-  }
-
-  .card-icon {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
+    padding: 1rem;
   }
 
   .card-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.8rem;
+    font-size: 1rem;
   }
 
   .card-description {
     font-size: 0.85rem;
-    line-height: 1.5;
+    line-height: 1.4;
   }
 }
 
+/* Small Mobile Screens */
 @media (max-width: 480px) {
   #services {
-    padding: 25px 0;
+    padding: 25px 5px;
+  }
+
+  #services h1 {
+    font-size: 1.5rem;
+    padding: 0 5px;
   }
 
   .services-container {
-    padding: 0 8px;
-    gap: 0.8rem;
+    padding: 0 5px;
   }
 
   .service-card {
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 0.9rem;
   }
 
   .card-title {
@@ -420,13 +409,12 @@ footer a:hover {
 
   .card-description {
     font-size: 0.8rem;
-    line-height: 1.45;
   }
 
   .card-category {
-    left: 8px;
-    top: 8px;
-    max-width: 75%;
+    left: 6px;
+    top: 6px;
+    font-size: 0.7rem;
   }
 }
 /* FAQ Section */
