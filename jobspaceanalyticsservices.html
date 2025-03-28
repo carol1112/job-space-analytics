@@ -16,22 +16,23 @@
   <!-- Fixed Header Navigation -->
   <header>
     <div class="logo">
-        <img src="2-18-2025 JOB SPACE ANALYTICS.gif" alt="Job Space Analytics Logo" width="500" height="200">
-     
+        <img src="2-18-2025 JOB SPACE ANALYTICS.gif" alt="Job Space Analytics Logo">
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
     <nav>
         <ul class="menu">
             <li><a href="jobspaceanalytics.html">Home</a></li>
             <li class="dropdown">
                 <a href="jobspaceanalyticsabout.html">About ▾</a>
-                <ul class="dropdown-menu">
-                    
+                <ul class="dropdown-menu">  
                     <li><a href="jobspaceanalytics-mission.html">Our Mission</a></li>
                     <li><a href="jobspaceanalytics-testimonial.html">Testimonials</a></li>
                     <li><a href="jobspaceanalytics-corevalues.html">Core Values</a></li>
                     <li><a href="jobspaceanalytics-faqs.html">FAQS</a></li>
-                    
-
                 </ul>
             </li>
             <li class="dropdown">
@@ -41,83 +42,70 @@
                     <li><a href="analytics.html">Analytics Focuses Area</a></li>
                 </ul>
             </li>
-            <li><a href="jobspaceanalytics-contact.html">Contact-Us</a></li>
-           
-         
+            <li><a href="jobspaceanalytics-contact.html">Contact Us</a></li>
         </ul>
     </nav>
-</header>
-
+  </header>
+  
+  <script>
+    function toggleMenu() {
+        document.querySelector('.menu').classList.toggle('active');
+    }
+  </script>
  <!-- Services Section -->
  <section id="services">
   <div class="services-wrapper">
-    <h1>Our Services</h1>
-
-    <div class="services-container">
-      <!-- Service 1 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-user-tie"></i>
-        <h3 class="card-title">Remote Talent Sourcing</h3>
-        <p class="card-description">We connect businesses with top-tier remote professionals, ensuring a seamless hiring process.</p>
+      <h1>Our Services</h1>
+      <div class="services-container">
+          <div class="service-card">
+              <i class="card-icon fas fa-user-tie"></i>
+              <h3 class="card-title">Remote Talent Sourcing</h3>
+              <p class="card-description">We connect businesses with top-tier remote professionals, ensuring a seamless hiring process.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-chart-line"></i>
+              <h3 class="card-title">Workforce Analytics</h3>
+              <p class="card-description">Leverage real-time data and AI-driven insights to optimize remote workforce performance.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-clock"></i>
+              <h3 class="card-title">Flexible Work Models</h3>
+              <p class="card-description">Hire on full-time, part-time, or project-based contracts with scalable solutions tailored to your needs.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-shield-alt"></i>
+              <h3 class="card-title">Secure Remote Infrastructure</h3>
+              <p class="card-description">We ensure GDPR-compliant and enterprise-grade security for remote teams worldwide.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-briefcase"></i>
+              <h3 class="card-title">Trial-to-Hire Programs</h3>
+              <p class="card-description">Risk-free hiring with trial periods before making a full-time commitment.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-laptop-code"></i>
+              <h3 class="card-title">IT & Tech Support</h3>
+              <p class="card-description">Ensure smooth operations with dedicated remote IT professionals ready to assist your team.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-users"></i>
+              <h3 class="card-title">HR & Leadership Coaching</h3>
+              <p class="card-description">Support your remote teams with HR expertise and leadership development programs.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-tasks"></i>
+              <h3 class="card-title">Project Management Support</h3>
+              <p class="card-description">Optimize project efficiency with experienced remote project managers ensuring seamless execution.</p>
+          </div>
+          <div class="service-card">
+              <i class="card-icon fas fa-user-cog"></i>
+              <h3 class="card-title">AI-Powered Hiring</h3>
+              <p class="card-description">Our AI-driven platform matches employers with the best remote talent in seconds.</p>
+          </div>
       </div>
-
-      <!-- Service 2 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-chart-line"></i>
-        <h3 class="card-title">Workforce Analytics</h3>
-        <p class="card-description">Leverage real-time data and AI-driven insights to optimize remote workforce performance.</p>
-      </div>
-
-      <!-- Service 3 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-clock"></i>
-        <h3 class="card-title">Flexible Work Models</h3>
-        <p class="card-description">Hire on full-time, part-time, or project-based contracts with scalable solutions tailored to your needs.</p>
-      </div>
-
-      <!-- Service 4 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-shield-alt"></i>
-        <h3 class="card-title">Secure Remote Infrastructure</h3>
-        <p class="card-description">We ensure GDPR-compliant and enterprise-grade security for remote teams worldwide.</p>
-      </div>
-
-      <!-- Service 5 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-briefcase"></i>
-        <h3 class="card-title">Trial-to-Hire Programs</h3>
-        <p class="card-description">Risk-free hiring with trial periods before making a full-time commitment.</p>
-      </div>
-
-      <!-- Service 6 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-laptop-code"></i>
-        <h3 class="card-title">IT & Tech Support</h3>
-        <p class="card-description">Ensure smooth operations with dedicated remote IT professionals ready to assist your team.</p>
-      </div>
-
-      <!-- Service 7 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-users"></i>
-        <h3 class="card-title">HR & Leadership Coaching</h3>
-        <p class="card-description">Support your remote teams with HR expertise and leadership development programs.</p>
-      </div>
-
-      <!-- Service 8 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-tasks"></i>
-        <h3 class="card-title">Project Management Support</h3>
-        <p class="card-description">Optimize project efficiency with experienced remote project managers ensuring seamless execution.</p>
-      </div>
-
-      <!-- Service 9 -->
-      <div class="service-card">
-        <i class="card-icon fas fa-user-cog"></i>
-        <h3 class="card-title">AI-Powered Hiring</h3>
-        <p class="card-description">Our AI-driven platform matches employers with the best remote talent in seconds.</p>
-      </div>
-    </div>
   </div>
+
+
 </section>
 </body>
 </html>
