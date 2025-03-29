@@ -6,9 +6,8 @@
   <title>Job Space Analytics - Staffing Solutions</title>
   <link rel="stylesheet" href="jobspaceanalytics.css">
 </head>
-<style>
-#core {
-    padding-top: 250px; /* Adjust based on header height */
+<style>body {
+    padding-top: 200px; /* Adjust based on header height */
   }
   
   hr.animated-hr {
@@ -19,13 +18,14 @@
     background-size: 200% auto;
     animation: hrFlow 3s linear infinite;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
- 
   }
   
   @keyframes hrFlow {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
+
+
   </style>
 <body>
   <!-- Fixed Header Navigation -->
@@ -49,7 +49,7 @@
                   <li><a href="jobspaceanalytics-corevalues.html">Core Values</a></li>
                   <li><a href="jobspaceanalytics-faqs.html">FAQS</a></li>
               </ul>
-          <li><a href="jobspaceanalytics choose us.html">Why Choose Us</a></li>       
+          <li><a href="jobspaceanalytics choose us.html">Why Choose Us</a></li>      
           </li>
           <li class="dropdown">
               <a href="jobspaceanalyticsservices.html">Services ▾</a>
@@ -68,21 +68,41 @@
       document.querySelector('.menu').classList.toggle('active');
   }
 </script>
-
-
-<section id="core">
-    <div class="container" id="core-value">
-      <hr class="animated-hr">    
-        <h2>Job Space Analytics Core Values</h2>
-    
-        <div class="value">🔍 **Innovation** – We embrace technology and creativity to redefine the job market landscape.</div>
-        <div class="value">🤝 **Integrity** – Honesty and transparency are the foundation of everything we do.</div>
-        <div class="value">📈 **Growth** – We are committed to continuous learning and improvement for our clients and team.</div>
-        <div class="value">🌍 **Impact** – We strive to make meaningful changes in the workforce industry.</div>
-        <div class="value">🚀 **Excellence** – We deliver high-quality solutions and exceed expectations.</div>
+<!-- WHY CHOOSE US SECTION -->
+<section class="why-choose">
+    <h2>Why Choose Job Space Analytics?</h2>
+    <div class="reasons">
+        <div class="reason">
+            <i class="fas fa-users"></i>
+            <h3>Expert Talent Pool</h3>
+            <p>Access a global network of skilled professionals.</p>
+        </div>
+        <div class="reason">
+            <i class="fas fa-clock"></i>
+            <h3>24/7 Availability</h3>
+            <p>Round-the-clock support and workforce solutions.</p>
+        </div>
+        <div class="reason">
+            <i class="fas fa-chart-line"></i>
+            <h3>Scalability</h3>
+            <p>Easily scale your workforce as your business grows.</p>
+        </div>
+        <div class="reason">
+            <i class="fas fa-dollar-sign"></i>
+            <h3>Cost Efficiency</h3>
+            <p>Reduce operational costs without compromising quality.</p>
+        </div>
+        <div class="reason">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Data Security</h3>
+            <p>Ensure confidential and secure handling of business data.</p>
+        </div>
+        <div class="reason">
+            <i class="fas fa-handshake"></i>
+            <h3>Trusted Partnerships</h3>
+            <p>Long-term collaboration and commitment to your success.</p>
+        </div>
     </div>
-    <hr class="animated-hr">
-      </section>
-    
+</section>
 </body>
-</html>    
+</html>
