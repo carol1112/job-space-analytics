@@ -6,15 +6,7 @@ body {
   line-height: 1.6;
 }
 
-/* Header (Static Position) */    
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-}
-
-/* Header (Static Position) */    
+/* Header (Fixed Position) */
 header {
   display: flex;
   flex-direction: column;
@@ -22,10 +14,10 @@ header {
   background: rgb(246, 155, 9);
   padding: 15px 20px;
   width: 100%;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  position: fixed;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -113,31 +105,75 @@ header {
   margin: 5px;
 }
 
+/* Media Queries */
 @media screen and (max-width: 768px) {
   .menu {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 80px;
-      left: 0;
-      width: 100%;
-      background: rgb(246, 155, 9);
-      align-items: center;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background: rgb(246, 155, 9);
+    align-items: center;
+    gap: 0;
   }
 
   .menu li {
-      text-align: center;
+    text-align: center;
+    width: 100%;
   }
 
-  .menu-toggle {
-      display: flex;
+  .menu li a {
+    padding: 15px;
+    width: 100%;
+    text-align: center;
   }
 
   .menu.active {
-      display: flex;
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* Dropdown Menu for Mobile */
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+  }
+
+  .dropdown-menu li a {
+    padding: 15px;
+    background-color: rgb(246, 155, 9);
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
   }
 }
 
+/* Desktop and Larger Devices (Laptop/Desktop) */
+@media screen and (min-width: 769px) {
+  .menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .dropdown-menu {
+    display: none;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+}
     /* Video Section */
     #home {
       display: flex;
