@@ -18,7 +18,7 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1000;             /* Ensure header is above all content */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -197,56 +197,57 @@ header {
   }
 }
 
-/* Video Section */
-/* Video Section */
 #home {
   display: flex;
   justify-content: center;  /* Centers the video horizontally */
   align-items: center;      /* Centers the video vertically */
-  min-height: 100vh;         /* Ensures full height of the viewport */
+  min-height: 100vh;         /* Full screen height */
   background: #060606;
   padding: 10px;
-  overflow: hidden;
-  margin-top: 0; /* Remove the space between the header and video section */
+  overflow: hidden;          /* Prevent unwanted scrollbars */
+  margin-top: 60px;          /* Adjust margin to make space for the fixed header */
+  position: relative;        /* Ensure the video is positioned relative */
+  z-index: 1;   
 }
 
 /* Video Styling */
 #bg-video {
   width: 100%;
-  max-width: 1000px;
-  height: 500px;
-  object-fit: cover;         /* Ensures the video covers the area without distortion */
-  border-radius: 10px;
-  margin: 0 auto;            /* Centers the video if the width is adjusted */
-}
+  max-width: 1000px;         /* Max width for desktops */
+  height: 100%;              /* Ensure the video fills the container */
+  object-fit: cover;         /* Ensure the video maintains aspect ratio */
+  border-radius: 10px;       /* Optional rounded corners */
+  margin: 0 auto;            /* Centers the video within the container */
+  position: relative;        /* To ensure the z-index works */
+  z-index: 1;  
+}  
 
-/* Responsive Video */
-@media screen and (max-width: 1024px) {
+/* Responsive Adjustments for Various Screen Sizes */
+@media (max-width: 1024px) { /* Tablets and below */
   #bg-video {
-    max-width: 90%;
-    height: 450px;
+    width: 100%;             /* Full width for tablet */
+    height: 100%;            /* Full height to maintain aspect ratio */
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) { /* Small tablets and larger smartphones */
   #bg-video {
-    max-width: 95%;
-    height: 400px;
+    width: 100%;             /* Full width for small screens */
+    height: 100%;            /* Full height to maintain aspect ratio */
   }
 }
 
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) { /* Mobile phones */
   #bg-video {
-    width: 90%;
-    max-width: 100%;
-    height: 300px;
+    width: 100%;             /* Full width for mobile */
+    height: 100%;            /* Full height to maintain aspect ratio */
   }
 }
 
-@media screen and (max-width: 360px) {
+@media (max-width: 400px) { /* Very small screens */
   #bg-video {
-    width: 100%;
-    height: 250px;
+    width: 100%;             /* Full width for very small screens */
+    height: 100%;            /* Full height to maintain aspect ratio */
   }
 }
 
