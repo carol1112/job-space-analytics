@@ -5,126 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics Focus Areas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="jobspaceanalytics.css">
     <style>
    
-        :root {
-            --primary: #2a2a72;
-            --secondary: #009ffd;
-            --accent: #00c853;
-            --dark: #333;
-            --light: #f8f9fa;
-        }
+   :root {
+      --primary: #2a2a72;
+      --secondary: #009ffd;
+      --accent: #00c853;
+      --dark: #333;
+      --light: #f8f9fa;
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 2rem;
-            background: var(--light);
-        }
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--light);
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .section-title {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 3rem;
-        }
+    .section-title {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+    }
 
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 20px 15px;
+    }
 
-        .analytics-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
+    .analytics-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
 
-        .analytics-card:hover {
-            transform: translateY(-5px);
-        }
+    .analytics-card:hover {
+      transform: translateY(-5px);
+    }
 
-        .analytics-icon {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
+    .analytics-icon {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
 
-        .analytics-title {
-            color: var(--primary);
-            margin: 0 0 1rem 0;
-        }
+    .analytics-title {
+      color: var(--primary);
+      margin: 0 0 1rem 0;
+    }
 
-        .analytics-list {
-            list-style: none;
-            padding: 0;
-            color: var(--dark);
-        }
+    .analytics-list {
+      list-style: none;
+      padding: 0;
+      color: var(--dark);
+    }
 
-        .analytics-list li {
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
+    .analytics-list li {
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
 
-        .analytics-list li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: bold;
-        }
+    .analytics-list li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
 
-        .analytics-stat {
-            color: var(--accent);
-            font-weight: bold;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
+    .analytics-stat {
+      color: var(--accent);
+      font-weight: bold;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    #analytics {
+      padding-top: 200px; /* Adjust for header */
+    }
 
-        @media (max-width: 768px) {
-            .analytics-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    hr.animated-hr {
+      border: 0;
+      height: 4px;
+      margin: 2rem 0;
+      background: linear-gradient(90deg, #2c3e50, #3498db, #2c3e50);
+      background-size: 200% auto;
+      animation: hrFlow 3s linear infinite;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes hrFlow {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 768px) {
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .analytics-card {
+        padding: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .analytics-card {
+        padding: 1rem;}}
+
+        .btn {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 30px;
+  }
+
+  .btn:hover {
+    background-color: var(--secondary);
+    transform: translateY(-5px);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  /* Center align the button */
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  } 
     </style>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Job Space Analytics - Staffing Solutions</title>
-  <link rel="stylesheet" href="jobspaceanalytics.css">
-</head>
-<style>
-#analytics {
-    padding-top: 220px; /* Adjust based on header height */
-  }
+
   
-  hr.animated-hr {
-    border: 0;
-    height: 4px;
-    margin: 2rem 0;
-    background: linear-gradient(90deg, #2c3e50, #3498db, #2c3e50);
-    background-size: 200% auto;
-    animation: hrFlow 3s linear infinite;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  
-  @keyframes hrFlow {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-  </style>
 <body>
   <!-- Fixed Header Navigation -->
   <header>
@@ -234,8 +264,10 @@
             </div>
         </div>
     </div>
-    <a href="jobspaceanalytics.html#home" class="btn">Back to Home</a>
-    <link rel="stylesheet" href="jobspaceanalytics.css">
-    
+
+    <div class="btn-container">
+        <a href="jobspaceanalytics.html#home" class="btn">Back to Home</a>
+      </div>
+    </section>
 </body>
 </html>

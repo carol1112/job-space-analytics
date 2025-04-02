@@ -198,15 +198,16 @@ header {
 }
 
 /* Video Section */
+/* Video Section */
 #home {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  justify-content: center;  /* Centers the video horizontally */
+  align-items: center;      /* Centers the video vertically */
+  min-height: 100vh;         /* Ensures full height of the viewport */
   background: #060606;
   padding: 10px;
   overflow: hidden;
-  margin-top: 150px;
+  margin-top: 0; /* Remove the space between the header and video section */
 }
 
 /* Video Styling */
@@ -214,8 +215,9 @@ header {
   width: 100%;
   max-width: 1000px;
   height: 500px;
-  object-fit: cover;
+  object-fit: cover;         /* Ensures the video covers the area without distortion */
   border-radius: 10px;
+  margin: 0 auto;            /* Centers the video if the width is adjusted */
 }
 
 /* Responsive Video */
