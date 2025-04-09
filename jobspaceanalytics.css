@@ -197,89 +197,213 @@ header {
   }
 }
 
+ /* Video Section */
+
+    
+/* Home Section Styling */
 #home {
   display: flex;
-  justify-content: center;  /* Centers the video horizontally */
-  align-items: center;      /* Centers the video vertically */
-  min-height: 100vh;         /* Full screen height */
+  justify-content: center; /* Centers the video horizontally */
+  align-items: center;     /* Centers the video vertically */
+  min-height: 100vh;       /* Full screen height */
   background: #060606;
   padding: 10px;
-  overflow: hidden;          /* Prevent unwanted scrollbars */
-  margin-top: 60px;          /* Adjust margin to make space for the fixed header */
-  position: relative;        /* Ensure the video is positioned relative */
-  z-index: 1;   
+  overflow: hidden;        /* Prevent unwanted scrollbars */
+  position: relative;
 }
 
 /* Video Styling */
 #bg-video {
-  width: 100%;
-  max-width: 1000px;         /* Max width for desktops */
-  height: 100%;              /* Ensure the video fills the container */
-  object-fit: cover;         /* Ensure the video maintains aspect ratio */
-  border-radius: 10px;       /* Optional rounded corners */
-  margin: 0 auto;            /* Centers the video within the container */
-  position: relative;        /* To ensure the z-index works */
-  z-index: 1;  
-}  
+  width: 80%;              /* Reduced width for laptops */
+  height: auto;            /* Maintain aspect ratio */
+  max-width: 900px;        /* Limit width on larger screens */
+  max-height: 600px;       /* Adjust height to prevent overflow */
+  object-fit: cover;       /* Ensure video fills the container */
+  border-radius: 10px;     /* Optional rounded corners */
+  margin: 0 auto;          /* Centers the video within the container */
+  position: relative;
+  padding-top: 120px;
+}
 
-/* Responsive Adjustments for Various Screen Sizes */
-@media (max-width: 1024px) { /* Tablets and below */
+/* Responsive Adjustments */
+@media (max-width: 1440px) {  /* Larger laptops */
   #bg-video {
-    width: 100%;             /* Full width for tablet */
-    height: 100%;            /* Full height to maintain aspect ratio */
+      width: 75%;
+      max-height: 380px;
   }
 }
 
-@media (max-width: 768px) { /* Small tablets and larger smartphones */
+@media (max-width: 1024px) {  /* Standard laptops & tablets */
   #bg-video {
-    width: 100%;             /* Full width for small screens */
-    height: 100%;            /* Full height to maintain aspect ratio */
+      width: 70%;  /* Reduce width */
+      max-height: 350px;
   }
 }
 
-@media (max-width: 480px) { /* Mobile phones */
+@media (max-width: 768px) {   /* Small tablets & larger smartphones */
   #bg-video {
-    width: 100%;             /* Full width for mobile */
-    height: 100%;            /* Full height to maintain aspect ratio */
+      width: 90%;
+      max-height: 350px;
   }
 }
 
-@media (max-width: 400px) { /* Very small screens */
+@media (max-width: 480px) {   /* Mobile phones */
   #bg-video {
-    width: 100%;             /* Full width for very small screens */
-    height: 100%;            /* Full height to maintain aspect ratio */
+      width: 95%;
+      max-height: 300px;
   }
 }
 
+@media (max-width: 400px) {   /* Very small screens */
+  #bg-video {
+      width: 100%;
+      max-height: 250px;
+  }
+}
 
-/* about us */
+/* About Us Section */
+
 .about-us {
   background-image: url(bg3.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  padding: 30px 10px;
+  padding: 60px 20px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+#about{padding-top: 110px; }/* Adjust based on header height */
+hr .animated-hr{
+    border: 0;
+    height: 4px;
+    margin: .5rem 0;
+    background: linear-gradient(90deg, #2c3e50, #3498db, #2c3e50);
+    background-size: 200% auto;
+    animation: hrFlow 3s linear infinite;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+   margin-top: 350px;
+  }
+  
+  @keyframes hrFlow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
 
+/* Container */
 .container1 {
-  max-width: 90%;
-  margin: auto;
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: justify;
+  gap: 20px;
 }
 
+/* Image Styling */
 .container1 img {
   width: 100%;
-  max-width: 500px; /* Prevents oversizing on larger screens */
+  max-width: 450px;
   height: auto;
   border-radius: 50%;
   border: 5px double black;
   margin-bottom: 20px;
 }
 
+/* Heading */
+.container1 h2 {
+  font-size: 2.5rem;
+  color: blue;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Paragraph */
+.container1 p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  font-style: italic;
+  text-indent: 2em;
+  color: #333;
+  max-width: 900px;
+  text-align: justify;
+}
+
+/* Tablet & Medium Screens */
+@media (max-width: 1024px) {
+  .about-us {
+    padding: 40px 15px;
+    background-attachment: scroll;
+   
+  }
+  #about{padding-top: 80px; }
+
+  .container1 h2 {
+    font-size: 2.2rem;
+  }
+
+  .container1 p {
+    font-size: 1rem;
+    text-indent: 1.5em;
+  }
+
+  .container1 img {
+    max-width: 80%;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+  .about-us {
+    padding: 40px 10px;
+  }
+
+  .container1 h2 {
+    font-size: 2rem;
+  }
+
+  .container1 p {
+    font-size: 0.95rem;
+    text-indent: 1.2em;
+  }
+
+  .container1 img {
+    max-width: 100%;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 480px) {
+  .about-us {
+    padding: 30px 8px;
+  }
+
+  .container1 h2 {
+    font-size: 1.7rem;
+  }
+
+  .container1 p {
+    font-size: 0.9rem;
+    text-indent: 1em;
+  }
+
+  .container1 img {
+    max-width: 95%;
+  }
+}
+
+/* Extra Large Screens */
+@media (min-width: 1441px) {
+  .container1 h2 {
+    font-size: 2.8rem;
+  }
+
+  .container1 p {
+    font-size: 1.2rem;
+  }
+}
 .container1 h2 {
   font-size: 2rem;
   color: blue;
@@ -322,7 +446,7 @@ header {
   width: 80%;
   max-width: 800px; /* Prevents it from stretching too wide */
   margin: 0 auto;
-  padding: 20px;
+  padding:5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
@@ -351,12 +475,14 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 h2 {
   font-size: 2rem;
   color: blue;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  padding: 20px 0; /* Adjust vertical padding here */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -410,10 +536,12 @@ h2 {
   position: relative;
   background-color: #f9f9f9;
   box-sizing: border-box;
-  margin-bottom: 40px;
   z-index: 2;
   margin-top: 0; /* Remove top space */
-}
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }  
+
 
 .mission-container {
   width: 85%;
@@ -528,7 +656,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 20px 20px;
   background: var(--light);
   width: 100%;
   margin-top: 0px;
@@ -643,62 +771,80 @@ html, body {
   background-image: url(background2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: white;
-  padding: 20px;
+  padding: 40px 20px; /* Increased for better vertical spacing */
   text-align: center;
+  min-height: 100vh; /* Full section height on laptop screens */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .why-choose h2 {
-  margin-bottom: 20px;
-  font-size: 2rem;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
 .reasons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  max-width: 1200px;
+  gap: 25px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
 }
 
 .reason {
   background: white;
   color: #007bff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
   width: 30%;
+  min-width: 280px;
+  max-width: 350px;
   text-align: center;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .reason:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .reason i {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+  font-size: 2.8rem;
+  margin-bottom: 15px;
 }
 
 @media (max-width: 992px) {
   .reason {
-      width: 45%;
+    width: 45%;
   }
 }
 
 @media (max-width: 768px) {
-  .reasons {
-      flex-direction: column;
-      align-items: center;
+  .why-choose {
+    padding: 40px 15px;
   }
+
+  .reasons {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .reason {
-      width: 90%;
+    width: 90%;
+  }
+
+  .why-choose h2 {
+    font-size: 2rem;
   }
 }
-
 
 
 
@@ -932,7 +1078,8 @@ html, body {
   position: relative;
   padding-bottom: 0.5rem;
 }
-#sheetform h1,p{color:black;}
+#sheetform h1,p{color:black;
+padding-bottom: 20px;}
 
 #sheetform h2:after {
   content: '';
@@ -977,7 +1124,7 @@ html, body {
 #jobForm input,
 #jobForm textarea {
   width: 100%;
-  padding: 1.2rem;
+  padding: 1.7rem;
   border: 2px solid #eee;
   border-radius: 8px;
   font-size: 1rem;
@@ -1002,12 +1149,12 @@ html, body {
 .input-group label {
   position: absolute;
   left: 1.2rem;
-  top: 1.2rem;
+  top: 1.5rem;
   color:blue;
   pointer-events: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
-  padding: 0 0.5rem;
+  padding: 0 .4rem;
   font-size: 1rem;
 }
 
@@ -1047,7 +1194,7 @@ button[type="submit"]:hover {
 .qr-code1 {display: flex;
   justify-content: center;
   align-items: center;
-  height: 300px; /* Adjust height as needed */
+  height: 200px; /* Adjust height as needed */
   width: 300px; /* Adjust width as needed */
  
   margin: auto;
