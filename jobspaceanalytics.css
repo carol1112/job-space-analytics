@@ -953,7 +953,9 @@ html, body {
 
 
 /* ========== Why Choose Us Section ========== */
-
+* {
+  box-sizing: border-box;
+}
 .why-choose {
   background-image: url(background2.jpg);
   background-repeat: no-repeat;
@@ -1130,27 +1132,28 @@ html, body {
 /* Adjustments for screens up to 480px (mobile phones) */
 @media (max-width: 480px) {
   .why-choose {
-    padding: 30px 15px; /* Reduced padding for mobile */
-  }
-
-  .reason {
-    width: 50%; /* 1 card per row on mobile */
-    margin-bottom: 20px; /* Space between cards */
-  }
-
-  .why-choose h2 {
-    font-size: 1.8rem; /* Smaller heading for mobile */
-  }
-
-  .reason i {
-    font-size: 2.5rem; /* Adjusted icon size for smaller screens */
+    padding: 30px 10px; /* Slightly reduced horizontal padding */
   }
 
   .reasons {
-    padding: 10px;
+    padding: 0; /* Remove extra padding */
+  }
+
+  .reason {
+    width: 100%; /* Take full width of container */
+    max-width: 100%; /* Prevent overflow */
+    margin: 0 0 20px 0; /* Bottom margin only */
+    box-sizing: border-box; /* Ensure padding stays inside width */
+  }
+
+  .why-choose h2 {
+    font-size: 1.8rem;
+  }
+
+  .reason i {
+    font-size: 2.5rem;
   }
 }
-
 /* Adjustments for very small screens (up to 360px) */
 @media (max-width: 360px) {
   .why-choose {
@@ -1170,6 +1173,8 @@ html, body {
     font-size: 2.2rem; /* Reduced icon size */
   }
 }
+
+
 /* FAQ Section */
 #faqs {
   width: 100%;
