@@ -959,7 +959,7 @@ html, body {
   background-position: center;
   background-attachment: fixed;
   color: white;
-  padding: 50px 20px; /* Adjusted for better vertical spacing */
+  padding: 30px 20px; /* Adjusted for better vertical spacing */
   text-align: center;
   min-height: 100vh; /* Full section height on larger screens */
   display: flex;
