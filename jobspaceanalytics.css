@@ -1009,20 +1009,95 @@ html, body {
   font-size: 3.5rem; /* Increased for better visibility */
   margin-bottom: 20px;
 }
+/* Why Choose Us Section */
+.why-choose {
+  background-image: url(background2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  padding: 50px 20px; /* Default padding for larger screens */
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 80px; /* Adjusted for balanced top spacing */
+  row-gap: 2rem; /* Adds consistent gap between elements */
+}
 
+.why-choose h2 {
+  margin-bottom: 20px; /* Space below the heading */
+  font-size: 3rem; /* Default heading size */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.reasons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Adjusted gap between reason cards */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.reason {
+  background: white;
+  color: #007bff;
+  padding: 20px;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 30%; /* Default width for larger screens */
+  min-width: 280px;
+  max-width: 350px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.reason:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.reason i {
+  font-size: 3.5rem; /* Default icon size */
+  margin-bottom: 20px;
+}
+
+/* Adjustments for screens up to 1200px */
 @media (max-width: 1200px) {
   .why-choose h2 {
     font-size: 2.5rem; /* Slightly smaller heading */
+    padding-top: 20px;
   }
 
   .reason {
     width: 45%; /* Adjust width for medium screens */
   }
+  .why-choose {
+    background-image: url(background2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    padding: 50px 20px; /* Default padding for larger screens */
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 50px; /* Adjusted for balanced top spacing */
+    row-gap: 2rem; /* Adds consistent gap between elements */
+  }
 }
 
+/* Adjustments for screens up to 992px (tablets) */
 @media (max-width: 992px) {
   .why-choose {
-    padding-top: 140px; /* Reduced padding for better alignment on smaller screens */
+    padding-top: 40px; /* Reduced padding for better alignment */
   }
 
   .reason {
@@ -1034,10 +1109,11 @@ html, body {
   }
 }
 
+/* Adjustments for screens up to 768px (small tablets and laptops) */
 @media (max-width: 768px) {
   .why-choose {
-    padding-top: 150px;
-    padding-bottom: 60px;
+    padding-top: 100px;
+    padding-bottom: 50px; /* Adjusted padding for better alignment */
   }
 
   .reasons {
@@ -1047,11 +1123,11 @@ html, body {
 
   .reason {
     width: 80%; /* Adjust width for tablets and small laptops */
-    margin-bottom: 30px; /* Added bottom margin for better spacing */
+    margin-bottom: 20px; /* Reduced bottom margin for better spacing */
   }
 
   .why-choose h2 {
-    font-size: 2rem;
+    font-size: 2rem; /* Slightly smaller heading */
   }
 
   .reason i {
@@ -1063,14 +1139,15 @@ html, body {
   }
 }
 
+/* Adjustments for screens up to 480px (mobile phones) */
 @media (max-width: 480px) {
   .why-choose {
-    padding: 40px 15px; /* Reduced padding for mobile */
+    padding: 30px 15px; /* Reduced padding for mobile */
   }
 
   .reason {
-    width: 90%; /* 1 card per row on mobile */
-    margin-bottom: 30px; /* Added margin for spacing between cards */
+    width: 70%; /* 1 card per row on mobile */
+    margin-bottom: 20px; /* Space between cards */
   }
 
   .why-choose h2 {
@@ -1086,9 +1163,10 @@ html, body {
   }
 }
 
+/* Adjustments for very small screens (up to 360px) */
 @media (max-width: 360px) {
   .why-choose {
-    padding: 30px 10px; /* Further reduced padding for very small screens */
+    padding: 20px 10px; /* Further reduced padding for very small screens */
   }
 
   .reason {
