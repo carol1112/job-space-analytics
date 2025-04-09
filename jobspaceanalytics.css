@@ -965,6 +965,7 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 120px;
 }
 
 .why-choose h2 {
