@@ -1180,7 +1180,6 @@ hr.animated-hr {
   font-size: 1rem;
   pointer-events: none;
   transition: 0.3s ease;
-  background: white;
   padding: 0 .3rem;
 }
 
