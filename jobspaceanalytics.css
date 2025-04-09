@@ -951,9 +951,9 @@ html, body {
   }
 }
 
-/* Why Choose Us Section */
+
 /* ========== Why Choose Us Section ========== */
-/* Why Choose Us Section */
+
 .why-choose {
   background-image: url(background2.jpg);
   background-repeat: no-repeat;
@@ -1049,7 +1049,7 @@ html, body {
   padding: 20px;
   border-radius: 12px; /* Rounded corners */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  width: 30%; /* Default width for larger screens */
+  width: 50%; /* Default width for larger screens */
   min-width: 280px;
   max-width: 350px;
   text-align: center;
@@ -1070,27 +1070,15 @@ html, body {
 @media (max-width: 1200px) {
   .why-choose h2 {
     font-size: 2.5rem; /* Slightly smaller heading */
-    padding-top: 20px;
+   
   }
 
   .reason {
-    width: 45%; /* Adjust width for medium screens */
+    width: 75%; /* Adjust width for medium screens */
   }
   .why-choose {
-    background-image: url(background2.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: white;
-    padding: 50px 20px; /* Default padding for larger screens */
-    text-align: center;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 50px; /* Adjusted for balanced top spacing */
-    row-gap: 2rem; /* Adds consistent gap between elements */
+    padding-top: 20px; /* Adjusted for balanced top spacing */
+    
   }
 }
 
@@ -1101,7 +1089,7 @@ html, body {
   }
 
   .reason {
-    width: 45%; /* Adjust width for smaller tablets */
+    width: 30%; /* Adjust width for smaller tablets */
   }
 
   .why-choose h2 {
@@ -1112,8 +1100,8 @@ html, body {
 /* Adjustments for screens up to 768px (small tablets and laptops) */
 @media (max-width: 768px) {
   .why-choose {
-    padding-top: 100px;
-    padding-bottom: 50px; /* Adjusted padding for better alignment */
+    padding-top: 70px;
+    padding-bottom: 30px; /* Adjusted padding for better alignment */
   }
 
   .reasons {
@@ -1146,7 +1134,7 @@ html, body {
   }
 
   .reason {
-    width: 70%; /* 1 card per row on mobile */
+    width: 50%; /* 1 card per row on mobile */
     margin-bottom: 20px; /* Space between cards */
   }
 
