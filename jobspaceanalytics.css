@@ -963,18 +963,18 @@ html, body {
   background-position: center;
   background-attachment: fixed;
   color: white;
-  padding: 50px 20px; /* Increased padding for better vertical spacing */
+  padding: 30px 20px; /* Increased padding for better vertical spacing */
   text-align: center;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 100px; /* Adjusted for more balanced top spacing */
+  padding-top: 60px; /* Adjusted for more balanced top spacing */
   row-gap: 2rem; /* Adds consistent gap between elements */
 }
 
 .why-choose h2 {
-  margin-bottom: 40px; /* Added more space below the heading */
+  margin-bottom: 20px; /* Added more space below the heading */
   font-size: 3rem; /* Increased font size for readability */
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
@@ -1011,62 +1011,7 @@ html, body {
   font-size: 3.5rem; /* Increased for better visibility */
   margin-bottom: 20px;
 }
-/* Why Choose Us Section */
-.why-choose {
-  background-image: url(background2.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: white;
-  padding: 50px 20px; /* Default padding for larger screens */
-  text-align: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 80px; /* Adjusted for balanced top spacing */
-  row-gap: 2rem; /* Adds consistent gap between elements */
-}
 
-.why-choose h2 {
-  margin-bottom: 20px; /* Space below the heading */
-  font-size: 3rem; /* Default heading size */
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-}
-
-.reasons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px; /* Adjusted gap between reason cards */
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.reason {
-  background: white;
-  color: #007bff;
-  padding: 20px;
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  width: 50%; /* Default width for larger screens */
-  min-width: 280px;
-  max-width: 350px;
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.reason:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-}
-
-.reason i {
-  font-size: 3.5rem; /* Default icon size */
-  margin-bottom: 20px;
-}
 
 /* Adjustments for screens up to 1200px */
 @media (max-width: 1200px) {
@@ -1076,7 +1021,7 @@ html, body {
   }
 
   .reason {
-    width: 75%; /* Adjust width for medium screens */
+    width: 60%; /* Adjust width for medium screens */
   }
   .why-choose {
     padding-top: 20px; /* Adjusted for balanced top spacing */
