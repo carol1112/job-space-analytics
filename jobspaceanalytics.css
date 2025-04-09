@@ -341,11 +341,11 @@ hr.animated-hr {
 /* Tablets (768px – 1024px) */
 @media (max-width: 1024px) {
   #about {
-    padding-top: 90px;
+    padding-top: 30px;
   }
 
   .about-us {
-    padding: 40px 15px;
+    padding: 20px 15px;
     background-attachment: scroll;
   }
 
@@ -363,7 +363,7 @@ hr.animated-hr {
   }
 
   .container1 img {
-    max-width: 350px;
+    max-width: 300px;
   }
 }
 
@@ -517,29 +517,43 @@ h2 {
 }
 
 
-/* Mission Section */
+/* ─────────────── Mission Section ─────────────── */
 
+/* ========== Mission Section ========== */
 #Mission {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  padding: 40px 20px;
-  text-align: center;
-  position: relative;
+  padding: 160px 20px 60px;
   background-color: #f9f9f9;
+  text-align: center;
   box-sizing: border-box;
+  margin: 0 auto;
   z-index: 2;
-  margin-top: 0; /* Remove top space */
-  margin-bottom: 0;
-  padding-bottom: 0;
-  }  
+}
 
+/* Animated HR */
+hr.animated-hr {
+  border: 0;
+  height: 4px;
+  margin: 2rem 0;
+  background: linear-gradient(90deg, #2c3e50, #3498db, #2c3e50);
+  background-size: 200% auto;
+  animation: hrFlow 3s linear infinite;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
+@keyframes hrFlow {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ========== Mission Container ========== */
 .mission-container {
-  width: 85%;
-  max-width: 900px;
+  width: 90%;
+  max-width: 950px;
   background-image: url('bg4.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -549,54 +563,70 @@ h2 {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  position: relative;
-  margin: 2rem 0;
+  margin: 2rem auto;
+  box-sizing: border-box;
 }
 
+/* ========== Typography ========== */
 .mission-container h2 {
   color: blue;
-  margin-bottom: 2rem;
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  margin-bottom: 1.5rem;
 }
 
 .mission {
   color: black;
-  line-height: 1.7;
+  line-height: 1.8;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  padding: 0 10px;
   max-width: 800px;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  padding: 10px;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 1024px) {
+/* ========== Responsive Adjustments ========== */
+@media (max-width: 1200px) {
   .mission-container {
     padding: 3.5rem 2.5rem;
   }
 }
 
+@media (max-width: 1024px) {
+  .mission-container {
+    padding: 2rem 1rem;
+  }
+
+  #Mission {
+    padding: 50px 15px 40px;
+  }
+
+  body {
+    padding-top: 50px;
+  }
+}
+
 @media (max-width: 768px) {
   .mission-container {
-    padding: 3rem 2rem;
-    width: 90%;
+    width: 92%;
+    padding: 2rem 1.5rem;
+  }
+
+  #Mission {
+    padding: 80px 15px 50px;
+  }
+
+  .mission {
+    font-size: 1.05rem;
   }
 
   .mission-container h2 {
     font-size: 1.8rem;
   }
-
-  .mission {
-    font-size: 1.1rem;
-  }
 }
 
 @media (max-width: 480px) {
   .mission-container {
-    padding: 2.5rem 1.5rem;
-    width: 95%;
-    margin: 1.5rem 0;
+    width: 96%;
+    padding: 2rem 1rem;
   }
 
   .mission-container h2 {
@@ -606,19 +636,27 @@ h2 {
   .mission {
     font-size: 1rem;
   }
+
+  #Mission {
+    padding: 70px 10px 40px;
+  }
 }
 
 @media (max-width: 360px) {
   .mission-container {
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.8rem;
   }
 
   .mission {
     font-size: 0.95rem;
   }
+
+  .mission-container h2 {
+    font-size: 1.5rem;
+  }
 }
 
-
+/* ========== Services Section ========== */
 /* Services Section */
 :root {
   --primary: #007bff;
@@ -640,7 +678,7 @@ html, body {
   overflow-x: hidden; /* Prevents horizontal scroll */
 }
 
-/* Services Section */
+
 #services {
   background-image: url('bg5.png');
   background-repeat: no-repeat;
@@ -1285,7 +1323,7 @@ img {
 /* Responsive Design */
 @media (max-width: 1024px) {
   #sheetform {
-    padding-top: 120px;
+    padding-top: 80px;
   }
 
   #sheetform h2 {
