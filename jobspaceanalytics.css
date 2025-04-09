@@ -1055,27 +1055,39 @@ html, body {
   }
 }
 
+
 /* contact form*/
+/* ─────────────────────────────── */
+/* Base Styles */
 #sheetform {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  background: white; /* Optional: Add a background color */
-  padding: 20px;
+  min-height: 100vh;
+  background: white;
+  padding: 120px 20px 40px; /* top padding avoids header overlap */
+  box-sizing: border-box;
 }
+
+#sheetform h1,
+#sheetform p {
+  color: black;
+  padding-bottom: 20px;
+  text-align: center;
+  justify-items: center;
+}
+
 #sheetform h2 {
   text-align: center;
+  justify-items: center;
   color: blue;
   font-size: 2.4rem;
   margin-bottom: 2.5rem;
   position: relative;
   padding-bottom: 0.5rem;
 }
-#sheetform h1,p{color:black;
-padding-bottom: 20px;}
 
-#sheetform h2:after {
+#sheetform h2::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1087,43 +1099,63 @@ padding-bottom: 20px;}
   border-radius: 2px;
 }
 
-/* Form Elements */
+/* ─────────────────────────────── */
+/* Animated Horizontal Line */
+hr.animated-hr {
+  border: 0;
+  height: 4px;
+  margin: 2rem 0;
+  background: linear-gradient(90deg, #2c3e50, #3498db, #2c3e50);
+  background-size: 200% auto;
+  animation: hrFlow 3s linear infinite;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hrFlow {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─────────────────────────────── */
+/* Form */
 #jobForm {
   display: grid;
-  gap: 1.8rem;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .input-group {
   position: relative;
-  margin-bottom: 2rem;
+  animation: slideIn 0.4s ease-out forwards;
   opacity: 0;
   transform: translateX(-20px);
-  animation: slideIn 0.4s ease-out forwards;
 }
 
 @keyframes slideIn {
   to {
-      opacity: 1;
-      transform: translateX(0);
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-.input-group:nth-child(1) { animation-delay: 0.2s; }
-.input-group:nth-child(2) { animation-delay: 0.3s; }
-.input-group:nth-child(3) { animation-delay: 0.4s; }
-.input-group:nth-child(4) { animation-delay: 0.5s; }
-.input-group:nth-child(5) { animation-delay: 0.6s; }
-.input-group:nth-child(6) { animation-delay: 0.7s; }
+/* Staggered animation delays */
+.input-group:nth-child(n) {
+  animation-delay: calc(0.1s + (var(--i, 1) * 0.1s));
+}
 
+/* Inputs and Textarea */
 #jobForm input,
 #jobForm textarea {
   width: 100%;
-  padding: 1.7rem;
+  padding: 1.2rem;
   border: 2px solid #eee;
   border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.3s ease;
   background: #f8f9fa;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 #jobForm input:focus,
@@ -1131,7 +1163,7 @@ padding-bottom: 20px;}
   outline: none;
   border-color: #6c5ce7;
   background: white;
-  box-shadow: 0 4px 15px rgba(108,92,231,0.1);
+  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.1);
 }
 
 #jobForm textarea {
@@ -1144,25 +1176,25 @@ padding-bottom: 20px;}
   position: absolute;
   left: 1.2rem;
   top: 1.5rem;
-  color:blue;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: transparent;
-  padding: 0 .4rem;
+  color: blue;
   font-size: 1rem;
+  pointer-events: none;
+  transition: 0.3s ease;
+  background: white;
+  padding: 0 .3rem;
 }
 
 .input-group input:focus ~ label,
 .input-group input:not(:placeholder-shown) ~ label,
 .input-group textarea:focus ~ label,
 .input-group textarea:not(:placeholder-shown) ~ label {
-  top: -0.8rem;
+  top: -0.6rem;
   left: 1rem;
   font-size: 0.85rem;
   color: #6c5ce7;
-  background:transparent;
 }
 
+/* ─────────────────────────────── */
 /* Submit Button */
 button[type="submit"] {
   background: orange;
@@ -1172,34 +1204,35 @@ button[type="submit"] {
   border-radius: 10px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
   width: 100%;
-  position: relative;
-  overflow: hidden;
   margin-top: 1rem;
-  justify-content: center;
 }
 
 button[type="submit"]:hover {
   background: rgb(248, 199, 109);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(230, 120, 3, 0.914);
+  box-shadow: 0 8px 20px rgba(230, 120, 3, 0.9);
 }
-.qr-code1 {display: flex;
+
+/* ─────────────────────────────── */
+/* QR Code Styling */
+.qr-code1 {
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px; /* Adjust height as needed */
-  width: 300px; /* Adjust width as needed */
- 
+  height: 200px;
+  width: 300px;
   margin: auto;
 }
+
 img {
   max-width: 100%;
   height: auto;
 }
 
-
-/* Message Styles */
+/* ─────────────────────────────── */
+/* Message */
 #msg {
   padding: 1.2rem;
   border-radius: 10px;
@@ -1209,7 +1242,7 @@ img {
   font-size: 1.1rem;
   opacity: 0;
   transform: translateY(-20px);
-  transition: all 0.4s ease;
+  transition: 0.4s ease;
   display: none;
 }
 
@@ -1231,15 +1264,16 @@ img {
   color: #c62828;
 }
 
-/* Spinner Animation */
+/* ─────────────────────────────── */
+/* Spinner */
 .spinner {
   display: inline-block;
   width: 1.2em;
   height: 1.2em;
-  border: 3px solid rgba(255,255,255,0.3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
+  animation: spin 1s linear infinite;
   vertical-align: middle;
   margin-right: 10px;
 }
@@ -1248,31 +1282,57 @@ img {
   to { transform: rotate(360deg); }
 }
 
+/* ─────────────────────────────── */
 /* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-      padding: 2rem;
-      margin: 1rem;
+@media (max-width: 1024px) {
+  #sheetform {
+    padding-top: 120px;
   }
 
   #sheetform h2 {
-      font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   #jobForm input,
   #jobForm textarea {
-      padding: 1rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #sheetform {
+    padding-top: 100px;
+  }
+
+  #sheetform h2 {
+    font-size: 2rem;
+  }
+
+  .qr-code1 {
+    width: 100%;
+    height: auto;
   }
 }
 
 @media (max-width: 480px) {
-  .container{
-      padding: 1.5rem;
+  #sheetform {
+    padding-top: 90px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #sheetform h2 {
+    font-size: 1.7rem;
+  }
+
+  #jobForm input,
+  #jobForm textarea {
+    font-size: 0.95rem;
   }
 
   button[type="submit"] {
-      padding: 1rem;
-      font-size: 1rem;
+    font-size: 1rem;
+    padding: 1rem;
   }
 }
 
