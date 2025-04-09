@@ -959,9 +959,9 @@ html, body {
   background-position: center;
   background-attachment: fixed;
   color: white;
-  padding: 40px 20px; /* Increased for better vertical spacing */
+  padding: 50px 20px; /* Adjusted for better vertical spacing */
   text-align: center;
-  min-height: 100vh; /* Full section height on laptop screens */
+  min-height: 100vh; /* Full section height on larger screens */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -969,7 +969,7 @@ html, body {
 
 .why-choose h2 {
   margin-bottom: 30px;
-  font-size: 2.5rem;
+  font-size: 3rem; /* Increased font size for readability */
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -978,7 +978,7 @@ html, body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 25px;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -1002,19 +1002,33 @@ html, body {
 }
 
 .reason i {
-  font-size: 2.8rem;
+  font-size: 3rem; /* Increased for better icon visibility */
   margin-bottom: 15px;
+}
+
+@media (max-width: 1200px) {
+  .why-choose h2 {
+    font-size: 2.5rem; /* Slightly smaller heading */
+  }
+
+  .reason {
+    width: 45%; /* Adjust width for larger tablets and small laptops */
+  }
 }
 
 @media (max-width: 992px) {
   .reason {
-    width: 45%;
+    width: 45%; /* Adjust width for mid-size tablets */
+  }
+
+  .why-choose h2 {
+    font-size: 2.2rem; /* Slightly smaller heading */
   }
 }
 
 @media (max-width: 768px) {
   .why-choose {
-    padding: 40px 15px;
+    padding: 50px 15px; /* Slightly reduced padding for tablets */
   }
 
   .reasons {
@@ -1023,11 +1037,35 @@ html, body {
   }
 
   .reason {
-    width: 90%;
+    width: 80%; /* Adjust width for tablets and small laptops */
+    margin-bottom: 20px; /* Added bottom margin for spacing */
   }
 
   .why-choose h2 {
-    font-size: 2rem;
+    font-size: 2rem; /* Slightly smaller heading */
+  }
+}
+
+@media (max-width: 480px) {
+  .why-choose {
+    padding: 40px 15px; /* Reduced padding for mobile */
+  }
+
+  .reasons {
+    padding: 10px;
+  }
+
+  .reason {
+    width: 90%; /* Adjust width for small screens */
+    margin-bottom: 20px; /* Added bottom margin for spacing */
+  }
+
+  .why-choose h2 {
+    font-size: 1.8rem; /* Smaller heading size */
+  }
+
+  .reason i {
+    font-size: 2.5rem; /* Adjusted icon size */
   }
 }
 
@@ -1214,7 +1252,7 @@ hr.animated-hr {
 /* ========== Testimonials Section ========== */
 #testimonials {
   width: 100%;
-  padding: 140px 30px 80px; /* Top, horizontal, bottom */
+  padding: 120px 30px 80px; /* Top, horizontal, bottom */
   background: #f8f9fa;
   text-align: center;
   position: relative;
