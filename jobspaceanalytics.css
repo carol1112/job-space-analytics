@@ -261,8 +261,9 @@ header {
   }
 }
 
-/* About Us Section */
 
+
+/* About Us Section */
 .about-us {
   background-image: url(bg3.png);
   background-repeat: no-repeat;
@@ -274,27 +275,32 @@ header {
   justify-content: center;
   align-items: center;
 }
-#about{padding-top: 110px; }/* Adjust based on header height */
-hr .animated-hr{
-    border: 0;
-    height: 4px;
-    margin: .5rem 0;
-    background: linear-gradient(90deg, #2c3e50, #3498db, #2c3e50);
-    background-size: 200% auto;
-    animation: hrFlow 3s linear infinite;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-   margin-top: 350px;
-  }
-  
-  @keyframes hrFlow {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
+
+#about {
+  padding-top: 120px; /* Adjust depending on header height */
+}
+
+/* Animated Horizontal Line */
+hr.animated-hr {
+  border: 0;
+  height: 4px;
+  margin: 3rem 0;
+  background: linear-gradient(90deg, #2c3e50, #3498db, #2c3e50);
+  background-size: 200% auto;
+  animation: hrFlow 3s linear infinite;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hrFlow {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
 /* Container */
 .container1 {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -307,6 +313,7 @@ hr .animated-hr{
   width: 100%;
   max-width: 450px;
   height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 5px double black;
   margin-bottom: 20px;
@@ -316,7 +323,7 @@ hr .animated-hr{
 .container1 h2 {
   font-size: 2.5rem;
   color: blue;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
@@ -328,17 +335,23 @@ hr .animated-hr{
   text-indent: 2em;
   color: #333;
   max-width: 900px;
-  text-align: justify;
 }
 
-/* Tablet & Medium Screens */
+/* ─────────────────────────────── */
+/* Tablets (768px – 1024px) */
 @media (max-width: 1024px) {
+  #about {
+    padding-top: 90px;
+  }
+
   .about-us {
     padding: 40px 15px;
     background-attachment: scroll;
-   
   }
-  #about{padding-top: 80px; }
+
+  .container1 {
+    max-width: 90%;
+  }
 
   .container1 h2 {
     font-size: 2.2rem;
@@ -350,14 +363,18 @@ hr .animated-hr{
   }
 
   .container1 img {
-    max-width: 80%;
+    max-width: 350px;
   }
 }
 
-/* Mobile Devices */
+/* Mobile Phones */
 @media (max-width: 768px) {
+  #about {
+    padding-top: 70px;
+  }
+
   .about-us {
-    padding: 40px 10px;
+    padding: 35px 10px;
   }
 
   .container1 h2 {
@@ -370,12 +387,16 @@ hr .animated-hr{
   }
 
   .container1 img {
-    max-width: 100%;
+    max-width: 300px;
   }
 }
 
-/* Extra Small Mobile */
+/* Extra Small Mobile Devices */
 @media (max-width: 480px) {
+  #about {
+    padding-top: 60px;
+  }
+
   .about-us {
     padding: 30px 8px;
   }
@@ -390,12 +411,16 @@ hr .animated-hr{
   }
 
   .container1 img {
-    max-width: 95%;
+    max-width: 250px;
   }
 }
 
 /* Extra Large Screens */
 @media (min-width: 1441px) {
+  .container1 {
+    max-width: 1400px;
+  }
+
   .container1 h2 {
     font-size: 2.8rem;
   }
@@ -403,43 +428,12 @@ hr .animated-hr{
   .container1 p {
     font-size: 1.2rem;
   }
-}
-.container1 h2 {
-  font-size: 2rem;
-  color: blue;
-  margin-bottom: 15px;
-}
-
-.container1 p {
-  font-size: 1rem;
-  line-height: 1.6;
-  font-style: italic;
-  text-indent: 1.5em;
-  margin-bottom: 15px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .about-us {
-    padding: 20px 5px;
-    background-attachment: scroll; /* Prevents background issues on mobile */
-  }
-
-  .container1 h2 {
-    font-size: 1.8rem;
-  }
-
-  .container1 p {
-    font-size: 0.95rem;
-    text-indent: 1em;
-  }
 
   .container1 img {
-    max-width: 90%; /* Ensures better scaling on smaller screens */
+    max-width: 500px;
   }
 }
 
-      
 /*core value*/
 
 .container {
