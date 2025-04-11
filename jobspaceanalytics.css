@@ -250,6 +250,9 @@ header {
   #bg-video {
     max-width: 95%;
   }
+  #home {
+    padding-top: 40px; /* Reduced space above video on laptops */
+  }
 }
 
 @media (max-width: 400px) {
