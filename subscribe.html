@@ -1,0 +1,6314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Subscribe | Job Space Link</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+<link rel="stylesheet" href="jobspacelink.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase_config.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins","Segoe UI",sans-serif;}
+
+:root{
+  --header-h:78px;
+}
+
+html, body{
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  min-height:100%;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--header-h) + 16px);
+}
+
+body{
+  min-height:100vh;
+  padding-top:var(--header-h);
+  background:radial-gradient(circle at 20% 20%, #0ea5e9, #1e1b4b 60%, #020617);
+  color:#e5e7eb;
+  overflow-x:hidden;
+}
+
+/* ============================================================
+   HEADER - INDEX STYLE
+=========================================================== */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:var(--header-h);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 16px 0 8px;
+  background:rgba(15,23,42,0.92);
+  border-bottom:1px solid rgba(59,130,246,0.28);
+  backdrop-filter:blur(14px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.18);
+  z-index:1500;
+}
+
+header .logo{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  margin-left:-4px;
+}
+
+header .logo img{
+  height:80px;
+  width:auto;
+  display:block;
+  object-fit:contain;
+  filter:drop-shadow(0 0 8px rgba(0,198,255,0.35));
+}
+
+header nav{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:12px;
+  margin-left:4px;
+  white-space:nowrap;
+}
+
+header nav > a,
+header nav .nav-main-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:36px;
+  padding:0 4px;
+  color:#e5e7eb;
+  text-decoration:none;
+  font-size:0.88rem;
+  font-weight:600;
+  transition:color 0.25s ease, text-shadow 0.25s ease;
+}
+
+header nav > a:hover,
+header nav .nav-main-link:hover{
+  color:#ffffff;
+  text-shadow:0 0 12px rgba(0,198,255,0.55);
+}
+
+header .auth-buttons{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  white-space:nowrap;
+}
+
+header .auth-buttons a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  height:36px;
+  padding:0 11px;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:0.82rem;
+  font-weight:700;
+  color:#ffffff;
+  border:1px solid rgba(255,255,255,0.14);
+  background:linear-gradient(135deg, rgba(0,198,255,0.22), rgba(139,92,246,0.22));
+  box-shadow:0 0 14px rgba(0,198,255,0.10);
+  transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+header .auth-buttons a:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 20px rgba(0,198,255,0.22);
+  border-color:rgba(0,198,255,0.35);
+}
+
+.nav-toggle{
+  display:none;
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(135deg, rgba(0,198,255,0.22), rgba(139,92,246,0.22));
+  color:#fff;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  flex:0 0 auto;
+  border:1px solid rgba(255,255,255,0.14);
+  box-shadow:0 0 14px rgba(0,198,255,0.10);
+}
+
+.nav-toggle i{
+  font-size:1rem;
+}
+
+/* Mobile panel */
+.mobile-panel{
+  position:fixed;
+  top:var(--header-h);
+  left:0;
+  right:0;
+  background:rgba(15,23,42,0.97);
+  border-top:1px solid rgba(59,130,246,0.25);
+  border-bottom:1px solid rgba(59,130,246,0.25);
+  box-shadow:0 10px 28px rgba(0,0,0,0.28);
+  backdrop-filter:blur(12px);
+  padding:14px 16px 18px;
+  transform:translateY(-10px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s ease, transform 0.25s ease;
+  z-index:1400;
+}
+
+.mobile-panel.open{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.mobile-panel .mnav{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.mobile-panel .mnav a{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#e5e7eb;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  font-weight:600;
+  transition:background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.mobile-panel .mnav a:hover{
+  background:rgba(0,198,255,0.12);
+  color:#fff;
+  transform:translateX(3px);
+}
+
+.mobile-panel .mnav-group{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.mobile-panel .mnav-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.mobile-panel .mnav-main-link{
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#e5e7eb;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  font-weight:600;
+  transition:background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.mobile-panel .mnav-main-link:hover{
+  background:rgba(0,198,255,0.12);
+  color:#fff;
+  transform:translateX(3px);
+}
+
+.mobile-panel .mnav-toggle{
+  flex:0 0 48px;
+  width:48px;
+  min-width:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);
+  color:#e5e7eb;
+  font-weight:600;
+  font-size:0.96rem;
+  cursor:pointer;
+  transition:background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.mobile-panel .mnav-toggle:hover{
+  background:rgba(0,198,255,0.12);
+  color:#fff;
+  transform:translateX(3px);
+}
+
+.mobile-panel .mnav-toggle .mnav-caret{
+  transition:transform 0.25s ease;
+}
+
+.mobile-panel .mnav-group.open .mnav-toggle .mnav-caret{
+  transform:rotate(180deg);
+}
+
+.mobile-panel .mnav-submenu{
+  display:none;
+  flex-direction:column;
+  gap:8px;
+  padding-left:14px;
+}
+
+.mobile-panel .mnav-group.open .mnav-submenu{
+  display:flex;
+}
+
+.mobile-panel .mnav-submenu a{
+  background:rgba(255,255,255,0.03);
+}
+
+/* ============================================================
+   ABOUT NAV FIX
+=========================================================== */
+.nav-dropdown{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  height:36px;
+  flex:0 0 auto;
+}
+
+.nav-dropdown-trigger{
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  height:100%;
+}
+
+.nav-main-link{
+  display:inline-flex;
+  align-items:center;
+  text-decoration:none;
+}
+
+.nav-dropdown-toggle{
+  appearance:none;
+  -webkit-appearance:none;
+  border:none;
+  outline:none;
+  background:transparent;
+  color:#ffffff;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:24px;
+  padding:0;
+  margin:0;
+  line-height:1;
+}
+
+.nav-dropdown-toggle i{
+  pointer-events:none;
+  color:#ffffff;
+  font-size:0.9rem;
+}
+
+.nav-dropdown-menu{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:0;
+  min-width:220px;
+  display:none;
+  flex-direction:column;
+  gap:0;
+  padding:10px 0;
+  border-radius:14px;
+  background:rgba(15,23,42,0.96);
+  border:1px solid rgba(59,130,246,0.35);
+  box-shadow:0 12px 34px rgba(0,0,0,0.35);
+  backdrop-filter:blur(12px);
+  z-index:1200;
+}
+
+.nav-dropdown.open .nav-dropdown-menu{
+  display:flex;
+}
+
+.nav-dropdown-menu a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 16px;
+  color:#e5e7eb;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background 0.25s ease, color 0.25s ease;
+}
+
+.nav-dropdown-menu a:hover{
+  background:rgba(0,198,255,0.12);
+  color:#ffffff;
+}
+
+.nav-dropdown-menu i{
+  width:18px;
+  text-align:center;
+}
+
+/* ============================================================
+   PAGE
+=========================================================== */
+.wrap{
+  max-width:820px;
+  margin:40px auto 40px;
+  padding:28px 30px 34px;
+  border-radius:22px;
+  background:rgba(15,23,42,0.92);
+  border:1px solid rgba(0,198,255,0.5);
+  box-shadow:0 0 28px rgba(0,198,255,0.3);
+}
+
+.title{
+  font-size:1.7rem;
+  font-weight:800;
+  margin-bottom:6px;
+  color:#e0f2fe;
+  text-shadow:0 0 12px rgba(0,198,255,0.6);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.sub{
+  margin-bottom:16px;
+  font-size:0.92rem;
+  color:#cbd5f5;
+  opacity:0.92;
+  line-height:1.35;
+}
+
+.card{
+  background:rgba(15,23,42,0.98);
+  border-radius:18px;
+  border:1px solid rgba(0,198,255,0.4);
+  padding:18px 20px 22px;
+  box-shadow:0 0 16px rgba(15,23,42,0.8);
+}
+
+.plan{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(8,47,73,0.9);
+  border:1px solid rgba(56,189,248,0.8);
+  font-size:0.82rem;
+  margin-bottom:12px;
+}
+.plan strong{color:#e0f2fe;}
+
+.row{display:flex;flex-direction:column;margin-bottom:10px;}
+label{font-size:0.85rem;color:#bfdbfe;margin-bottom:3px;}
+input{
+  padding:9px 10px;
+  border-radius:10px;
+  border:1px solid rgba(148,163,184,0.5);
+  background:rgba(15,23,42,0.9);
+  color:#e5e7eb;
+  font-size:0.92rem;
+}
+input:focus{
+  outline:none;
+  border-color:#0ea5e9;
+  box-shadow:0 0 10px rgba(14,165,233,0.45);
+  background:#020617;
+}
+input[readonly]{
+  opacity:0.92;
+}
+
+#subForm{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  align-items:start;
+}
+#subForm .row{ margin-bottom:0; }
+
+.action-row{
+  grid-column: 1 / -1;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:10px;
+  margin-top:6px;
+}
+
+#statusBtn,
+#payBtn,
+#exitBtn{
+  width:100%;
+  padding:10px 16px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  font-size:0.98rem;
+  transition:0.3s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  white-space:nowrap;
+  min-width:0;
+  line-height:1.1;
+}
+
+#statusBtn i,
+#payBtn i,
+#exitBtn i{
+  flex:0 0 auto;
+}
+
+#payBtn{
+  background:linear-gradient(90deg,#00c6ff,#7c3aed,#00c6ff);
+  background-size:200%;
+  color:white;
+  box-shadow:0 0 16px rgba(59,130,246,0.45);
+}
+
+#payBtn:hover:not(:disabled){
+  background-position:100% 0;
+  transform:translateY(-1px);
+  box-shadow:0 0 22px rgba(129,140,248,0.7);
+}
+
+#payBtn:disabled{
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+#statusBtn{
+  background:linear-gradient(90deg,#0ea5e9,#2563eb,#0ea5e9);
+  background-size:200%;
+  color:#fff;
+  box-shadow:0 0 16px rgba(14,165,233,0.35);
+}
+
+#statusBtn:hover:not(:disabled){
+  background-position:100% 0;
+  transform:translateY(-1px);
+  box-shadow:0 0 20px rgba(14,165,233,0.65);
+}
+
+#statusBtn:disabled{
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+#exitBtn{
+  background:linear-gradient(90deg,#6b7280,#9ca3af);
+  border:none;
+  color:#fff;
+}
+
+#exitBtn:hover{
+
+  box-shadow:0 0 18px grey;
+}
+
+#exitBtn:disabled{
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+#msg{margin-top:10px;font-size:0.9rem;}
+.note{margin-top:10px;font-size:0.82rem;color:#9ca3af;line-height:1.35;}
+
+#msg, .note{ grid-column: 1 / -1; }
+
+#cardNumber{ letter-spacing: .3px; }
+
+/* ============================================================
+   MEDIA QUERIES
+============================================================ */
+@media (min-width: 1800px){
+  .wrap{max-width:920px;margin:50px auto 60px;padding:34px 36px 40px;}
+  .title{font-size:2rem;}
+  .sub{font-size:1rem;}
+  .card{padding:22px 24px 26px;}
+  input{padding:11px 12px;font-size:0.98rem;}
+  #statusBtn,#payBtn,#exitBtn{padding:12px 18px;font-size:1.05rem;}
+}
+
+@media (min-width: 1440px){
+  .wrap{max-width:860px;margin:44px auto 50px;padding:30px 32px 36px;}
+  .title{font-size:1.85rem;}
+}
+
+@media (max-width: 1280px){
+  header{
+    gap:10px;
+    padding:0 12px 0 6px;
+  }
+
+  header .logo img{
+    height:46px;
+  }
+
+  header nav{
+    gap:10px;
+    margin-left:2px;
+  }
+
+  header nav > a,
+  header nav .nav-main-link{
+    font-size:0.82rem;
+  }
+
+  header .auth-buttons{
+    gap:6px;
+  }
+
+  header .auth-buttons a{
+    padding:0 9px;
+    font-size:0.78rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1023px){
+  .wrap{
+    max-width:660px;
+    margin:28px auto 28px;
+    padding:6px 6px 8px;
+    border-radius:16px;
+  }
+  .title{font-size:1.15rem;margin-bottom:2px;}
+  .sub{font-size:0.84rem;margin-bottom:6px;line-height:1.25;}
+  .card{padding:10px 10px 10px;border-radius:14px;}
+  .plan{margin-bottom:10px;font-size:0.76rem;padding:4px 8px;}
+  label{font-size:0.76rem;margin-bottom:2px;}
+  input{padding:7px 8px;font-size:0.86rem;border-radius:9px;}
+  #subForm{ gap: 6px 8px; }
+  .action-row{ gap:8px; }
+  #statusBtn,#payBtn,#exitBtn{ padding: 9px 12px; border-radius: 12px; font-size: 0.92rem; }
+}
+
+@media (max-width: 920px){
+  header{
+    justify-content:space-between;
+    padding:0 12px 0 8px;
+  }
+
+  header nav{
+    display:none;
+  }
+
+  header .auth-buttons{
+    display:none;
+  }
+
+  .nav-toggle{
+    display:inline-flex;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px){
+  .wrap{
+    width:94%;
+    margin:28px auto 30px;
+    padding:18px 16px 18px;
+  }
+  .title{font-size:1.4rem;}
+  .sub{font-size:0.88rem;margin-bottom:12px;}
+  .card{padding:14px 14px 16px;}
+  input{padding:9px 10px;font-size:0.92rem;}
+  #statusBtn,#payBtn,#exitBtn{padding:10px 14px;border-radius:12px;}
+}
+
+@media (max-width: 480px){
+  :root{
+    --header-h:72px;
+  }
+
+  header{
+    padding:0 10px 0 6px;
+  }
+
+  header .logo{
+    margin-left:-2px;
+  }
+
+  header .logo img{
+    height:42px;
+  }
+
+  .wrap{
+    width:94%;
+    margin:18px auto 26px;
+    padding:16px 14px 16px;
+    border-radius:18px;
+  }
+  .title{font-size:1.25rem;}
+  .sub{font-size:0.85rem;}
+  .card{padding:12px 12px 14px;border-radius:14px;}
+  label{font-size:0.8rem;}
+  input{padding:9px 10px;font-size:0.92rem;}
+
+  #subForm{ grid-template-columns: 1fr; gap: 10px; }
+  .action-row{ grid-template-columns: 1fr; gap:10px; }
+  #statusBtn,#payBtn,#exitBtn{font-size:0.95rem;}
+}
+
+/* ============================================================
+   FINAL RESPONSIVE PATCH
+   Exact breakpoints + more compressed subscribe form
+============================================================ */
+
+/* ===== 1800px and above ===== */
+@media (min-width: 1800px){
+  :root{
+    --header-h:82px;
+  }
+
+  header{
+    padding:0 18px 0 10px !important;
+    gap:14px !important;
+  }
+  header .logo img{height:76px !important;}
+  header nav{gap:18px !important; margin-left:8px !important;}
+  header nav > a,
+  header nav .nav-main-link{font-size:0.86rem !important; padding:0 5px !important;}
+  header .auth-buttons{gap:9px !important;}
+  header .auth-buttons a{
+    height:35px !important;
+    padding:0 11px !important;
+    font-size:0.79rem !important;
+  }
+  .nav-toggle{display:none !important;}
+  .mobile-panel{display:none !important;}
+
+  .wrap{
+    max-width:860px !important;
+    margin:26px auto 34px !important;
+    padding:20px 20px 22px !important;
+    border-radius:18px !important;
+  }
+  .title{
+    font-size:1.42rem !important;
+    margin-bottom:4px !important;
+    gap:8px !important;
+  }
+  .sub{
+    margin-bottom:10px !important;
+    font-size:0.82rem !important;
+    line-height:1.25 !important;
+  }
+  .card{
+    padding:14px 14px 16px !important;
+    border-radius:14px !important;
+  }
+  .plan{
+    margin-bottom:8px !important;
+    padding:5px 8px !important;
+    font-size:0.74rem !important;
+    gap:6px !important;
+  }
+
+  #subForm{
+    gap:7px 10px !important;
+  }
+  label{
+    font-size:0.74rem !important;
+    margin-bottom:2px !important;
+  }
+  input{
+    padding:7px 8px !important;
+    border-radius:8px !important;
+    font-size:0.82rem !important;
+  }
+  .action-row{
+    gap:8px !important;
+    margin-top:4px !important;
+  }
+  #payBtn,
+  #exitBtn{
+    padding:9px 12px !important;
+    border-radius:11px !important;
+    font-size:0.86rem !important;
+  }
+  #msg{margin-top:8px !important; font-size:0.80rem !important;}
+  .note{margin-top:8px !important; font-size:0.72rem !important;}
+}
+
+/* ===== 1440px to 1799px ===== */
+@media (min-width: 1440px) and (max-width: 1799px){
+  :root{
+    --header-h:78px;
+  }
+
+  header{
+    padding:0 14px 0 8px !important;
+    gap:12px !important;
+  }
+  header .logo img{height:70px !important;}
+  header nav{gap:14px !important; margin-left:6px !important;}
+  header nav > a,
+  header nav .nav-main-link{font-size:0.80rem !important; padding:0 4px !important;}
+  header .auth-buttons{gap:7px !important;}
+  header .auth-buttons a{
+    height:34px !important;
+    padding:0 10px !important;
+    font-size:0.76rem !important;
+  }
+  .nav-toggle{display:none !important;}
+  .mobile-panel{display:none !important;}
+
+  .wrap{
+    max-width:760px !important;
+    margin:22px auto 28px !important;
+    padding:16px 16px 18px !important;
+    border-radius:17px !important;
+  }
+  .title{
+    font-size:1.26rem !important;
+    margin-bottom:3px !important;
+    gap:8px !important;
+  }
+  .sub{
+    margin-bottom:8px !important;
+    font-size:0.78rem !important;
+    line-height:1.23 !important;
+  }
+  .card{
+    padding:12px 12px 14px !important;
+    border-radius:13px !important;
+  }
+  .plan{
+    margin-bottom:7px !important;
+    padding:5px 8px !important;
+    font-size:0.70rem !important;
+  }
+  #subForm{
+    gap:6px 8px !important;
+  }
+  label{
+    font-size:0.70rem !important;
+    margin-bottom:2px !important;
+  }
+  input{
+    padding:7px 8px !important;
+    border-radius:8px !important;
+    font-size:0.78rem !important;
+  }
+  .action-row{
+    gap:8px !important;
+    margin-top:4px !important;
+  }
+  #payBtn,
+  #exitBtn{
+    padding:8px 11px !important;
+    border-radius:10px !important;
+    font-size:0.82rem !important;
+  }
+  #msg{margin-top:8px !important; font-size:0.77rem !important;}
+  .note{margin-top:7px !important; font-size:0.69rem !important;}
+}
+
+/* ===== 1024px to 1439px ===== */
+@media (min-width: 1024px) and (max-width: 1439px){
+  :root{
+    --header-h:76px;
+  }
+
+  header{
+    padding:0 10px 0 6px !important;
+    gap:9px !important;
+  }
+  header .logo img{height:62px !important;}
+  header nav{
+    display:flex !important;
+    gap:9px !important;
+    margin-left:3px !important;
+  }
+  header nav > a,
+  header nav .nav-main-link{
+    font-size:0.73rem !important;
+    padding:0 2px !important;
+    height:33px !important;
+  }
+  .nav-dropdown{height:33px !important;}
+  .nav-dropdown-trigger{gap:1px !important;}
+  .nav-dropdown-toggle{width:20px !important; height:20px !important;}
+  .nav-dropdown-toggle i{font-size:0.72rem !important;}
+  header .auth-buttons{
+    display:flex !important;
+    gap:5px !important;
+  }
+  header .auth-buttons a{
+    height:31px !important;
+    padding:0 7px !important;
+    font-size:0.68rem !important;
+    border-radius:8px !important;
+  }
+  .nav-toggle{display:none !important;}
+  .mobile-panel{display:none !important;}
+
+  .wrap{
+    max-width:640px !important;
+    margin:18px auto 22px !important;
+    padding:10px 10px 12px !important;
+    border-radius:15px !important;
+  }
+  .title{
+    font-size:1.08rem !important;
+    margin-bottom:2px !important;
+    gap:7px !important;
+  }
+  .sub{
+    margin-bottom:6px !important;
+    font-size:0.72rem !important;
+    line-height:1.18 !important;
+  }
+  .card{
+    padding:9px 9px 10px !important;
+    border-radius:12px !important;
+  }
+  .plan{
+    margin-bottom:6px !important;
+    padding:4px 7px !important;
+    font-size:0.66rem !important;
+    gap:5px !important;
+  }
+
+  #subForm{
+    gap:5px 7px !important;
+    grid-template-columns:1fr 1fr !important;
+  }
+  .row{margin-bottom:0 !important;}
+  label{
+    font-size:0.66rem !important;
+    margin-bottom:2px !important;
+  }
+  input{
+    padding:6px 7px !important;
+    border-radius:7px !important;
+    font-size:0.72rem !important;
+  }
+  .action-row{
+    grid-column:1 / -1 !important;
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:6px !important;
+    margin-top:3px !important;
+  }
+  #payBtn,
+  #exitBtn{
+    padding:8px 9px !important;
+    border-radius:9px !important;
+    font-size:0.76rem !important;
+  }
+  #msg{margin-top:7px !important; font-size:0.72rem !important;}
+  .note{margin-top:6px !important; font-size:0.64rem !important;}
+}
+
+/* ===== 769px to 1023px ===== */
+@media (min-width: 769px) and (max-width: 1023px){
+  :root{
+    --header-h:74px;
+  }
+
+  header{
+    padding:0 8px 0 5px !important;
+    gap:6px !important;
+  }
+  header .logo{margin-left:-2px !important;}
+  header .logo img{height:58px !important;}
+  header nav{
+    display:flex !important;
+    gap:7px !important;
+    margin-left:2px !important;
+  }
+  header nav > a,
+  header nav .nav-main-link{
+    height:31px !important;
+    padding:0 2px !important;
+    font-size:0.66rem !important;
+  }
+  .nav-dropdown{height:31px !important;}
+  .nav-dropdown-trigger{gap:1px !important;}
+  .nav-dropdown-toggle{width:18px !important; height:18px !important;}
+  .nav-dropdown-toggle i{font-size:0.68rem !important;}
+  header .auth-buttons{
+    display:flex !important;
+    gap:4px !important;
+  }
+  header .auth-buttons a{
+    height:29px !important;
+    padding:0 6px !important;
+    font-size:0.61rem !important;
+    border-radius:8px !important;
+    gap:4px !important;
+  }
+  .nav-toggle{display:none !important;}
+  .mobile-panel{display:none !important;}
+
+  .wrap{
+    max-width:560px !important;
+    margin:14px auto 18px !important;
+    padding:7px 7px 8px !important;
+    border-radius:14px !important;
+  }
+  .title{
+    font-size:0.98rem !important;
+    margin-bottom:2px !important;
+    gap:6px !important;
+  }
+  .sub{
+    margin-bottom:5px !important;
+    font-size:0.66rem !important;
+    line-height:1.14 !important;
+  }
+  .card{
+    padding:7px 7px 8px !important;
+    border-radius:11px !important;
+  }
+  .plan{
+    margin-bottom:5px !important;
+    padding:4px 6px !important;
+    font-size:0.61rem !important;
+    gap:5px !important;
+  }
+
+  #subForm{
+    gap:4px 6px !important;
+    grid-template-columns:1fr 1fr !important;
+  }
+  label{
+    font-size:0.61rem !important;
+    margin-bottom:1px !important;
+  }
+  input{
+    padding:5px 6px !important;
+    border-radius:7px !important;
+    font-size:0.66rem !important;
+  }
+  .action-row{
+    grid-column:1 / -1 !important;
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:5px !important;
+    margin-top:3px !important;
+  }
+  #payBtn,
+  #exitBtn{
+    padding:7px 8px !important;
+    border-radius:9px !important;
+    font-size:0.70rem !important;
+  }
+  #msg{margin-top:6px !important; font-size:0.66rem !important;}
+  .note{margin-top:5px !important; font-size:0.60rem !important;}
+}
+
+/* ===== 481px to 768px ===== */
+@media (min-width: 481px) and (max-width: 768px){
+  :root{
+    --header-h:72px;
+  }
+
+  header{
+    height:var(--header-h) !important;
+    gap:2px !important;
+    padding:0 12px 0 8px !important;
+    justify-content:flex-start !important;
+    align-items:center !important;
+  }
+  header .logo{
+    order:1 !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    flex:0 0 auto !important;
+  }
+  header .logo img{height:54px !important;}
+  header nav{display:none !important;}
+  header .auth-buttons{display:none !important;}
+  .nav-toggle{
+    order:2 !important;
+    display:inline-flex !important;
+    width:40px !important;
+    height:40px !important;
+    border-radius:10px !important;
+    margin-left:1px !important;
+    margin-right:auto !important;
+    flex:0 0 auto !important;
+    align-self:center !important;
+  }
+  .mobile-panel{
+    top:var(--header-h) !important;
+    padding:12px 14px 16px !important;
+  }
+  .mobile-panel .mnav{
+    gap:8px !important;
+  }
+  .mobile-panel .mnav a,
+  .mobile-panel .mnav-main-link,
+  .mobile-panel .mnav-toggle{
+    padding:11px 12px !important;
+    border-radius:11px !important;
+    font-size:0.88rem !important;
+  }
+  .mobile-panel .mnav-submenu{
+    padding-left:12px !important;
+  }
+
+  .wrap{
+    width:94% !important;
+    max-width:none !important;
+    margin:14px auto 18px !important;
+    padding:9px 9px 10px !important;
+    border-radius:14px !important;
+  }
+  .title{
+    font-size:1.02rem !important;
+    margin-bottom:2px !important;
+    gap:6px !important;
+  }
+  .sub{
+    margin-bottom:6px !important;
+    font-size:0.68rem !important;
+    line-height:1.16 !important;
+  }
+  .card{
+    padding:8px 8px 9px !important;
+    border-radius:11px !important;
+  }
+  .plan{
+    margin-bottom:5px !important;
+    padding:4px 6px !important;
+    font-size:0.62rem !important;
+    gap:5px !important;
+  }
+
+  #subForm{
+    gap:5px 6px !important;
+    grid-template-columns:1fr 1fr !important;
+  }
+  label{
+    font-size:0.62rem !important;
+    margin-bottom:1px !important;
+  }
+  input{
+    padding:6px 6px !important;
+    border-radius:7px !important;
+    font-size:0.67rem !important;
+  }
+  .action-row{
+    grid-column:1 / -1 !important;
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:5px !important;
+    margin-top:3px !important;
+  }
+  #payBtn,
+  #exitBtn{
+    padding:7px 8px !important;
+    border-radius:9px !important;
+    font-size:0.72rem !important;
+  }
+  #msg{margin-top:6px !important; font-size:0.67rem !important;}
+  .note{margin-top:5px !important; font-size:0.60rem !important;}
+}
+
+/* ===== 480px and below ===== */
+@media (max-width: 480px){
+  :root{
+    --header-h:70px;
+  }
+
+  header{
+    height:var(--header-h) !important;
+    gap:1px !important;
+    padding:0 10px 0 8px !important;
+    justify-content:flex-start !important;
+    align-items:center !important;
+  }
+  header .logo{
+    order:1 !important;
+    flex:0 0 auto !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+  header .logo img{height:50px !important;}
+  header nav{display:none !important;}
+  header .auth-buttons{display:none !important;}
+  .nav-toggle{
+    order:2 !important;
+    display:inline-flex !important;
+    width:38px !important;
+    height:38px !important;
+    border-radius:9px !important;
+    margin-left:0 !important;
+    margin-right:auto !important;
+    flex:0 0 auto !important;
+    align-self:center !important;
+  }
+  .mobile-panel{
+    top:var(--header-h) !important;
+    padding:12px 12px 14px !important;
+  }
+  .mobile-panel .mnav{
+    gap:7px !important;
+  }
+  .mobile-panel .mnav a,
+  .mobile-panel .mnav-main-link,
+  .mobile-panel .mnav-toggle{
+    padding:10px 11px !important;
+    border-radius:10px !important;
+    font-size:0.84rem !important;
+  }
+  .mobile-panel .mnav-submenu{
+    padding-left:10px !important;
+  }
+
+  .wrap{
+    width:95% !important;
+    max-width:none !important;
+    margin:10px auto 14px !important;
+    padding:7px 7px 8px !important;
+    border-radius:13px !important;
+  }
+  .title{
+    font-size:0.90rem !important;
+    margin-bottom:2px !important;
+    gap:6px !important;
+  }
+  .sub{
+    margin-bottom:5px !important;
+    font-size:0.62rem !important;
+    line-height:1.12 !important;
+  }
+  .card{
+    padding:6px 6px 7px !important;
+    border-radius:10px !important;
+  }
+  .plan{
+    margin-bottom:5px !important;
+    padding:4px 6px !important;
+    font-size:0.58rem !important;
+    gap:5px !important;
+  }
+
+  #subForm{
+    grid-template-columns:1fr !important;
+    gap:4px !important;
+  }
+  label{
+    font-size:0.58rem !important;
+    margin-bottom:1px !important;
+  }
+  input{
+    padding:5px 6px !important;
+    border-radius:7px !important;
+    font-size:0.62rem !important;
+  }
+  .action-row{
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:4px !important;
+    margin-top:3px !important;
+  }
+  #payBtn,
+  #exitBtn{
+    padding:7px 8px !important;
+    border-radius:8px !important;
+    font-size:0.66rem !important;
+  }
+  #msg{margin-top:5px !important; font-size:0.62rem !important;}
+  .note{margin-top:4px !important; font-size:0.56rem !important;}
+}
+
+
+/* ============================================================
+   FORM CENTERING PATCH
+   Keep the form centered on desktop and mobile screens
+============================================================ */
+@media (min-width: 1024px){
+  body.subscribe-page{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-height:100vh;
+  }
+
+  .wrap{
+    margin:0 auto !important;
+  }
+}
+
+@media (max-width: 768px){
+  body.subscribe-page{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-height:100vh;
+  }
+
+  .wrap{
+    margin:auto !important;
+  }
+}
+
+
+
+/* ============================================================
+   FINAL MOBILE HEADER LOCK
+   Logo left + hamburger right inside header
+============================================================ */
+@media (max-width: 768px){
+  header{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    padding-left:8px !important;
+    padding-right:12px !important;
+    gap:8px !important;
+  }
+
+  header .logo{
+    order:1 !important;
+    flex:0 0 auto !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    min-width:0 !important;
+  }
+
+  header .logo img{
+    display:block !important;
+    object-fit:contain !important;
+  }
+
+  header nav,
+  header .auth-buttons{
+    display:none !important;
+  }
+
+  .nav-toggle{
+    order:99 !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex:0 0 auto !important;
+    margin-left:auto !important;
+    margin-right:0 !important;
+    align-self:center !important;
+    position:relative !important;
+    right:0 !important;
+    left:auto !important;
+  }
+}
+
+
+
+/* ============================================================
+   FINAL MOBILE HEADER IMAGE MATCH V5
+   Force logo left and hamburger right inside header
+============================================================ */
+@media (max-width: 768px){
+  header{
+    position:fixed !important;
+    top:0 !important;
+    left:0 !important;
+    right:0 !important;
+    height:var(--header-h) !important;
+    min-height:var(--header-h) !important;
+    padding:0 !important;
+    justify-content:flex-start !important;
+    align-items:center !important;
+    overflow:visible !important;
+  }
+
+  header .logo{
+    position:absolute !important;
+    left:8px !important;
+    top:50% !important;
+    transform:translateY(-50%) !important;
+    margin:0 !important;
+    padding:0 !important;
+    width:auto !important;
+    max-width:calc(100% - 74px) !important;
+    z-index:3 !important;
+  }
+
+  header .logo img{
+    display:block !important;
+    width:auto !important;
+    height:46px !important;
+    max-width:150px !important;
+    object-fit:contain !important;
+  }
+
+  header nav,
+  header .auth-buttons{
+    display:none !important;
+  }
+
+  .nav-toggle{
+    position:absolute !important;
+    top:50% !important;
+    right:12px !important;
+    left:auto !important;
+    transform:translateY(-50%) !important;
+    margin:0 !important;
+    order:unset !important;
+    z-index:4 !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+}
+
+@media (max-width: 480px){
+  header .logo{
+    left:8px !important;
+    max-width:calc(100% - 68px) !important;
+  }
+
+  header .logo img{
+    height:44px !important;
+    max-width:142px !important;
+  }
+
+  .nav-toggle{
+    right:10px !important;
+    width:38px !important;
+    height:38px !important;
+  }
+}
+
+
+
+/* ============================================================
+   EXACT LATEST INDEX HEADER OVERRIDE - APPLIED TO SUBSCRIBE PAGE
+   Matches the latest Index header: nav icons, dropdown hover effects,
+   refined Employer/Jobseeker icons, desktop no-overlap sizing,
+   and mobile logo-left / hamburger-right layout.
+============================================================ */
+/* ============================================================
+   SUBSCRIBE HEADER HEIGHT SYNC
+   Keeps the subscription form layout aligned with the exact Index header height.
+============================================================ */
+:root{ --header-h:78px; }
+
+body.subscribe-page{
+  padding-top:var(--header-h) !important;
+}
+
+.mobile-panel{
+  top:var(--header-h) !important;
+  max-height:calc(100vh - var(--header-h)) !important;
+  overflow-y:auto !important;
+}
+
+/* ============================================================
+   FINAL HEADER RESPONSIVE PATCH
+   Exact requested breakpoints
+============================================================ */
+
+/* ===== 1800px and above ===== */
+@media (min-width: 1800px){
+  :root{ --header-h:84px !important; }
+
+  header{
+    height:var(--header-h) !important;
+    gap:18px !important;
+    padding:0 24px 0 14px !important;
+  }
+
+  header .logo{
+    margin-left:-2px !important;
+  }
+
+  header .logo img{
+    height:88px !important;
+  }
+
+  header nav{
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:20px !important;
+    margin-left:10px !important;
+    white-space:nowrap !important;
+  }
+
+  header nav > a,
+  header nav .nav-main-link{
+    height:38px !important;
+    padding:0 5px !important;
+    font-size:0.94rem !important;
+  }
+
+  .nav-dropdown{
+    height:38px !important;
+  }
+
+  .nav-dropdown-trigger{
+    gap:2px !important;
+  }
+
+  .nav-dropdown-toggle{
+    width:24px !important;
+    height:24px !important;
+  }
+
+  .nav-dropdown-toggle i{
+    font-size:0.92rem !important;
+  }
+
+  header .auth-buttons{
+    display:flex !important;
+    gap:10px !important;
+  }
+
+  header .auth-buttons a{
+    height:38px !important;
+    padding:0 14px !important;
+    font-size:0.86rem !important;
+    border-radius:10px !important;
+  }
+
+  .nav-toggle{ display:none !important; }
+  .mobile-panel{ display:none !important; }
+}
+
+/* ===== 1440px to 1799px ===== */
+@media (min-width: 1440px) and (max-width: 1799px){
+  :root{ --header-h:78px !important; }
+
+  header{
+    height:var(--header-h) !important;
+    gap:14px !important;
+    padding:0 18px 0 10px !important;
+  }
+
+  header .logo{
+    margin-left:-3px !important;
+  }
+
+  header .logo img{
+    height:80px !important;
+  }
+
+  header nav{
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:15px !important;
+    margin-left:7px !important;
+    white-space:nowrap !important;
+  }
+
+  header nav > a,
+  header nav .nav-main-link{
+    height:36px !important;
+    padding:0 4px !important;
+    font-size:0.84rem !important;
+  }
+
+  .nav-dropdown{
+    height:36px !important;
+  }
+
+  .nav-dropdown-toggle{
+    width:24px !important;
+    height:24px !important;
+  }
+
+  .nav-dropdown-toggle i{
+    font-size:0.88rem !important;
+  }
+
+  header .auth-buttons{
+    display:flex !important;
+    gap:7px !important;
+  }
+
+  header .auth-buttons a{
+    height:36px !important;
+    padding:0 11px !important;
+    font-size:0.79rem !important;
+    border-radius:10px !important;
+  }
+
+  .nav-toggle{ display:none !important; }
+  .mobile-panel{ display:none !important; }
+}
+
+/* ===== 1024px to 1439px ===== */
+@media (min-width: 1024px) and (max-width: 1439px){
+  :root{ --header-h:76px !important; }
+
+  header{
+    height:var(--header-h) !important;
+    gap:9px !important;
+    padding:0 12px 0 6px !important;
+  }
+
+  header .logo{
+    margin-left:-2px !important;
+  }
+
+  header .logo img{
+    height:66px !important;
+  }
+
+  header nav{
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:9px !important;
+    margin-left:3px !important;
+    white-space:nowrap !important;
+  }
+
+  header nav > a,
+  header nav .nav-main-link{
+    height:34px !important;
+    padding:0 2px !important;
+    font-size:0.75rem !important;
+  }
+
+  .nav-dropdown{
+    height:34px !important;
+  }
+
+  .nav-dropdown-trigger{
+    gap:1px !important;
+  }
+
+  .nav-dropdown-toggle{
+    width:20px !important;
+    height:20px !important;
+  }
+
+  .nav-dropdown-toggle i{
+    font-size:0.74rem !important;
+  }
+
+  header .auth-buttons{
+    display:flex !important;
+    gap:5px !important;
+  }
+
+  header .auth-buttons a{
+    height:32px !important;
+    padding:0 8px !important;
+    font-size:0.70rem !important;
+    border-radius:8px !important;
+    gap:5px !important;
+  }
+
+  .nav-toggle{ display:none !important; }
+  .mobile-panel{ display:none !important; }
+}
+
+/* ===== 769px to 1023px ===== */
+@media (min-width: 769px) and (max-width: 1023px){
+  :root{ --header-h:74px !important; }
+
+  header{
+    height:var(--header-h) !important;
+    gap:7px !important;
+    padding:0 8px 0 5px !important;
+  }
+
+  header .logo{
+    margin-left:-2px !important;
+  }
+
+  header .logo img{
+    height:58px !important;
+  }
+
+  header nav{
+    display:flex !important;
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:7px !important;
+    margin-left:2px !important;
+    white-space:nowrap !important;
+  }
+
+  header nav > a,
+  header nav .nav-main-link{
+    height:31px !important;
+    padding:0 2px !important;
+    font-size:0.66rem !important;
+  }
+
+  .nav-dropdown{
+    height:31px !important;
+  }
+
+  .nav-dropdown-trigger{
+    gap:1px !important;
+  }
+
+  .nav-dropdown-toggle{
+    width:18px !important;
+    height:18px !important;
+  }
+
+  .nav-dropdown-toggle i{
+    font-size:0.68rem !important;
+  }
+
+  header .auth-buttons{
+    display:flex !important;
+    gap:4px !important;
+  }
+
+  header .auth-buttons a{
+    height:30px !important;
+    padding:0 6px !important;
+    font-size:0.61rem !important;
+    border-radius:8px !important;
+    gap:4px !important;
+  }
+
+  .nav-toggle{ display:none !important; }
+  .mobile-panel{ display:none !important; }
+}
+
+/* ===== 481px to 768px ===== */
+@media (min-width: 481px) and (max-width: 768px){
+  :root{ --header-h:72px !important; }
+
+  header{
+    height:var(--header-h) !important;
+    gap:8px !important;
+    padding:0 12px 0 8px !important;
+    justify-content:space-between !important;
+    align-items:center !important;
+  }
+
+  header .logo{
+    order:1 !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    flex:0 0 auto !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+  }
+
+  header .logo img{
+    height:54px !important;
+  }
+
+  header nav{ display:none !important; }
+  header .auth-buttons{ display:none !important; }
+
+  .nav-toggle{
+    order:2 !important;
+    display:inline-flex !important;
+    width:40px !important;
+    height:40px !important;
+    border-radius:10px !important;
+    margin-left:auto !important;
+    margin-right:0 !important;
+    flex:0 0 auto !important;
+    align-self:center !important;
+  }
+
+  .mobile-panel{
+    top:var(--header-h) !important;
+    padding:12px 14px 16px !important;
+  }
+
+  .mobile-panel .mnav{
+    gap:8px !important;
+  }
+
+  .mobile-panel .mnav a,
+  .mobile-panel .mnav-main-link,
+  .mobile-panel .mnav-toggle{
+    padding:11px 12px !important;
+    border-radius:11px !important;
+    font-size:0.88rem !important;
+  }
+
+  .mobile-panel .mnav-submenu{
+    padding-left:12px !important;
+  }
+
+  .why-grid,
+  .steps{
+    grid-template-columns:1fr !important;
+  }
+}
+
+/* ===== 480px and below ===== */
+@media (max-width: 480px){
+  :root{ --header-h:70px !important; }
+
+  header{
+    height:var(--header-h) !important;
+    gap:8px !important;
+    padding:0 10px 0 8px !important;
+    justify-content:space-between !important;
+    align-items:center !important;
+  }
+
+  header .logo{
+    order:1 !important;
+    flex:0 0 auto !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+
+  header .logo img{
+    height:50px !important;
+  }
+
+  header nav{ display:none !important; }
+  header .auth-buttons{ display:none !important; }
+
+  .nav-toggle{
+    order:2 !important;
+    display:inline-flex !important;
+    width:38px !important;
+    height:38px !important;
+    border-radius:9px !important;
+    margin-left:auto !important;
+    margin-right:0 !important;
+    flex:0 0 auto !important;
+    align-self:center !important;
+  }
+
+  .mobile-panel{
+    top:var(--header-h) !important;
+    padding:12px 12px 14px !important;
+  }
+
+  .mobile-panel .mnav{
+    gap:7px !important;
+  }
+
+  .mobile-panel .mnav a,
+  .mobile-panel .mnav-main-link,
+  .mobile-panel .mnav-toggle{
+    padding:10px 11px !important;
+    border-radius:10px !important;
+    font-size:0.84rem !important;
+  }
+
+  .mobile-panel .mnav-submenu{
+    padding-left:10px !important;
+  }
+
+  .why-grid,
+  .steps{
+    grid-template-columns:1fr !important;
+  }
+}
+
+
+/* ============================================================
+   FINAL MOBILE HEADER LOCK
+   Force logo left + hamburger right inside header
+============================================================ */
+@media (max-width: 768px){
+  header{
+    display:grid !important;
+    grid-template-columns:auto 1fr auto !important;
+    align-items:center !important;
+    column-gap:10px !important;
+    justify-content:unset !important;
+  }
+
+  header .logo{
+    grid-column:1 !important;
+    justify-self:start !important;
+    align-self:center !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    padding-left:0 !important;
+    min-width:0 !important;
+  }
+
+  header .logo img{
+    display:block !important;
+    margin:0 !important;
+  }
+
+  .nav-toggle{
+    grid-column:3 !important;
+    justify-self:end !important;
+    align-self:center !important;
+    margin:0 !important;
+  }
+
+  header nav,
+  header .auth-buttons{
+    display:none !important;
+  }
+}
+
+@media (max-width: 480px){
+  header{
+    padding-left:8px !important;
+    padding-right:8px !important;
+  }
+
+  header .logo img{
+    height:48px !important;
+  }
+
+  .nav-toggle{
+    width:38px !important;
+    height:38px !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px){
+  header{
+    padding-left:8px !important;
+    padding-right:10px !important;
+  }
+
+  header .logo img{
+    height:52px !important;
+  }
+
+  .nav-toggle{
+    width:40px !important;
+    height:40px !important;
+  }
+}
+
+
+
+/* ============================================================
+   NAV ICON + NO-OVERLAP HEADER PATCH
+   Adds icons to every nav item and compresses safely by screen size.
+============================================================ */
+header nav > a,
+header nav .nav-main-link{
+  gap:7px !important;
+  min-width:0 !important;
+  overflow:visible !important;
+}
+
+header nav > a i,
+header nav .nav-main-link i,
+.nav-dropdown-menu a i,
+.mobile-panel .mnav a i:not(.fa-arrow-right),
+.mobile-panel .mnav-main-link i:not(.fa-arrow-right),
+.mobile-panel .mnav-toggle i:not(.mnav-caret){
+  flex:0 0 auto;
+  color:#38bdf8;
+  text-shadow:0 0 10px rgba(56,189,248,0.35);
+}
+
+header nav > a i,
+header nav .nav-main-link i{
+  width:16px;
+  min-width:16px;
+  text-align:center;
+  font-size:0.92em;
+}
+
+header nav .nav-text,
+.mobile-panel .nav-text{
+  display:inline-block;
+  min-width:0;
+}
+
+.nav-dropdown-trigger{
+  gap:2px !important;
+}
+
+.nav-dropdown-toggle{
+  flex:0 0 auto !important;
+}
+
+.nav-dropdown-menu{
+  min-width:238px !important;
+}
+
+.nav-dropdown-menu a{
+  gap:11px !important;
+  font-size:0.88rem !important;
+}
+
+.nav-dropdown-menu a i{
+  width:20px !important;
+  min-width:20px !important;
+  text-align:center !important;
+}
+
+.mobile-panel .mnav a,
+.mobile-panel .mnav-main-link{
+  min-width:0 !important;
+}
+
+.mobile-panel .mnav-left{
+  display:inline-flex;
+  align-items:center;
+  gap:11px;
+  min-width:0;
+}
+
+.mobile-panel .mnav-left i{
+  width:18px;
+  min-width:18px;
+  text-align:center;
+}
+
+.mobile-panel .mnav a .fa-arrow-right,
+.mobile-panel .mnav-main-link .fa-arrow-right{
+  flex:0 0 auto;
+  color:#93c5fd;
+}
+
+.mobile-panel .mnav-row{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1fr) 46px !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+.mobile-panel .mnav-toggle{
+  width:46px !important;
+  min-width:46px !important;
+  max-width:46px !important;
+  height:auto !important;
+  align-self:stretch !important;
+  justify-content:center !important;
+  padding:0 !important;
+  flex:0 0 46px !important;
+}
+
+.mobile-panel .mnav-toggle .mnav-caret{
+  color:#e5e7eb !important;
+}
+
+@media (min-width:1800px){
+  header nav > a,
+  header nav .nav-main-link{ gap:8px !important; }
+  header nav > a i,
+  header nav .nav-main-link i{ width:17px !important; min-width:17px !important; }
+}
+
+@media (min-width:1440px) and (max-width:1799px){
+  header nav{ gap:13px !important; }
+  header nav > a,
+  header nav .nav-main-link{ gap:6px !important; }
+  header nav > a i,
+  header nav .nav-main-link i{ width:15px !important; min-width:15px !important; }
+}
+
+@media (min-width:1024px) and (max-width:1439px){
+  header{ gap:8px !important; padding-left:6px !important; padding-right:10px !important; }
+  header nav{ gap:6px !important; margin-left:2px !important; }
+  header nav > a,
+  header nav .nav-main-link{
+    gap:4px !important;
+    padding:0 1px !important;
+    font-size:0.69rem !important;
+    letter-spacing:-0.01em !important;
+  }
+  header nav > a i,
+  header nav .nav-main-link i{
+    width:12px !important;
+    min-width:12px !important;
+    font-size:0.82em !important;
+  }
+  .nav-dropdown-toggle{ width:18px !important; height:18px !important; }
+  .nav-dropdown-toggle i{ font-size:0.68rem !important; }
+  header .auth-buttons{ gap:4px !important; }
+  header .auth-buttons a{ padding:0 6px !important; font-size:0.66rem !important; }
+}
+
+@media (min-width:769px) and (max-width:1023px){
+  header{ gap:5px !important; padding-left:4px !important; padding-right:6px !important; }
+  header .logo img{ height:54px !important; }
+  header nav{ gap:4px !important; margin-left:1px !important; }
+  header nav > a,
+  header nav .nav-main-link{
+    gap:3px !important;
+    padding:0 1px !important;
+    font-size:0.58rem !important;
+    letter-spacing:-0.03em !important;
+  }
+  header nav > a i,
+  header nav .nav-main-link i{
+    width:10px !important;
+    min-width:10px !important;
+    font-size:0.78em !important;
+  }
+  .nav-dropdown-toggle{ width:15px !important; height:15px !important; }
+  .nav-dropdown-toggle i{ font-size:0.58rem !important; }
+  header .auth-buttons{ gap:3px !important; }
+  header .auth-buttons a{
+    height:28px !important;
+    padding:0 4px !important;
+    font-size:0.56rem !important;
+    gap:3px !important;
+  }
+  header .auth-buttons a i{ font-size:0.70em !important; }
+}
+
+@media (max-width:768px){
+  .mobile-panel{
+    max-height:calc(100vh - var(--header-h)) !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+  .mobile-panel .mnav a,
+  .mobile-panel .mnav-main-link{
+    justify-content:space-between !important;
+  }
+}
+
+@media (max-width:480px){
+  .mobile-panel .mnav-left{ gap:9px !important; }
+  .mobile-panel .mnav-left i{ width:16px !important; min-width:16px !important; }
+  .mobile-panel .mnav-row{ grid-template-columns:minmax(0, 1fr) 42px !important; gap:7px !important; }
+  .mobile-panel .mnav-toggle{ width:42px !important; min-width:42px !important; max-width:42px !important; }
+}
+
+
+/* ============================================================
+   FINAL NAV HOVER + AUTH ICON REFINEMENT PATCH
+   Applies dropdown-style hover to desktop nav links and refines
+   Employer / Jobseeker button icons without causing overlap.
+============================================================ */
+header nav > a,
+header nav .nav-main-link{
+  position:relative !important;
+  border-radius:12px !important;
+  border:1px solid transparent !important;
+  background:transparent !important;
+  overflow:hidden !important;
+  isolation:isolate !important;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    text-shadow 0.25s ease !important;
+}
+
+header nav > a::before,
+header nav .nav-main-link::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(135deg, rgba(0,198,255,0.14), rgba(139,92,246,0.12));
+  opacity:0;
+  transform:scaleX(0.72);
+  transform-origin:center;
+  transition:opacity 0.25s ease, transform 0.25s ease;
+  z-index:-1;
+}
+
+header nav > a:hover,
+header nav > a:focus-visible,
+header nav .nav-main-link:hover,
+header nav .nav-main-link:focus-visible,
+.nav-dropdown.open .nav-main-link{
+  color:#ffffff !important;
+  background:rgba(0,198,255,0.12) !important;
+  border-color:rgba(56,189,248,0.28) !important;
+  box-shadow:0 0 16px rgba(0,198,255,0.16) !important;
+  text-shadow:0 0 12px rgba(0,198,255,0.55) !important;
+  transform:translateY(-1px) !important;
+}
+
+header nav > a:hover::before,
+header nav > a:focus-visible::before,
+header nav .nav-main-link:hover::before,
+header nav .nav-main-link:focus-visible::before,
+.nav-dropdown.open .nav-main-link::before{
+  opacity:1;
+  transform:scaleX(1);
+}
+
+header nav > a:hover i,
+header nav > a:focus-visible i,
+header nav .nav-main-link:hover i,
+header nav .nav-main-link:focus-visible i,
+.nav-dropdown.open .nav-main-link i{
+  color:#ffffff !important;
+  text-shadow:0 0 12px rgba(56,189,248,0.75) !important;
+  transform:scale(1.08);
+}
+
+header nav > a i,
+header nav .nav-main-link i{
+  transition:color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease !important;
+}
+
+.nav-dropdown-menu a{
+  border:1px solid transparent !important;
+  border-radius:10px !important;
+  margin:0 8px !important;
+  padding:12px 12px !important;
+}
+
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a:focus-visible{
+  background:rgba(0,198,255,0.12) !important;
+  border-color:rgba(56,189,248,0.24) !important;
+  color:#ffffff !important;
+  transform:translateX(3px);
+  box-shadow:0 0 14px rgba(0,198,255,0.12);
+}
+
+.nav-dropdown-menu a:hover i,
+.nav-dropdown-menu a:focus-visible i{
+  color:#ffffff !important;
+  text-shadow:0 0 12px rgba(56,189,248,0.70) !important;
+}
+
+header .auth-buttons a{
+  position:relative !important;
+  overflow:hidden !important;
+  isolation:isolate !important;
+  gap:7px !important;
+}
+
+header .auth-buttons a::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  opacity:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+  transition:opacity 0.25s ease;
+  z-index:-1;
+}
+
+header .auth-buttons a:hover::before,
+header .auth-buttons a:focus-visible::before{
+  opacity:1;
+}
+
+header .auth-buttons a i{
+  width:18px !important;
+  height:18px !important;
+  min-width:18px !important;
+  display:inline-grid !important;
+  place-items:center !important;
+  border-radius:999px !important;
+  font-size:0.85rem !important;
+  line-height:1 !important;
+  color:#ffffff !important;
+  background:rgba(255,255,255,0.16) !important;
+  box-shadow:0 0 10px rgba(255,255,255,0.10) !important;
+  transition:transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+header .auth-buttons a.employer-auth i{
+  background:rgba(56,189,248,0.22) !important;
+  box-shadow:0 0 12px rgba(56,189,248,0.18) !important;
+}
+
+header .auth-buttons a.jobseeker-auth i{
+  background:rgba(167,139,250,0.22) !important;
+  box-shadow:0 0 12px rgba(167,139,250,0.18) !important;
+}
+
+header .auth-buttons a:hover i,
+header .auth-buttons a:focus-visible i{
+  transform:scale(1.10) rotate(-3deg);
+  background:rgba(255,255,255,0.24) !important;
+  box-shadow:0 0 16px rgba(255,255,255,0.20) !important;
+}
+
+header .auth-buttons .auth-text{
+  display:inline-block;
+  min-width:0;
+}
+
+.mobile-panel .mnav a:hover .mnav-left i,
+.mobile-panel .mnav-main-link:hover .mnav-left i{
+  color:#ffffff !important;
+  transform:scale(1.08);
+  text-shadow:0 0 12px rgba(56,189,248,0.70) !important;
+}
+
+.mobile-panel .mnav-left i{
+  transition:color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease !important;
+}
+
+@media (min-width:1024px) and (max-width:1439px){
+  header nav > a,
+  header nav .nav-main-link{
+    border-radius:9px !important;
+  }
+  header .auth-buttons a i{
+    width:15px !important;
+    height:15px !important;
+    min-width:15px !important;
+    font-size:0.68rem !important;
+  }
+}
+
+@media (min-width:769px) and (max-width:1023px){
+  header nav > a,
+  header nav .nav-main-link{
+    border-radius:8px !important;
+  }
+  header .auth-buttons a i{
+    width:13px !important;
+    height:13px !important;
+    min-width:13px !important;
+    font-size:0.58rem !important;
+  }
+}
+
+
+/* ============================================================
+   FINAL SUBSCRIBE ACTION BUTTONS PATCH
+   Three buttons stay aligned in one row on every screen size.
+============================================================ */
+.action-row{
+  grid-column:1 / -1 !important;
+  display:grid !important;
+  grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+  gap:10px !important;
+  align-items:stretch !important;
+}
+
+#statusBtn,
+#payBtn,
+#exitBtn{
+  width:100% !important;
+  min-width:0 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  white-space:nowrap !important;
+}
+
+@media (max-width: 768px){
+  .action-row{ gap:6px !important; }
+  #statusBtn,
+  #payBtn,
+  #exitBtn{
+    padding:7px 6px !important;
+    font-size:0.68rem !important;
+    border-radius:8px !important;
+    gap:4px !important;
+  }
+}
+
+@media (max-width: 480px){
+  .action-row{ gap:4px !important; }
+  #statusBtn,
+  #payBtn,
+  #exitBtn{
+    padding:7px 4px !important;
+    font-size:0.56rem !important;
+    border-radius:8px !important;
+    gap:3px !important;
+    letter-spacing:-0.02em !important;
+  }
+
+  #statusBtn i,
+  #payBtn i,
+  #exitBtn i{
+    font-size:0.9em !important;
+  }
+}
+
+
+
+/* ============================================================
+   FINAL PATCH: Employer icon account dropdown on Subscribe page
+   - Removes only Jobseeker Login button
+   - Employer Login becomes icon-only
+   - Dropdown shows logged-in company logo, company name, email, Company Profile, Subscribe, Posted Jobs, and Log out
+============================================================ */
+header .auth-buttons.subscribe-employer-auth-shell{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  overflow:visible !important;
+  z-index:1900 !important;
+}
+
+.subscribe-employer-account-wrap{
+  position:relative !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:visible !important;
+}
+
+header .auth-buttons .subscribe-employer-icon-btn,
+.subscribe-employer-icon-btn{
+  width:42px !important;
+  height:42px !important;
+  min-width:42px !important;
+  padding:0 !important;
+  border-radius:14px !important;
+  border:1px solid rgba(255,255,255,0.14) !important;
+  background:linear-gradient(135deg, rgba(0,198,255,0.22), rgba(139,92,246,0.22)) !important;
+  color:#ffffff !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  cursor:pointer !important;
+  box-shadow:0 0 14px rgba(0,198,255,0.10) !important;
+  font-size:0 !important;
+  line-height:1 !important;
+  text-decoration:none !important;
+  overflow:hidden !important;
+  transition:none !important;
+  animation:none !important;
+}
+
+header .auth-buttons .subscribe-employer-icon-btn:hover,
+header .auth-buttons .subscribe-employer-icon-btn:focus,
+header .auth-buttons .subscribe-employer-icon-btn:active,
+.subscribe-employer-icon-btn:hover,
+.subscribe-employer-icon-btn:focus,
+.subscribe-employer-icon-btn:active{
+  transform:none !important;
+  transition:none !important;
+  animation:none !important;
+  border-color:rgba(0,198,255,0.36) !important;
+  box-shadow:0 0 18px rgba(0,198,255,0.20) !important;
+  outline:none !important;
+}
+
+.subscribe-employer-icon-btn .auth-text{
+  display:none !important;
+}
+
+header .auth-buttons .subscribe-employer-icon-btn i,
+.subscribe-employer-icon-btn i{
+  width:auto !important;
+  height:auto !important;
+  min-width:0 !important;
+  display:block !important;
+  place-items:unset !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:#ffffff !important;
+  font-size:1.14rem !important;
+  line-height:1 !important;
+  margin:0 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+.subscribe-employer-account-logo-img{
+  width:100% !important;
+  height:100% !important;
+  display:none !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  padding:4px !important;
+  margin:0 !important;
+  border-radius:inherit !important;
+  background:#071325 !important;
+  box-shadow:none !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+.subscribe-employer-icon-btn.has-account-logo .subscribe-employer-account-logo-img{
+  display:block !important;
+}
+
+.subscribe-employer-icon-btn.has-account-logo > i{
+  display:none !important;
+}
+
+.subscribe-employer-icon-btn.is-logged-out .subscribe-employer-account-logo-img,
+.subscribe-employer-icon-btn:not(.has-account-logo) .subscribe-employer-account-logo-img{
+  display:none !important;
+}
+
+.subscribe-employer-icon-btn.is-logged-out > i,
+.subscribe-employer-icon-btn:not(.has-account-logo) > i{
+  display:block !important;
+}
+
+.subscribe-employer-account-dropdown{
+  position:absolute !important;
+  top:calc(100% + 12px) !important;
+  right:0 !important;
+  width:min(360px, calc(100vw - 24px)) !important;
+  display:none !important;
+  flex-direction:column !important;
+  gap:12px !important;
+  padding:14px !important;
+  border-radius:22px !important;
+  background:linear-gradient(180deg, rgba(15,23,42,0.99), rgba(2,6,23,0.99)) !important;
+  border:1px solid rgba(0,198,255,0.36) !important;
+  box-shadow:0 18px 42px rgba(2,6,23,0.58), 0 0 18px rgba(0,198,255,0.16) !important;
+  backdrop-filter:blur(12px) !important;
+  z-index:2600 !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+  transition:none !important;
+  animation:none !important;
+}
+
+.subscribe-employer-account-dropdown.open{
+  display:flex !important;
+}
+
+.subscribe-employer-dropdown-profile{
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+  padding:12px !important;
+  border-radius:18px !important;
+  background:rgba(15,23,42,0.78) !important;
+  border:1px solid rgba(0,198,255,0.22) !important;
+}
+
+.subscribe-employer-dropdown-logo-wrap{
+  width:70px !important;
+  height:70px !important;
+  min-width:70px !important;
+  border-radius:18px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+  background:rgba(2,6,23,0.85) !important;
+  border:1px solid rgba(0,198,255,0.32) !important;
+  box-shadow:none !important;
+}
+
+.subscribe-employer-dropdown-logo-wrap img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  display:block !important;
+  padding:4px !important;
+  background:#071325 !important;
+}
+
+.subscribe-employer-dropdown-logo-wrap.has-logo .subscribe-employer-dropdown-logo-fallback{
+  display:none !important;
+}
+
+.subscribe-employer-dropdown-logo-wrap:not(.has-logo) img{
+  display:none !important;
+}
+
+.subscribe-employer-dropdown-logo-fallback{
+  color:#7dd3fc !important;
+  font-size:1.5rem !important;
+}
+
+.subscribe-employer-dropdown-identity{
+  min-width:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:4px !important;
+}
+
+.subscribe-employer-dropdown-label{
+  color:#8ed3ff !important;
+  font-size:0.72rem !important;
+  letter-spacing:0.08em !important;
+  text-transform:uppercase !important;
+  white-space:nowrap !important;
+}
+
+.subscribe-employer-dropdown-company{
+  color:#ffffff !important;
+  font-size:0.96rem !important;
+  font-weight:700 !important;
+  line-height:1.2 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+
+.subscribe-employer-dropdown-email{
+  color:#dbeafe !important;
+  font-size:0.83rem !important;
+  line-height:1.2 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+
+.subscribe-employer-dropdown-menu{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:8px !important;
+}
+
+.subscribe-employer-dropdown-item{
+  width:100% !important;
+  min-height:42px !important;
+  padding:0 12px !important;
+  border-radius:14px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:10px !important;
+  border:1px solid rgba(0,198,255,0.20) !important;
+  background:rgba(2,6,23,0.62) !important;
+  color:#e8f9ff !important;
+  font-size:0.86rem !important;
+  font-weight:700 !important;
+  text-decoration:none !important;
+  cursor:pointer !important;
+  box-shadow:none !important;
+  transform:none !important;
+  transition:none !important;
+  animation:none !important;
+  font-family:inherit !important;
+}
+
+.subscribe-employer-dropdown-item:hover,
+.subscribe-employer-dropdown-item:focus,
+.subscribe-employer-dropdown-item:active{
+  color:#ffffff !important;
+  background:rgba(0,198,255,0.14) !important;
+  border-color:rgba(0,198,255,0.34) !important;
+  outline:none !important;
+  transform:none !important;
+}
+
+.subscribe-employer-dropdown-item i{
+  width:18px !important;
+  min-width:18px !important;
+  text-align:center !important;
+  color:#38bdf8 !important;
+}
+
+.subscribe-employer-dropdown-logout{
+  text-align:left !important;
+  background:linear-gradient(135deg, #7b8798, #596678) !important;
+  border-color:rgba(194,205,220,0.28) !important;
+  color:#f8fafc !important;
+}
+
+.subscribe-employer-dropdown-logout i{
+  color:#f8fafc !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-in .subscribe-employer-dropdown-login{
+  display:none !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logout{
+  display:none !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login{
+  display:flex !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out #subscribeEmployerCompanyProfileLink{
+  display:flex !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out #subscribeEmployerSubscribeLink{
+  display:flex !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out #subscribeEmployerPostedJobsLink{
+  display:flex !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-label{
+  color:#fbbf24 !important;
+}
+
+/* Logged-out employer dropdown keeps Company Profile, Subscribe, and Posted Jobs visible */
+.subscribe-employer-account-dropdown.is-logged-out #subscribeEmployerCompanyProfileLink,
+.subscribe-employer-account-dropdown.is-logged-out #subscribeEmployerSubscribeLink,
+.subscribe-employer-account-dropdown.is-logged-out #subscribeEmployerPostedJobsLink{
+  display:flex !important;
+}
+
+@media (min-width:1800px){
+  header .auth-buttons .subscribe-employer-icon-btn,
+  .subscribe-employer-icon-btn{ width:46px !important; height:46px !important; min-width:46px !important; border-radius:16px !important; }
+}
+
+@media (min-width:1024px) and (max-width:1439px){
+  header .auth-buttons .subscribe-employer-icon-btn,
+  .subscribe-employer-icon-btn{ width:38px !important; height:38px !important; min-width:38px !important; border-radius:13px !important; }
+  .subscribe-employer-icon-btn i{ font-size:1rem !important; }
+}
+
+@media (min-width:769px) and (max-width:1023px){
+  header .auth-buttons .subscribe-employer-icon-btn,
+  .subscribe-employer-icon-btn{ width:34px !important; height:34px !important; min-width:34px !important; border-radius:12px !important; }
+  .subscribe-employer-icon-btn i{ font-size:0.9rem !important; }
+}
+
+@media (max-width:920px){
+  header .auth-buttons.subscribe-employer-auth-shell{
+    display:none !important;
+  }
+}
+
+
+
+/* ============================================================
+   FINAL EXACT MARKUP STYLE: logged-out Subscribe account menu
+   Matches the marked screenshot: logo + No login account,
+   Subscribe / Posted Jobs / green Employer Login only.
+============================================================ */
+.subscribe-employer-account-dropdown.is-logged-out{
+  width:min(410px, calc(100vw - 28px)) !important;
+  padding:14px !important;
+  gap:14px !important;
+  border-radius:24px !important;
+  background:linear-gradient(180deg, rgba(7,18,42,0.99), rgba(2,8,24,0.99)) !important;
+  border:1px solid rgba(0,198,255,0.38) !important;
+  box-shadow:0 22px 52px rgba(0,0,0,0.54), 0 0 20px rgba(0,198,255,0.18) !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-profile{
+  min-height:92px !important;
+  padding:13px 16px !important;
+  gap:18px !important;
+  border-radius:18px !important;
+  background:linear-gradient(180deg, rgba(8,24,55,0.98), rgba(5,17,39,0.98)) !important;
+  border:1px solid rgba(0,198,255,0.28) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.025) !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logo-wrap{
+  width:70px !important;
+  height:70px !important;
+  min-width:70px !important;
+  border-radius:18px !important;
+  background:#071325 !important;
+  border:1px solid rgba(0,198,255,0.42) !important;
+  box-shadow:0 10px 22px rgba(0,0,0,0.28) !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logo-wrap img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  padding:6px !important;
+  border-radius:inherit !important;
+  background:#071325 !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logo-wrap.has-logo .subscribe-employer-dropdown-logo-fallback{
+  display:none !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-identity{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  display:flex !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  gap:0 !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-label,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-email{
+  display:none !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-company{
+  display:block !important;
+  color:#ffffff !important;
+  font-size:1.05rem !important;
+  font-weight:800 !important;
+  line-height:1.15 !important;
+  letter-spacing:0 !important;
+  text-align:left !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  max-width:100% !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-menu{
+  gap:10px !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item{
+  min-height:52px !important;
+  padding:0 16px !important;
+  border-radius:14px !important;
+  border:1px solid rgba(0,198,255,0.22) !important;
+  background:rgba(2,8,24,0.74) !important;
+  color:#ffffff !important;
+  font-size:0.94rem !important;
+  font-weight:800 !important;
+  gap:12px !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item:hover,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item:focus{
+  background:rgba(0,198,255,0.12) !important;
+  border-color:rgba(0,198,255,0.36) !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item i{
+  width:20px !important;
+  min-width:20px !important;
+  color:#16c8ff !important;
+  text-align:center !important;
+  filter:drop-shadow(0 0 8px rgba(22,200,255,0.42)) !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login{
+  display:flex !important;
+  background:linear-gradient(180deg, #087a37, #06602c) !important;
+  border-color:rgba(29,220,122,0.44) !important;
+  color:#ffffff !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06) !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login:hover,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login:focus{
+  background:linear-gradient(180deg, #0b8840, #076832) !important;
+  border-color:rgba(29,220,122,0.62) !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login i{
+  color:#dfffea !important;
+  filter:none !important;
+}
+
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logout{
+  display:none !important;
+}
+
+@media (max-width:480px){
+  .subscribe-employer-account-dropdown.is-logged-out{
+    right:-4px !important;
+    width:min(360px, calc(100vw - 18px)) !important;
+    padding:12px !important;
+    border-radius:20px !important;
+  }
+
+  .subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-profile{
+    min-height:82px !important;
+    padding:10px 12px !important;
+    gap:12px !important;
+  }
+
+  .subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logo-wrap{
+    width:58px !important;
+    height:58px !important;
+    min-width:58px !important;
+    border-radius:16px !important;
+  }
+
+  .subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-company{
+    font-size:0.96rem !important;
+  }
+
+  .subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item{
+    min-height:48px !important;
+    font-size:0.88rem !important;
+    padding:0 13px !important;
+  }
+}
+
+</style>
+</head>
+
+<body class="subscribe-page">
+
+<!-- HEADER -->
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <img src="JOBSPACELINK.png" alt="Job Space Link Logo" />
+  </div>
+
+  <nav>
+    <a href="home.html"><i class="fa-solid fa-house"></i><span class="nav-text">Home</span></a>
+
+    <div class="nav-dropdown" id="aboutNavDropdown">
+      <div class="nav-dropdown-trigger">
+        <a href="about.html" id="aboutNavLink" class="nav-main-link"><i class="fa-solid fa-circle-info"></i><span class="nav-text">About</span></a>
+        <button
+          type="button"
+          class="nav-dropdown-toggle"
+          id="aboutNavToggle"
+          aria-expanded="false"
+          aria-controls="aboutNavMenu"
+          aria-label="Toggle About menu"
+        >
+          <i class="fa-solid fa-caret-down nav-caret"></i>
+        </button>
+      </div>
+
+      <div class="nav-dropdown-menu" id="aboutNavMenu">
+        <a href="why choose us.html"><i class="fa-solid fa-circle-check"></i><span class="nav-text">Why Choose Us</span></a>
+        <a href="how it works.html"><i class="fa-solid fa-diagram-project"></i><span class="nav-text">How It Works</span></a>
+      </div>
+    </div>
+
+    <a href="postedhiring1.html"><i class="fa-solid fa-briefcase"></i><span class="nav-text">Job Hiring</span></a>
+    <a href="dashboard1.html"><i class="fa-solid fa-users"></i><span class="nav-text">Jobseeker</span></a>
+    <a href="postjob1.html"><i class="fa-solid fa-square-plus"></i><span class="nav-text">Post Jobs</span></a>
+    <a href="applicantform1.html?source=jobspacelink"><i class="fa-solid fa-file-arrow-up"></i><span class="nav-text">Post Resume</span></a>
+  </nav>
+
+  <div class="auth-buttons subscribe-employer-auth-shell" id="subscribeEmployerAuthShell">
+    <div class="subscribe-employer-account-wrap" id="subscribeEmployerAccountWrap">
+      <button
+        type="button"
+        class="admin employer-auth subscribe-employer-icon-btn is-logged-out"
+        id="subscribeEmployerAccountBtn"
+        aria-label="Employer account menu"
+        aria-expanded="false"
+        aria-controls="subscribeEmployerAccountDropdown"
+        title="Employer account"
+      >
+        <img id="subscribeEmployerAccountLogo" class="subscribe-employer-account-logo-img" src="" alt="Company logo" />
+        <i class="fa-solid fa-building-user" aria-hidden="true"></i>
+        <span class="auth-text">Employer Account</span>
+      </button>
+
+      <div class="subscribe-employer-account-dropdown is-logged-out" id="subscribeEmployerAccountDropdown" aria-hidden="true">
+        <div class="subscribe-employer-dropdown-profile">
+          <div class="subscribe-employer-dropdown-logo-wrap has-logo" id="subscribeEmployerDropdownLogoWrap">
+            <img id="subscribeEmployerDropdownLogo" src="JOBSPACELINK.png" alt="Job Space Link logo" />
+            <i class="fa-solid fa-building-user subscribe-employer-dropdown-logo-fallback" id="subscribeEmployerDropdownLogoFallback" aria-hidden="true"></i>
+          </div>
+          <div class="subscribe-employer-dropdown-identity">
+            <div class="subscribe-employer-dropdown-label" id="subscribeEmployerDropdownLabel"></div>
+            <div class="subscribe-employer-dropdown-company" id="subscribeEmployerDropdownCompany">No login account</div>
+            <div class="subscribe-employer-dropdown-email" id="subscribeEmployerDropdownEmail"></div>
+          </div>
+        </div>
+
+        <div class="subscribe-employer-dropdown-menu" aria-label="Employer account menu">
+          <a href="companyprofile.html" class="subscribe-employer-dropdown-item" id="subscribeEmployerCompanyProfileLink"><i class="fa-solid fa-id-card"></i><span>Company Profile</span></a>
+          <a href="subscribe.html" class="subscribe-employer-dropdown-item" id="subscribeEmployerSubscribeLink"><i class="fa-solid fa-credit-card"></i><span>Subscribe</span></a>
+          <a href="employer_dashboard.html" class="subscribe-employer-dropdown-item" id="subscribeEmployerPostedJobsLink"><i class="fa-solid fa-briefcase"></i><span>Posted Jobs</span></a>
+          <a href="loginemployer.html" class="subscribe-employer-dropdown-item subscribe-employer-dropdown-login" id="subscribeEmployerLoginLink"><i class="fa-solid fa-right-to-bracket"></i><span>Employer Login</span></a>
+          <button type="button" class="subscribe-employer-dropdown-item subscribe-employer-dropdown-logout" id="subscribeEmployerLogoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="nav-toggle"
+    id="navToggle"
+    aria-label="Open mobile menu"
+    aria-expanded="false"
+  >
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</header>
+
+<!-- Mobile panel -->
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+  <div class="mnav">
+    <a href="home.html"><span class="mnav-left"><i class="fa-solid fa-house"></i><span class="nav-text">Home</span></span><i class="fa-solid fa-arrow-right"></i></a>
+
+    <div class="mnav-group" id="mobileAboutGroup">
+      <div class="mnav-row">
+        <a href="about.html" class="mnav-main-link"><span class="mnav-left"><i class="fa-solid fa-circle-info"></i><span class="nav-text">About</span></span><i class="fa-solid fa-arrow-right"></i></a>
+        <button
+          type="button"
+          class="mnav-toggle"
+          id="mobileAboutToggle"
+          aria-expanded="false"
+          aria-controls="mobileAboutMenu"
+          aria-label="Toggle About submenu"
+        >
+          <i class="fa-solid fa-caret-down mnav-caret"></i>
+        </button>
+      </div>
+
+      <div class="mnav-submenu" id="mobileAboutMenu">
+        <a href="why choose us.html"><span class="mnav-left"><i class="fa-solid fa-circle-check"></i><span class="nav-text">Why Choose Us</span></span><i class="fa-solid fa-arrow-right"></i></a>
+        <a href="how it works.html"><span class="mnav-left"><i class="fa-solid fa-diagram-project"></i><span class="nav-text">How It Works</span></span><i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <a href="postedhiring1.html"><span class="mnav-left"><i class="fa-solid fa-briefcase"></i><span class="nav-text">Job Hiring</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="postjob1.html"><span class="mnav-left"><i class="fa-solid fa-square-plus"></i><span class="nav-text">Post Jobs</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="applicantform1.html?source=jobspacelink"><span class="mnav-left"><i class="fa-solid fa-file-arrow-up"></i><span class="nav-text">Post Resume</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="dashboard1.html"><span class="mnav-left"><i class="fa-solid fa-users"></i><span class="nav-text">Jobseeker Directory</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="loginemployer.html"><span class="mnav-left"><i class="fa-solid fa-building-user"></i><span class="nav-text">Employer Login</span></span><i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="title"><i class="fa-solid fa-credit-card"></i> Employer Subscription</div>
+  <div class="sub">
+    If an employer account is logged in, the <b>company name</b> and <b>company email</b> will auto-fill. Expired subscriptions are auto-marked as <b>not active</b> using the USA/Supabase subscription date. Employers must subscribe first before employer login.
+  </div>
+
+  <div class="card">
+    <div class="plan"><i class="fa-solid fa-star"></i><span>Plan: <strong>$10 / month</strong> (+30 days)</span></div>
+
+    <form id="subForm" autocomplete="off">
+      <div class="row">
+        <label for="companyName">Company Name</label>
+        <input id="companyName" type="text" required />
+      </div>
+
+      <div class="row">
+        <label for="companyEmail">Company Email</label>
+        <input id="companyEmail" type="email" required />
+      </div>
+
+      <div class="row">
+        <label for="cardName">Cardholder Name</label>
+        <input id="cardName" type="text" required />
+      </div>
+
+      <div class="row">
+        <label for="cardNumber">Card Number</label>
+        <input id="cardNumber" type="text" maxlength="19" placeholder="1234 5678 9012 3456" required />
+      </div>
+
+      <div class="row">
+        <label for="cardExpiry">Expiry (MM/YY)</label>
+        <input id="cardExpiry" type="text" maxlength="5" placeholder="08/27" required />
+      </div>
+
+      <div class="row">
+        <label for="cardCvv">CVV</label>
+        <input id="cardCvv" type="password" maxlength="4" required />
+      </div>
+
+      <div class="action-row">
+        <button id="statusBtn" type="button"><i class="fa-solid fa-clipboard-check"></i> Subscription Status</button>
+        <button id="payBtn" type="submit"><i class="fa-solid fa-shield"></i> Pay $10 Now</button>
+        <button id="exitBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Exit</button>
+      </div>
+    </form>
+
+    <div id="msg"></div>
+    <div class="note">After payment, you’ll be redirected to Subscription Status.</div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   ABOUT DROPDOWN
+============================================================ */
+(function(){
+  const dd = document.getElementById("aboutNavDropdown");
+  const toggle = document.getElementById("aboutNavToggle");
+  const menu = document.getElementById("aboutNavMenu");
+
+  if(!dd || !toggle || !menu) return;
+
+  function closeAboutMenu(){
+    dd.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function openAboutMenu(){
+    dd.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+  }
+
+  toggle.addEventListener("click", function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    const isOpen = dd.classList.contains("open");
+    if(isOpen){
+      closeAboutMenu();
+    }else{
+      openAboutMenu();
+    }
+  });
+
+  document.addEventListener("click", function(e){
+    if(!dd.contains(e.target)){
+      closeAboutMenu();
+    }
+  });
+
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){
+      closeAboutMenu();
+    }
+  });
+
+  menu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){
+      closeAboutMenu();
+    });
+  });
+})();
+
+/* ============================================================
+   MOBILE MENU
+============================================================ */
+(function(){
+  const btn = document.getElementById("navToggle");
+  const panel = document.getElementById("mobilePanel");
+  const aboutGroup = document.getElementById("mobileAboutGroup");
+  const aboutToggle = document.getElementById("mobileAboutToggle");
+  if(!btn || !panel) return;
+
+  function closeAbout(){
+    if(!aboutGroup || !aboutToggle) return;
+    aboutGroup.classList.remove("open");
+    aboutToggle.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleAbout(){
+    if(!aboutGroup || !aboutToggle) return;
+    const open = aboutGroup.classList.toggle("open");
+    aboutToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  function close(){
+    panel.classList.remove("open");
+    panel.setAttribute("aria-hidden","true");
+    btn.setAttribute("aria-expanded","false");
+    closeAbout();
+  }
+
+  btn.addEventListener("click", ()=>{
+    const open = panel.classList.toggle("open");
+    panel.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if(!open) closeAbout();
+  });
+
+  if(aboutToggle){
+    aboutToggle.addEventListener("click", (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      toggleAbout();
+    });
+  }
+
+  panel.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
+  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") close(); });
+
+  document.addEventListener("click", (e)=>{
+    if(panel.classList.contains("open")){
+      const header = document.querySelector("header");
+      if(header && header.contains(e.target)) return;
+      if(panel.contains(e.target)) return;
+      close();
+    }
+  });
+
+  window.addEventListener("resize", ()=>{
+    if(window.innerWidth >= 769) close();
+  }, { passive:true });
+})();
+
+/* ============================================================
+   SUPABASE CLIENT RESOLUTION
+============================================================ */
+function isSupabaseClient(obj){
+  return !!(
+    obj &&
+    typeof obj.from === "function" &&
+    obj.auth &&
+    typeof obj.auth.getSession === "function"
+  );
+}
+
+function isSupabaseNamespace(obj){
+  return !!(
+    obj &&
+    typeof obj.createClient === "function"
+  );
+}
+
+function resolveSupabaseClient(){
+  if (isSupabaseClient(window.supabase)) return window.supabase;
+  if (window.supabaseClient && isSupabaseClient(window.supabaseClient)) return window.supabaseClient;
+  if (isSupabaseNamespace(window.supabase) && window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
+    window.supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    return window.supabaseClient;
+  }
+  return null;
+}
+
+let supabaseClient = resolveSupabaseClient();
+
+/* ============================================================
+   ELEMENTS
+============================================================ */
+const form = document.getElementById("subForm");
+const msg = document.getElementById("msg");
+const payBtn = document.getElementById("payBtn");
+const statusBtn = document.getElementById("statusBtn");
+const exitBtn = document.getElementById("exitBtn");
+
+const companyNameInput = document.getElementById("companyName");
+const companyEmailInput = document.getElementById("companyEmail");
+const cardNameInput = document.getElementById("cardName");
+const cardNumberInput = document.getElementById("cardNumber");
+const cardExpiryInput = document.getElementById("cardExpiry");
+const cardCvvInput = document.getElementById("cardCvv");
+
+/* ============================================================
+   SUBSCRIPTION DATE SETTINGS
+   USA date is used for matching subscription_end_date.
+   If your table is pure Supabase UTC date, change to "UTC".
+============================================================ */
+const SUBSCRIPTION_DATE_TIME_ZONE = "America/New_York";
+const INACTIVE_SUBSCRIPTION_STATUS = "not active";
+const ACTIVE_SUBSCRIPTION_STATUSES = ["active", "paid", "approved", "current"];
+const EMPLOYER_LOGIN_DAY_FUNCTION = "employer-login-day-subscription";
+// IMPORTANT: this Subscribe page only expires end-date rows. It does NOT deduct days_remaining.
+// Deduct days_remaining only after a verified employer login by calling EMPLOYER_LOGIN_DAY_FUNCTION.
+
+/* ============================================================
+   HELPERS
+============================================================ */
+function clearMessage(){
+  msg.textContent = "";
+  msg.innerHTML = "";
+  msg.style.color = "";
+}
+
+function showErr(t){
+  msg.textContent = t;
+  msg.style.color = "#fecaca";
+}
+
+function showOk(t){
+  msg.innerHTML = `<span style="color:#bbf7d0"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(t)}</span>`;
+}
+
+function showWarn(t){
+  msg.innerHTML = `<span style="color:#fde68a"><i class="fa-solid fa-triangle-exclamation"></i> ${escapeHtml(t)}</span>`;
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalizeText(value){
+  return String(value || "").trim().toLowerCase();
+}
+
+function normalizeCompanyKey(value){
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function formatCompanyName(name){
+  if (!name) return "";
+  return String(name)
+    .trim()
+    .split(/\s+/)
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+function getRecordField(obj, names, fallback = ""){
+  for(const name of names){
+    if(obj && Object.prototype.hasOwnProperty.call(obj, name) && obj[name] != null && String(obj[name]).trim() !== ""){
+      return obj[name];
+    }
+  }
+  return fallback;
+}
+
+function hasOwnField(obj, name){
+  return !!(obj && Object.prototype.hasOwnProperty.call(obj, name));
+}
+
+function getSafeSupabaseUrl(){
+  return window.SUPABASE_URL || (typeof SUPABASE_URL !== "undefined" ? SUPABASE_URL : "");
+}
+
+function getSafeSupabaseAnonKey(){
+  return window.SUPABASE_ANON_KEY || (typeof SUPABASE_ANON_KEY !== "undefined" ? SUPABASE_ANON_KEY : "");
+}
+
+function pad2(value){
+  return String(value).padStart(2, "0");
+}
+
+function getDateKeyInTimeZone(date = new Date(), timeZone = SUBSCRIPTION_DATE_TIME_ZONE){
+  try{
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).formatToParts(date);
+
+    const map = {};
+    parts.forEach(part => { map[part.type] = part.value; });
+
+    if(map.year && map.month && map.day){
+      return `${map.year}-${map.month}-${map.day}`;
+    }
+  }catch(err){
+    console.warn("Timezone date conversion failed. Falling back to UTC date.", err);
+  }
+
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getTodaySubscriptionDateKey(){
+  return getDateKeyInTimeZone(new Date(), SUBSCRIPTION_DATE_TIME_ZONE);
+}
+
+function normalizeDateKey(value){
+  if(value == null) return "";
+
+  const raw = String(value).trim();
+  if(!raw) return "";
+
+  const yyyyMmDd = raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(yyyyMmDd){
+    return `${yyyyMmDd[1]}-${pad2(yyyyMmDd[2])}-${pad2(yyyyMmDd[3])}`;
+  }
+
+  const mmDdYyyy = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(mmDdYyyy){
+    return `${mmDdYyyy[3]}-${pad2(mmDdYyyy[1])}-${pad2(mmDdYyyy[2])}`;
+  }
+
+  const d = new Date(raw);
+  if(isNaN(d.getTime())) return "";
+
+  return getDateKeyInTimeZone(d, SUBSCRIPTION_DATE_TIME_ZONE);
+}
+
+function compareDateKeys(a, b){
+  if(!a || !b) return null;
+  if(a === b) return 0;
+  return a < b ? -1 : 1;
+}
+
+function getSubscriptionEndDateKey(record){
+  const endValue = getRecordField(record, [
+    "subscription_end_date",
+    "end_date",
+    "date_end",
+    "expiry_date",
+    "expiration_date"
+  ], "");
+
+  return normalizeDateKey(endValue);
+}
+
+function getSubscriptionStartDateKey(record){
+  const startValue = getRecordField(record, [
+    "subscription_start_date",
+    "start_date",
+    "date_start",
+    "created_at"
+  ], "");
+
+  return normalizeDateKey(startValue);
+}
+
+function isExpiredByEndDate(record){
+  const endDateKey = getSubscriptionEndDateKey(record);
+  if(!endDateKey) return false;
+
+  const todayKey = getTodaySubscriptionDateKey();
+  const comparison = compareDateKeys(endDateKey, todayKey);
+
+  return comparison !== null && comparison <= 0;
+}
+
+function isActiveStatus(record){
+  const statusText = normalizeText(getRecordField(record, [
+    "status",
+    "subscription_status",
+    "payment_status"
+  ], ""));
+
+  return ACTIVE_SUBSCRIPTION_STATUSES.includes(statusText);
+}
+
+function getWritableStatusColumn(record){
+  if(hasOwnField(record, "status")) return "status";
+  if(hasOwnField(record, "subscription_status")) return "subscription_status";
+  return "status";
+}
+
+function buildInactiveUpdatePayload(record){
+  const statusColumn = getWritableStatusColumn(record);
+  const payload = {};
+  payload[statusColumn] = INACTIVE_SUBSCRIPTION_STATUS;
+
+  if(hasOwnField(record, "days_remaining")){
+    payload.days_remaining = 0;
+  }
+
+  return payload;
+}
+
+function setupCardFormatting(){
+  cardNumberInput.addEventListener("input", () => {
+    let v = cardNumberInput.value.replace(/\D/g,"").substring(0,16);
+    const groups = v.match(/.{1,4}/g) || [];
+    cardNumberInput.value = groups.join(" ");
+  });
+
+  cardExpiryInput.addEventListener("input", () => {
+    let v = cardExpiryInput.value.replace(/\D/g,"").substring(0,4);
+    if (v.length >= 3) v = v.substring(0,2) + "/" + v.substring(2);
+    cardExpiryInput.value = v;
+  });
+}
+
+/* ============================================================
+   FORM RESET
+============================================================ */
+function clearFormPreserveIdentity(){
+  cardNameInput.value = "";
+  cardNumberInput.value = "";
+  cardExpiryInput.value = "";
+  cardCvvInput.value = "";
+  clearMessage();
+  payBtn.disabled = false;
+  statusBtn.disabled = false;
+  exitBtn.disabled = false;
+  statusBtn.innerHTML = `<i class="fa-solid fa-clipboard-check"></i> Subscription Status`;
+  payBtn.innerHTML = `<i class="fa-solid fa-shield"></i> Pay $10 Now`;
+  exitBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Exit`;
+}
+
+function setLoadingState(isLoading, text = "Processing..."){
+  payBtn.disabled = isLoading;
+  statusBtn.disabled = isLoading;
+  exitBtn.disabled = isLoading;
+
+  if(isLoading){
+    payBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${escapeHtml(text)}`;
+  }else{
+    statusBtn.innerHTML = `<i class="fa-solid fa-clipboard-check"></i> Subscription Status`;
+    payBtn.innerHTML = `<i class="fa-solid fa-shield"></i> Pay $10 Now`;
+    exitBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Exit`;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  clearFormPreserveIdentity();
+  setupCardFormatting();
+
+  try{
+    await autoExpireAllSubscriptionsOnPageOpen();
+    await autofillEmployerIfLoggedIn();
+  }catch(err){
+    console.error("Subscription startup check error:", err);
+  }
+});
+
+window.addEventListener("pageshow", () => {
+  clearFormPreserveIdentity();
+});
+
+/* ============================================================
+   AUTO FILL LOGGED-IN EMPLOYER
+============================================================ */
+async function getLoggedInSessionEmail(){
+  if(!supabaseClient) return "";
+
+  const { data, error } = await supabaseClient.auth.getSession();
+  if(error){
+    console.error("Session fetch error:", error);
+    return "";
+  }
+
+  return String(data?.session?.user?.email || "").trim().toLowerCase();
+}
+
+async function getEmployerRecordByEmail(email){
+  if(!supabaseClient || !email) return null;
+
+  const emailColumns = ["email", "company_email", "contact_email", "employer_email"];
+
+  for(const column of emailColumns){
+    const { data, error } = await supabaseClient
+      .from("employers")
+      .select("*")
+      .eq(column, email)
+      .limit(1);
+
+    if(error){
+      console.warn(`Employers lookup failed on "${column}":`, error.message || error);
+      continue;
+    }
+
+    if(Array.isArray(data) && data.length){
+      return data[0];
+    }
+  }
+
+  return null;
+}
+
+async function autofillEmployerIfLoggedIn(){
+  supabaseClient = resolveSupabaseClient();
+
+  if(!supabaseClient) return;
+
+  const sessionEmail = await getLoggedInSessionEmail();
+  if(!sessionEmail) return;
+
+  const employerRow = await getEmployerRecordByEmail(sessionEmail);
+
+  if(!employerRow){
+    companyEmailInput.value = sessionEmail;
+    showWarn("No employer profile found. Enter your company name, subscribe, then login again.");
+    return;
+  }
+
+  const companyName = String(getRecordField(
+    employerRow,
+    ["company_name", "company", "business_name", "employer_name"],
+    ""
+  )).trim();
+
+  const companyEmail = String(getRecordField(
+    employerRow,
+    ["email", "company_email", "contact_email", "employer_email"],
+    sessionEmail
+  )).trim().toLowerCase();
+
+  if(companyName){
+    companyNameInput.value = formatCompanyName(companyName);
+  }
+
+  if(companyEmail){
+    companyEmailInput.value = companyEmail;
+  }
+
+  localStorage.setItem("employerCompanyName", companyName);
+  localStorage.setItem("employerEmail", companyEmail);
+
+  const updateResult = await autoMarkExpiredSubscriptions(companyName, companyEmail);
+
+  let accessResult = {
+    hasActiveSubscription: !!updateResult.hasActiveSubscription,
+    activeEndDate: updateResult.activeEndDate || ""
+  };
+
+  if(!updateResult.serverUsed){
+    accessResult = await getEmployerSubscriptionAccess(companyName, companyEmail);
+  }
+
+  if(updateResult.updated > 0){
+    showWarn(`${updateResult.updated} expired subscription record(s) matched the USA/Supabase date and were updated to not active. Please subscribe first before employer login.`);
+    return;
+  }
+
+  if(accessResult.hasActiveSubscription){
+    showOk(`Your subscription is active until ${accessResult.activeEndDate || "your subscription end date"}. You can login/open the employer dashboard.`);
+  }else{
+    showWarn("No active subscription found. Please subscribe first before employer login.");
+  }
+}
+
+/* ============================================================
+   AUTO-MARK EXPIRED SUBSCRIPTIONS
+============================================================ */
+async function fetchEmployerPaymentRowsByEmail(email){
+  if(!supabaseClient || !email) return [];
+
+  const emailColumns = ["company_email", "email", "contact_email", "employer_email"];
+  const allRows = [];
+  const seenIds = new Set();
+
+  for(const emailColumn of emailColumns){
+    let result = await supabaseClient
+      .from("employer_payment_transactions")
+      .select("*")
+      .eq(emailColumn, email)
+      .order("created_at", { ascending: false });
+
+    if(result.error){
+      result = await supabaseClient
+        .from("employer_payment_transactions")
+        .select("*")
+        .eq(emailColumn, email);
+    }
+
+    if(result.error){
+      console.warn(`Payment lookup failed on "${emailColumn}":`, result.error.message || result.error);
+      continue;
+    }
+
+    if(Array.isArray(result.data) && result.data.length){
+      result.data.forEach(row => {
+        const key = row?.id != null ? `id:${row.id}` : JSON.stringify(row);
+        if(!seenIds.has(key)){
+          seenIds.add(key);
+          allRows.push(row);
+        }
+      });
+    }
+  }
+
+  return allRows;
+}
+
+function filterMatchingSubscriptionRows(rows, companyName, companyEmail){
+  const normalizedCompany = normalizeCompanyKey(companyName);
+  const normalizedEmail = normalizeText(companyEmail);
+
+  return rows.filter(row => {
+    const rowCompany = normalizeCompanyKey(getRecordField(row, [
+      "company_name",
+      "company",
+      "business_name",
+      "employer_company_name"
+    ], ""));
+
+    const rowEmail = normalizeText(getRecordField(row, [
+      "company_email",
+      "email",
+      "contact_email",
+      "employer_email"
+    ], ""));
+
+    const companyMatches = !normalizedCompany || !rowCompany || rowCompany === normalizedCompany;
+    const emailMatches = rowEmail === normalizedEmail;
+
+    return companyMatches && emailMatches;
+  });
+}
+
+async function updateSingleRowNotActive(row){
+  const rowId = row?.id;
+  if(!rowId) return false;
+
+  const payload = buildInactiveUpdatePayload(row);
+
+  let { error } = await supabaseClient
+    .from("employer_payment_transactions")
+    .update(payload)
+    .eq("id", rowId);
+
+  if(error && hasOwnField(payload, "days_remaining")){
+    const retryPayload = {};
+    retryPayload[getWritableStatusColumn(row)] = INACTIVE_SUBSCRIPTION_STATUS;
+
+    const retry = await supabaseClient
+      .from("employer_payment_transactions")
+      .update(retryPayload)
+      .eq("id", rowId);
+
+    error = retry.error;
+  }
+
+  if(error){
+    console.error("Failed updating row to not active:", error);
+    return false;
+  }
+
+  return true;
+}
+
+async function runServerSubscriptionMaintenance(companyName = "", companyEmail = "", options = {}){
+  const supabaseUrl = getSafeSupabaseUrl();
+  const supabaseAnonKey = getSafeSupabaseAnonKey();
+
+  if(!supabaseUrl || !supabaseAnonKey){
+    return { ok:false, error:"Supabase config is missing." };
+  }
+
+  try{
+    const res = await fetch(`${supabaseUrl}/functions/v1/expire-employer-subscriptions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": supabaseAnonKey,
+        "Authorization": `Bearer ${supabaseAnonKey}`
+      },
+      body: JSON.stringify({
+        company_name: companyName || "",
+        company_email: companyEmail || "",
+        subscription_time_zone: SUBSCRIPTION_DATE_TIME_ZONE,
+        client_subscription_date: getTodaySubscriptionDateKey(),
+        update_all: options.updateAll !== false
+      })
+    });
+
+    const json = await res.json().catch(() => ({}));
+
+    if(!res.ok || !json.ok){
+      console.warn("expire-employer-subscriptions function did not complete:", json);
+      return { ok:false, status:res.status, error:json.error || "Subscription maintenance function failed." };
+    }
+
+    return json;
+  }catch(err){
+    console.warn("expire-employer-subscriptions function is unavailable:", err);
+    return { ok:false, error:String(err?.message || err) };
+  }
+}
+
+
+async function registerEmployerLoginDayForSubscription(companyName = "", companyEmail = "", employerId = ""){
+  const supabaseUrl = getSafeSupabaseUrl();
+  const supabaseAnonKey = getSafeSupabaseAnonKey();
+
+  if(!supabaseUrl || !supabaseAnonKey){
+    return { ok:false, login_allowed:false, error:"Supabase config is missing." };
+  }
+
+  try{
+    const res = await fetch(`${supabaseUrl}/functions/v1/${EMPLOYER_LOGIN_DAY_FUNCTION}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": supabaseAnonKey,
+        "Authorization": `Bearer ${supabaseAnonKey}`
+      },
+      body: JSON.stringify({
+        company_name: companyName || "",
+        company_email: companyEmail || "",
+        employer_id: employerId || "",
+        subscription_time_zone: SUBSCRIPTION_DATE_TIME_ZONE,
+        client_subscription_date: getTodaySubscriptionDateKey()
+      })
+    });
+
+    const json = await res.json().catch(() => ({}));
+
+    if(!res.ok || !json.ok){
+      console.warn("employer-login-day-subscription function did not complete:", json);
+      return {
+        ok:false,
+        login_allowed:false,
+        status:res.status,
+        error:json.error || "Login-day subscription function failed."
+      };
+    }
+
+    return json;
+  }catch(err){
+    console.warn("employer-login-day-subscription function is unavailable:", err);
+    return { ok:false, login_allowed:false, error:String(err?.message || err) };
+  }
+}
+
+// Expose helpers for loginemployer.html or dashboard scripts that load this file/script.
+// Call registerEmployerLoginDayForSubscription ONLY after a verified employer login.
+window.JobSpaceSubscription = Object.assign(window.JobSpaceSubscription || {}, {
+  expireEmployerSubscriptions: runServerSubscriptionMaintenance,
+  registerEmployerLoginDayForSubscription
+});
+
+
+async function autoExpireAllSubscriptionsOnPageOpen(){
+  const serverResult = await runServerSubscriptionMaintenance("", "", { updateAll:true });
+
+  if(serverResult.ok && Number(serverResult.updated || 0) > 0){
+    showWarn(`${serverResult.updated} expired subscription record(s) were changed to not active using ${serverResult.today || "today"}.`);
+  }
+
+  return serverResult;
+}
+
+async function autoMarkExpiredSubscriptions(companyName, companyEmail){
+  const result = {
+    updated: 0,
+    checkedToday: getTodaySubscriptionDateKey(),
+    timeZone: SUBSCRIPTION_DATE_TIME_ZONE,
+    serverUsed: false,
+    serverError: ""
+  };
+
+  /*
+    Best fix: let the Edge Function update the table with the service role key.
+    This fixes the issue where the browser cannot update the highlighted row because of RLS
+    or because the row is not matched by the logged-in employer email.
+  */
+  const serverResult = await runServerSubscriptionMaintenance(companyName, companyEmail, { updateAll:true });
+
+  if(serverResult.ok){
+    result.serverUsed = true;
+    result.updated = Number(serverResult.updated || 0);
+    result.checkedToday = serverResult.today || result.checkedToday;
+    result.hasActiveSubscription = !!serverResult.has_active_subscription;
+    result.activeEndDate = serverResult.active_end_date || "";
+    return result;
+  }
+
+  result.serverError = serverResult.error || "Edge Function not available. Browser fallback used.";
+
+  /* Browser fallback: works only for rows allowed by your RLS policies. */
+  if(!supabaseClient || !companyEmail) return result;
+
+  const rows = await fetchEmployerPaymentRowsByEmail(companyEmail);
+  if(!rows.length) return result;
+
+  const matchingRows = filterMatchingSubscriptionRows(rows, companyName, companyEmail);
+
+  for(const row of matchingRows){
+    if(isExpiredByEndDate(row) && isActiveStatus(row)){
+      const updated = await updateSingleRowNotActive(row);
+      if(updated) result.updated += 1;
+    }
+  }
+
+  return result;
+}
+
+async function getEmployerSubscriptionAccess(companyName, companyEmail){
+  const result = {
+    hasActiveSubscription: false,
+    activeEndDate: "",
+    latestEndDate: "",
+    activeRow: null
+  };
+
+  if(!supabaseClient || !companyEmail) return result;
+
+  const rows = await fetchEmployerPaymentRowsByEmail(companyEmail);
+  const matchingRows = filterMatchingSubscriptionRows(rows, companyName, companyEmail);
+
+  const sortedRows = matchingRows.sort((a, b) => {
+    const bEnd = getSubscriptionEndDateKey(b) || getSubscriptionStartDateKey(b) || "";
+    const aEnd = getSubscriptionEndDateKey(a) || getSubscriptionStartDateKey(a) || "";
+    return bEnd.localeCompare(aEnd);
+  });
+
+  for(const row of sortedRows){
+    const endDateKey = getSubscriptionEndDateKey(row);
+    if(endDateKey && !result.latestEndDate){
+      result.latestEndDate = endDateKey;
+    }
+
+    if(isActiveStatus(row) && !isExpiredByEndDate(row)){
+      result.hasActiveSubscription = true;
+      result.activeEndDate = endDateKey;
+      result.activeRow = row;
+      break;
+    }
+  }
+
+  return result;
+}
+
+/* ============================================================
+   ACTION BUTTONS
+============================================================ */
+function getStatusUrl(){
+  const email = (companyEmailInput.value || localStorage.getItem("employerEmail") || localStorage.getItem("lastSubscribedEmail") || "").trim().toLowerCase();
+  return email ? `subscriptionstatus.html?email=${encodeURIComponent(email)}` : "subscriptionstatus.html";
+}
+
+function goToSubscriptionStatus(){
+  window.location.href = getStatusUrl();
+}
+
+function exitToDashboard(){
+  window.location.href = "dashboard1.html";
+}
+
+statusBtn.addEventListener("click", goToSubscriptionStatus);
+exitBtn.addEventListener("click", exitToDashboard);
+
+/* ============================================================
+   SUBMIT
+============================================================ */
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  clearMessage();
+
+  supabaseClient = resolveSupabaseClient();
+
+  const company_name  = companyNameInput.value.trim();
+  const company_email = companyEmailInput.value.trim().toLowerCase();
+
+  const cardholderName = cardNameInput.value.trim();
+  const cardNumber     = cardNumberInput.value.replace(/\s+/g, "");
+  const cardExpiry     = cardExpiryInput.value.trim();
+  const cardCvv        = cardCvvInput.value.trim();
+
+  if (!company_name) return showErr("Company name is required.");
+  if (!company_email || !/^\S+@\S+\.\S+$/.test(company_email)) return showErr("Valid company email is required.");
+  if (!cardholderName || cardNumber.length < 12 || !/^\d+$/.test(cardNumber)) return showErr("Enter a valid card number.");
+  if (!/^\d{2}\/\d{2}$/.test(cardExpiry)) return showErr("Expiry must be MM/YY.");
+  if (cardCvv.length < 3 || cardCvv.length > 4) return showErr("Invalid CVV.");
+
+  const supabaseUrl = getSafeSupabaseUrl();
+  const supabaseAnonKey = getSafeSupabaseAnonKey();
+
+  if(!supabaseUrl || !supabaseAnonKey){
+    return showErr("Supabase config is missing. Check supabase_config.js.");
+  }
+
+  setLoadingState(true, "Processing...");
+
+  try {
+    await autoMarkExpiredSubscriptions(company_name, company_email);
+
+    const res = await fetch(`${supabaseUrl}/functions/v1/manual-subscribe`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": supabaseAnonKey,
+        "Authorization": `Bearer ${supabaseAnonKey}`
+      },
+      body: JSON.stringify({
+        company_name,
+        company_email,
+        subscription_time_zone: SUBSCRIPTION_DATE_TIME_ZONE,
+        client_subscription_date: getTodaySubscriptionDateKey()
+      })
+    });
+
+    const json = await res.json().catch(() => ({}));
+
+    if (!res.ok || !json.ok) {
+      console.error("manual-subscribe error:", json);
+      showErr(json.error || "Failed to record subscription.");
+      return;
+    }
+
+    msg.innerHTML = `<span style="color:#bbf7d0">
+      <i class="fa-solid fa-circle-check"></i>
+      Subscription ${json.mode === "renewed" ? "renewed" : "created"}! Redirecting to status...
+    </span>`;
+
+    localStorage.setItem("lastSubscribedEmail", company_email);
+    localStorage.setItem("lastSubscribedCompanyName", company_name);
+    localStorage.setItem("employerEmail", company_email);
+    localStorage.setItem("employerCompanyName", company_name);
+
+    setTimeout(() => {
+      clearFormPreserveIdentity();
+      window.location.href = `subscriptionstatus.html?email=${encodeURIComponent(company_email)}`;
+    }, 900);
+
+  } catch (err) {
+    console.error(err);
+    showErr("Network error. Please try again.");
+  } finally {
+    setLoadingState(false);
+  }
+});
+</script>
+
+
+
+
+<script id="finalSubscribeEmployerIconDropdownScript">
+(function(){
+  "use strict";
+
+  const EMAIL_KEYS = ["loggedInEmployerEmail", "employerEmail", "companyEmail", "loginEmployerEmail", "employer_email", "jobspacelinkEmployerEmail"];
+  const COMPANY_KEYS = ["loggedInCompanyName", "companyName", "employerCompanyName", "company_name", "jobspacelinkEmployerCompanyName"];
+  const LOGO_KEYS = ["loggedInEmployerLogo", "employerLogo", "companyLogo", "company_logo", "jobspacelinkEmployerLogo"];
+  const LOGO_COLUMNS = [
+    "company_logo", "logo", "logo_url", "company_logo_url", "business_logo", "image_url", "picture",
+    "profile_picture", "company_picture", "company_image", "company_profile_url", "company_profile_image",
+    "company_profile", "profile_url", "profile_image_url", "profile_image", "photo_url", "photo", "image",
+    "company_logo_path", "logo_path", "company_profile_path", "profile_path", "image_path",
+    "company_logo_file", "logo_file", "company_profile_file", "profile_file",
+    "company_logo_filename", "logo_filename", "company_profile_filename", "profile_filename",
+    "company_logo_name", "logo_name", "company_profile_name", "profile_name",
+    "company_logo_storage_path", "logo_storage_path", "company_profile_storage_path", "profile_storage_path",
+    "company_logo_public_url", "logo_public_url", "company_profile_public_url", "profile_public_url",
+    "company_logo_signed_url", "logo_signed_url", "company_profile_signed_url", "profile_signed_url"
+  ];
+
+  const byId = (id) => document.getElementById(id);
+  const clean = (value) => String(value || "").trim();
+  const isGood = (value) => {
+    const v = clean(value);
+    return !!v && v !== "—" && v.toLowerCase() !== "null" && v.toLowerCase() !== "undefined";
+  };
+
+  function readStorage(keys){
+    for(const key of keys){
+      try{
+        const local = clean(localStorage.getItem(key));
+        if(local) return local;
+      }catch(_err){}
+      try{
+        const session = clean(sessionStorage.getItem(key));
+        if(session) return session;
+      }catch(_err){}
+    }
+    return "";
+  }
+
+  function writeStorage(key, value){
+    try{
+      if(isGood(value)) localStorage.setItem(key, clean(value));
+    }catch(_err){}
+  }
+
+  function clearStorage(keys){
+    keys.forEach((key) => {
+      try{ localStorage.removeItem(key); }catch(_err){}
+      try{ sessionStorage.removeItem(key); }catch(_err){}
+    });
+  }
+
+  function getField(row, columns, fallback = ""){
+    for(const column of columns){
+      if(row && Object.prototype.hasOwnProperty.call(row, column) && isGood(row[column])) return row[column];
+    }
+    return fallback;
+  }
+
+  function getSupabaseClient(){
+    try{
+      if(typeof resolveSupabaseClient === "function") return resolveSupabaseClient();
+    }catch(_err){}
+    try{
+      if(window.supabase && typeof window.supabase.from === "function") return window.supabase;
+    }catch(_err){}
+    try{
+      if(window.supabaseClient && typeof window.supabaseClient.from === "function") return window.supabaseClient;
+    }catch(_err){}
+    return null;
+  }
+
+  async function getSessionEmail(){
+    const client = getSupabaseClient();
+    if(!client || !client.auth || typeof client.auth.getSession !== "function") return "";
+    try{
+      const { data } = await client.auth.getSession();
+      return clean(data?.session?.user?.email).toLowerCase();
+    }catch(error){
+      console.warn("Employer account session check failed:", error);
+      return "";
+    }
+  }
+
+  async function findEmployerRecord(email){
+    if(!email) return null;
+    try{
+      if(typeof getEmployerRecordByEmail === "function"){
+        const row = await getEmployerRecordByEmail(email);
+        if(row) return row;
+      }
+    }catch(error){
+      console.warn("Employer profile lookup failed:", error);
+    }
+
+    const client = getSupabaseClient();
+    if(!client || typeof client.from !== "function") return null;
+    const emailColumns = ["email", "company_email", "contact_email", "employer_email"];
+
+    for(const column of emailColumns){
+      try{
+        const { data, error } = await client.from("employers").select("*").eq(column, email).limit(1);
+        if(error) continue;
+        if(Array.isArray(data) && data.length) return data[0];
+      }catch(_err){}
+    }
+    return null;
+  }
+
+  function directLogoValue(row){
+    const fromRow = clean(getField(row, LOGO_COLUMNS, ""));
+    if(fromRow) return fromRow;
+    return readStorage(LOGO_KEYS);
+  }
+
+  function isAbsoluteUrl(value){
+    return /^(https?:|data:|blob:)/i.test(clean(value));
+  }
+
+  async function resolveLogoUrl(rawLogo){
+    const raw = clean(rawLogo);
+    if(!raw) return "";
+    if(isAbsoluteUrl(raw) || raw.startsWith("/") || raw.startsWith("./") || raw.startsWith("../")) return raw;
+    if(/\.(png|jpe?g|gif|webp|svg|bmp|avif)$/i.test(raw) && !raw.includes("/")) return raw;
+
+    const client = getSupabaseClient();
+    const storage = client && client.storage;
+    if(storage && typeof storage.from === "function"){
+      const candidates = [raw, `company_logos/${raw}`, `company-logos/${raw}`, `employer_logos/${raw}`, `employer-logos/${raw}`, `logos/${raw}`];
+      const buckets = ["company_logos", "company-logos", "employer_logos", "employer-logos", "logos", "public", "images", "avatars"];
+
+      for(const candidate of candidates){
+        const match = candidate.match(/^([^/]+)\/(.+)$/);
+        if(match){
+          try{
+            const result = storage.from(match[1]).getPublicUrl(match[2]);
+            const publicUrl = clean(result?.data?.publicUrl || result?.publicUrl || "");
+            if(publicUrl) return publicUrl;
+          }catch(_err){}
+        }
+      }
+
+      for(const bucket of buckets){
+        for(const candidate of candidates){
+          try{
+            const result = storage.from(bucket).getPublicUrl(candidate.replace(/^\/+/, ""));
+            const publicUrl = clean(result?.data?.publicUrl || result?.publicUrl || "");
+            if(publicUrl) return publicUrl;
+          }catch(_err){}
+        }
+      }
+    }
+
+    return raw;
+  }
+
+  function setLogo(src, altText){
+    const wrap = byId("subscribeEmployerDropdownLogoWrap");
+    const img = byId("subscribeEmployerDropdownLogo");
+    if(!wrap || !img) return;
+
+    const logo = clean(src);
+    img.onerror = function(){
+      wrap.classList.remove("has-logo");
+      img.removeAttribute("src");
+    };
+
+    if(logo){
+      img.referrerPolicy = "no-referrer";
+      img.alt = altText || "Company logo";
+      if(clean(img.getAttribute("src")) !== logo) img.src = logo;
+      wrap.classList.add("has-logo");
+    }else{
+      wrap.classList.remove("has-logo");
+      img.removeAttribute("src");
+    }
+  }
+
+  function setAccountButtonLogo(src, altText){
+    const btn = byId("subscribeEmployerAccountBtn");
+    const img = byId("subscribeEmployerAccountLogo");
+    if(!btn || !img) return;
+
+    const logo = clean(src);
+    img.onerror = function(){
+      btn.classList.remove("has-account-logo");
+      btn.classList.add("is-logged-out");
+      img.removeAttribute("src");
+    };
+
+    if(logo){
+      img.referrerPolicy = "no-referrer";
+      img.alt = altText || "Company logo";
+      if(clean(img.getAttribute("src")) !== logo) img.src = logo;
+      btn.classList.add("has-account-logo");
+      btn.classList.remove("is-logged-out");
+      btn.title = altText || "Employer account";
+      btn.setAttribute("aria-label", altText || "Employer account menu");
+    }else{
+      btn.classList.remove("has-account-logo");
+      btn.classList.add("is-logged-out");
+      img.removeAttribute("src");
+      btn.title = "Employer account";
+      btn.setAttribute("aria-label", "Employer account menu");
+    }
+  }
+
+  function setDropdownOpen(open){
+    const btn = byId("subscribeEmployerAccountBtn");
+    const dropdown = byId("subscribeEmployerAccountDropdown");
+    if(!btn || !dropdown) return;
+    dropdown.classList.toggle("open", !!open);
+    dropdown.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  function renderDropdown(identity){
+    const dropdown = byId("subscribeEmployerAccountDropdown");
+    const label = byId("subscribeEmployerDropdownLabel");
+    const companyEl = byId("subscribeEmployerDropdownCompany");
+    const emailEl = byId("subscribeEmployerDropdownEmail");
+    if(!dropdown) return;
+
+    const logged = !!(identity && identity.loggedIn && isGood(identity.email));
+    dropdown.classList.toggle("is-logged-in", logged);
+    dropdown.classList.toggle("is-logged-out", !logged);
+    document.body.classList.toggle("employer-logged-in", logged);
+
+    if(!logged){
+      if(label) label.textContent = "";
+      if(companyEl) companyEl.textContent = "No login account";
+      if(emailEl) emailEl.textContent = "";
+      setLogo("JOBSPACELINK.png", "Job Space Link logo");
+      setAccountButtonLogo("", "Employer account menu");
+      return;
+    }
+
+    const company = clean(identity.company) || "Company / Employer";
+    const email = clean(identity.email) || "Logged in employer";
+    if(label) label.textContent = "Logged in account";
+    if(companyEl) companyEl.textContent = company;
+    if(emailEl) emailEl.textContent = email;
+    setLogo(identity.logo || "", `${company} logo`);
+    setAccountButtonLogo(identity.logo || "", `${company} logo`);
+  }
+
+  async function loadEmployerIdentity(){
+    const sessionEmail = await getSessionEmail();
+    const email = sessionEmail;
+
+    if(!email){
+      renderDropdown({ loggedIn:false });
+      return { loggedIn:false };
+    }
+
+    const row = await findEmployerRecord(email);
+    const company = clean(getField(row, ["company_name", "company", "business_name", "employer_name"], readStorage(COMPANY_KEYS))) || "Company / Employer";
+    const companyEmail = clean(getField(row, ["email", "company_email", "contact_email", "employer_email"], email)).toLowerCase();
+    const logoRaw = directLogoValue(row);
+    const logo = await resolveLogoUrl(logoRaw);
+
+    writeStorage("employerEmail", companyEmail);
+    writeStorage("employerCompanyName", company);
+    writeStorage("companyName", company);
+    writeStorage("companyEmail", companyEmail);
+    if(logo) writeStorage("employerLogo", logo);
+
+    try{ if(companyNameInput && company) companyNameInput.value = company; }catch(_err){}
+    try{ if(companyEmailInput && companyEmail) companyEmailInput.value = companyEmail; }catch(_err){}
+
+    const identity = { loggedIn:true, company, email:companyEmail, logo };
+    renderDropdown(identity);
+    return identity;
+  }
+
+  async function logoutEmployer(){
+    const logoutBtn = byId("subscribeEmployerLogoutBtn");
+    if(logoutBtn){
+      logoutBtn.disabled = true;
+      logoutBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i><span>Logging out</span>';
+    }
+
+    const EXTRA_LOGOUT_KEYS = [
+      "lastSubscribedEmail",
+      "lastSubscribedCompanyName",
+      "loggedInEmployerEmail",
+      "employerEmail",
+      "companyEmail",
+      "loginEmployerEmail",
+      "employer_email",
+      "jobspacelinkEmployerEmail",
+      "JSL_EMPLOYER_EMAIL",
+      "JSL_LOGGED_IN_EMPLOYER_EMAIL",
+      "loggedInCompanyName",
+      "companyName",
+      "employerCompanyName",
+      "company_name",
+      "jobspacelinkEmployerCompanyName",
+      "JSL_EMPLOYER_COMPANY",
+      "JSL_LOGGED_IN_COMPANY_NAME",
+      "loggedInEmployerLogo",
+      "employerLogo",
+      "companyLogo",
+      "company_logo",
+      "jobspacelinkEmployerLogo",
+      "companyLogoUrl",
+      "company_logo_url",
+      "logo_url",
+      "JSL_EMPLOYER_LOGO",
+      "JSL_LOGGED_IN_COMPANY_LOGO",
+      "JSL_EMPLOYER_SESSION",
+      "JSL_EMPLOYER_ACCOUNT",
+      "JSL_LOGGED_IN_EMPLOYER",
+      "jobSpaceLink_employer_session",
+      "jobSpaceLink_employer_account",
+      "jobspacelink_employer_session",
+      "employerSession",
+      "employer_account",
+      "loggedInEmployer",
+      "currentEmployer",
+      "companySession",
+      "employer",
+      "loggedInEmployerId",
+      "employerId",
+      "employerUserId",
+      "JSL_EMPLOYER_ID",
+      "JSL_LOGGED_IN_EMPLOYER_ID"
+    ];
+
+    function clearKeyEverywhere(key){
+      try{ localStorage.removeItem(key); }catch(_err){}
+      try{ sessionStorage.removeItem(key); }catch(_err){}
+    }
+
+    try{
+      const client = getSupabaseClient();
+      if(client && client.auth && typeof client.auth.signOut === "function"){
+        await client.auth.signOut();
+      }
+    }catch(error){
+      console.warn("Employer logout warning:", error);
+    }
+
+    clearStorage(EMAIL_KEYS);
+    clearStorage(COMPANY_KEYS);
+    clearStorage(LOGO_KEYS);
+    EXTRA_LOGOUT_KEYS.forEach(clearKeyEverywhere);
+
+    try{ localStorage.setItem("JSL_EMPLOYER_LOGOUT_TS", String(Date.now())); }catch(_err){}
+    try{ sessionStorage.setItem("JSL_EMPLOYER_LOGOUT_TS", String(Date.now())); }catch(_err){}
+
+    try{ if(companyNameInput) companyNameInput.value = ""; }catch(_err){}
+    try{ if(companyEmailInput) companyEmailInput.value = ""; }catch(_err){}
+    try{ if(cardNameInput) cardNameInput.value = ""; }catch(_err){}
+    try{ if(cardNumberInput) cardNumberInput.value = ""; }catch(_err){}
+    try{ if(expiryInput) expiryInput.value = ""; }catch(_err){}
+    try{ if(cvcInput) cvcInput.value = ""; }catch(_err){}
+
+    renderDropdown({ loggedIn:false });
+    setDropdownOpen(false);
+
+    try{
+      window.dispatchEvent(new CustomEvent("jsl-employer-logout", {
+        detail: { source:"subscribe-dropdown", redirect:"index.html" }
+      }));
+    }catch(_err){}
+
+    window.location.replace("index.html");
+  }
+
+  function bindEmployerDropdown(){
+    const btn = byId("subscribeEmployerAccountBtn");
+    const dropdown = byId("subscribeEmployerAccountDropdown");
+    const logoutBtn = byId("subscribeEmployerLogoutBtn");
+    if(!btn || !dropdown || btn.__subscribeEmployerDropdownBound) return;
+    btn.__subscribeEmployerDropdownBound = true;
+
+    btn.addEventListener("click", async function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      await loadEmployerIdentity();
+      setDropdownOpen(!dropdown.classList.contains("open"));
+    });
+
+    dropdown.addEventListener("click", function(event){
+      event.stopPropagation();
+    });
+
+    if(logoutBtn && !logoutBtn.__subscribeEmployerLogoutBound){
+      logoutBtn.__subscribeEmployerLogoutBound = true;
+      logoutBtn.addEventListener("click", function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        logoutEmployer();
+      });
+    }
+
+    document.addEventListener("click", function(){ setDropdownOpen(false); });
+    document.addEventListener("keydown", function(event){ if(event.key === "Escape") setDropdownOpen(false); });
+  }
+
+  async function boot(){
+    bindEmployerDropdown();
+    await loadEmployerIdentity();
+
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once:true });
+  else boot();
+
+  window.addEventListener("load", function(){
+    setTimeout(boot, 200);
+    setTimeout(boot, 1000);
+  }, { once:true });
+
+  try{
+    const client = getSupabaseClient();
+    if(client && client.auth && typeof client.auth.onAuthStateChange === "function"){
+      client.auth.onAuthStateChange(function(){
+        setTimeout(boot, 80);
+      });
+    }
+  }catch(_err){}
+
+  window.refreshSubscribeEmployerDropdown = boot;
+})();
+</script>
+
+
+<!-- ============================================================
+   FINAL PATCH: Subscribe dropdown logged-in company logo
+   - Uses the logged-in employer/company email or user id.
+   - Loads logo first from employer_company_profiles, then employers, then saved session storage.
+   - Replaces the employer icon with the company logo in the header account button and dropdown profile card.
+============================================================ -->
+<style id="final-subscribe-loggedin-company-logo-css">
+  #subscribeEmployerAccountBtn.has-account-logo #subscribeEmployerAccountLogo{
+    display:block !important;
+  }
+
+  #subscribeEmployerAccountBtn.has-account-logo > i{
+    display:none !important;
+  }
+
+  #subscribeEmployerAccountBtn.has-account-logo{
+    background:linear-gradient(135deg,#020617,#111827) !important;
+    border-color:rgba(0,198,255,0.55) !important;
+    box-shadow:0 0 18px rgba(0,198,255,0.22) !important;
+  }
+
+  #subscribeEmployerAccountLogo{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    padding:3px !important;
+    border-radius:12px !important;
+    background:transparent !important;
+  }
+
+  #subscribeEmployerDropdownLogoWrap.has-logo #subscribeEmployerDropdownLogo{
+    display:block !important;
+  }
+
+  #subscribeEmployerDropdownLogoWrap.has-logo #subscribeEmployerDropdownLogoFallback{
+    display:none !important;
+  }
+
+  #subscribeEmployerDropdownLogoWrap.has-logo{
+    background:linear-gradient(135deg,#020617,#111827) !important;
+    border-color:rgba(0,198,255,0.50) !important;
+    box-shadow:0 0 22px rgba(0,198,255,0.18) !important;
+  }
+
+  #subscribeEmployerDropdownLogo{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    padding:4px !important;
+    border-radius:14px !important;
+    background:transparent !important;
+  }
+</style>
+
+
+<style id="subscribe-choose-portal-light-theme-css">
+/* ============================================================
+   CHOOSE PORTAL STYLE PATCH FOR SUBSCRIBE PAGE
+   Applies the attached Choose Portal white background, navy
+   typography, visible blue/navy icon treatment, and clean header
+   styling while preserving the existing subscription form IDs,
+   Supabase logic, account dropdown behavior, and JavaScript.
+============================================================ */
+:root{
+  --bank-white:#ffffff;
+  --bank-soft:#f5f5f5;
+  --bank-soft-2:#f7f7f7;
+  --bank-line:#e6e8ec;
+  --bank-navy:#012169;
+  --bank-blue:#003a70;
+  --bank-cyan:#0ea5e9;
+  --bank-text:#1f2937;
+  --bank-muted:#4b5563;
+  --bank-link:#0057b8;
+}
+
+/* Match Choose Portal font style without breaking Font Awesome */
+*,
+*::before,
+*::after{
+  font-family:Arial, Helvetica, "Segoe UI", sans-serif !important;
+}
+
+.fa,
+.fas,
+.fa-solid,
+.fa-regular,
+.far,
+.fa-brands,
+.fab,
+i[class^="fa-"],
+i[class*=" fa-"],
+.fa::before,
+.fas::before,
+.fa-solid::before,
+i[class^="fa-"]::before,
+i[class*=" fa-"]::before{
+  font-family:"Font Awesome 6 Free" !important;
+  font-style:normal !important;
+  font-variant:normal !important;
+  line-height:1 !important;
+  text-rendering:auto !important;
+  -webkit-font-smoothing:antialiased !important;
+  -moz-osx-font-smoothing:grayscale !important;
+}
+
+.fa-solid,
+.fas,
+i.fa-solid,
+i.fas,
+.fa-solid::before,
+.fas::before,
+i.fa-solid::before,
+i.fas::before{
+  font-weight:900 !important;
+}
+
+.fa-regular,
+.far,
+i.fa-regular,
+i.far,
+.fa-regular::before,
+.far::before,
+i.fa-regular::before,
+i.far::before{
+  font-family:"Font Awesome 6 Free" !important;
+  font-weight:400 !important;
+}
+
+.fa-brands,
+.fab,
+i.fa-brands,
+i.fab,
+.fa-brands::before,
+.fab::before,
+i.fa-brands::before,
+i.fab::before{
+  font-family:"Font Awesome 6 Brands" !important;
+  font-weight:400 !important;
+}
+
+/* White background like Choose Portal reference */
+html,
+body,
+body.subscribe-page{
+  background:var(--bank-white) !important;
+  color:var(--bank-text) !important;
+}
+
+body::before{
+  display:none !important;
+  content:none !important;
+}
+
+/* ============================================================
+   HEADER - CHOOSE PORTAL LIGHT STYLE
+============================================================ */
+header{
+  background:var(--bank-white) !important;
+  border-bottom:1px solid var(--bank-line) !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+header .logo img{
+  filter:none !important;
+}
+
+/* Main desktop nav text */
+header nav > a,
+header nav .nav-main-link{
+  color:var(--bank-navy) !important;
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  font-weight:500 !important;
+  letter-spacing:0 !important;
+  text-decoration:none !important;
+}
+
+header nav > a::before,
+header nav .nav-main-link::before{
+  opacity:0 !important;
+  background:transparent !important;
+}
+
+header nav > a:hover,
+header nav > a:focus-visible,
+header nav .nav-main-link:hover,
+header nav .nav-main-link:focus-visible,
+.nav-dropdown.open .nav-main-link{
+  color:#000000 !important;
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  text-decoration:underline !important;
+  text-underline-offset:4px !important;
+  transform:none !important;
+  outline:none !important;
+}
+
+/* Strong visible navigation icons like the Choose Portal screenshot */
+header nav > a > i,
+header nav .nav-main-link > i,
+.nav-dropdown-menu a > i{
+  display:inline-grid !important;
+  place-items:center !important;
+  flex:0 0 auto !important;
+  width:24px !important;
+  min-width:24px !important;
+  height:24px !important;
+  margin:0 7px 0 0 !important;
+  padding:0 !important;
+  border-radius:8px !important;
+  color:var(--bank-blue) !important;
+  background:rgba(14,165,233,0.10) !important;
+  border:1px solid rgba(14,165,233,0.26) !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  opacity:1 !important;
+  transform:none !important;
+  overflow:visible !important;
+}
+
+header nav > a > i::before,
+header nav .nav-main-link > i::before,
+.nav-dropdown-menu a > i::before{
+  color:inherit !important;
+  font-size:1rem !important;
+  line-height:1 !important;
+}
+
+header nav > a,
+header nav .nav-main-link{
+  gap:0 !important;
+  padding-left:7px !important;
+  padding-right:9px !important;
+  min-height:36px !important;
+}
+
+/* Nav and dropdown icons turn black on hover without hover background */
+header nav > a:hover > i,
+header nav > a:focus-visible > i,
+header nav .nav-main-link:hover > i,
+header nav .nav-main-link:focus-visible > i,
+.nav-dropdown.open .nav-main-link > i,
+.nav-dropdown-menu a:hover > i,
+.nav-dropdown-menu a:focus-visible > i{
+  color:#000000 !important;
+  background:rgba(0,0,0,0.045) !important;
+  border-color:rgba(0,0,0,0.12) !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  transform:none !important;
+}
+
+/* About dropdown button and menu */
+.nav-dropdown-toggle{
+  width:30px !important;
+  min-width:30px !important;
+  height:30px !important;
+  min-height:30px !important;
+  border-radius:8px !important;
+  margin-left:2px !important;
+  color:var(--bank-navy) !important;
+  background:rgba(14,165,233,0.06) !important;
+  border:1px solid rgba(14,165,233,0.18) !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+
+.nav-dropdown-toggle i,
+.nav-dropdown-toggle i::before{
+  color:inherit !important;
+  text-shadow:none !important;
+}
+
+.nav-dropdown-toggle:hover,
+.nav-dropdown-toggle:focus-visible{
+  color:#000000 !important;
+  background:rgba(0,0,0,0.045) !important;
+  border-color:rgba(0,0,0,0.12) !important;
+  outline:none !important;
+}
+
+.nav-dropdown-menu{
+  background:var(--bank-white) !important;
+  border:1px solid var(--bank-line) !important;
+  box-shadow:0 12px 28px rgba(1,33,105,0.10) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  z-index:2200 !important;
+}
+
+.nav-dropdown-menu a{
+  color:var(--bank-navy) !important;
+  background:var(--bank-white) !important;
+  border-color:transparent !important;
+  font-weight:500 !important;
+  text-shadow:none !important;
+  text-decoration:none !important;
+  gap:0 !important;
+  padding:11px 14px !important;
+}
+
+.nav-dropdown-menu a > i{
+  width:24px !important;
+  min-width:24px !important;
+  height:24px !important;
+  margin-right:10px !important;
+  font-size:1rem !important;
+}
+
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a:focus-visible{
+  color:#000000 !important;
+  background:var(--bank-white) !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+  text-decoration:underline !important;
+  text-underline-offset:4px !important;
+  transform:none !important;
+  outline:none !important;
+}
+
+/* Header auth/account button keeps behavior but uses the same clean blue/purple button family */
+header .auth-buttons a,
+header .auth-buttons button,
+header .auth-buttons .subscribe-employer-icon-btn,
+.subscribe-employer-icon-btn{
+  background:linear-gradient(135deg,#20bdf5,#6d5df6) !important;
+  color:#ffffff !important;
+  border:1px solid rgba(14,165,233,0.26) !important;
+  box-shadow:0 8px 18px rgba(37,99,235,0.18) !important;
+  text-shadow:none !important;
+  text-decoration:none !important;
+}
+
+header .auth-buttons a:hover,
+header .auth-buttons a:focus-visible,
+header .auth-buttons button:hover,
+header .auth-buttons button:focus-visible,
+header .auth-buttons .subscribe-employer-icon-btn:hover,
+header .auth-buttons .subscribe-employer-icon-btn:focus-visible,
+.subscribe-employer-icon-btn:hover,
+.subscribe-employer-icon-btn:focus-visible{
+  background:linear-gradient(135deg,#18b8f2,#5d55ee) !important;
+  color:#ffffff !important;
+  border-color:rgba(14,165,233,0.36) !important;
+  box-shadow:0 10px 24px rgba(37,99,235,0.24) !important;
+  transform:translateY(-1px) !important;
+  outline:none !important;
+}
+
+header .auth-buttons a i,
+header .auth-buttons button i,
+.subscribe-employer-icon-btn i{
+  color:#ffffff !important;
+  text-shadow:none !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
+
+/* Mobile panel follows the same white / navy style */
+.mobile-panel{
+  background:var(--bank-white) !important;
+  border-top:1px solid var(--bank-line) !important;
+  border-bottom:1px solid var(--bank-line) !important;
+  box-shadow:0 12px 28px rgba(1,33,105,0.10) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.mobile-panel .mnav a,
+.mobile-panel .mnav-main-link,
+.mobile-panel .mnav-toggle{
+  color:var(--bank-navy) !important;
+  background:var(--bank-soft) !important;
+  border:1px solid var(--bank-line) !important;
+  font-weight:500 !important;
+  text-shadow:none !important;
+  box-shadow:none !important;
+}
+
+.mobile-panel .mnav a:hover,
+.mobile-panel .mnav-main-link:hover,
+.mobile-panel .mnav-toggle:hover{
+  color:#000000 !important;
+  background:var(--bank-white) !important;
+  text-decoration:underline !important;
+  text-underline-offset:4px !important;
+  transform:none !important;
+}
+
+.mobile-panel .mnav-left > i{
+  display:inline-grid !important;
+  place-items:center !important;
+  flex:0 0 auto !important;
+  width:24px !important;
+  min-width:24px !important;
+  height:24px !important;
+  border-radius:8px !important;
+  color:var(--bank-blue) !important;
+  background:rgba(14,165,233,0.10) !important;
+  border:1px solid rgba(14,165,233,0.22) !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+
+.mobile-panel .mnav-left > i::before{
+  color:inherit !important;
+  font-size:1rem !important;
+}
+
+.mobile-panel .mnav a:hover .mnav-left > i,
+.mobile-panel .mnav-main-link:hover .mnav-left > i{
+  color:#000000 !important;
+  background:rgba(0,0,0,0.045) !important;
+  border-color:rgba(0,0,0,0.12) !important;
+}
+
+.mobile-panel .mnav-toggle > i,
+.mobile-panel .mnav-toggle > i::before,
+.mobile-panel .mnav-toggle .mnav-caret,
+.mobile-panel .mnav-toggle .mnav-caret::before{
+  color:var(--bank-navy) !important;
+  text-shadow:none !important;
+}
+
+.mobile-panel .mnav a .fa-arrow-right,
+.mobile-panel .mnav-main-link .fa-arrow-right{
+  color:var(--bank-navy) !important;
+}
+
+.mobile-panel .mnav-submenu a{
+  background:var(--bank-white) !important;
+}
+
+/* ============================================================
+   SUBSCRIBE PAGE CONTENT - LIGHT CHOOSE PORTAL LOOK
+============================================================ */
+.wrap{
+  background:var(--bank-white) !important;
+  border:1px solid var(--bank-line) !important;
+  box-shadow:0 12px 28px rgba(1,33,105,0.08) !important;
+  color:var(--bank-text) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.title{
+  color:var(--bank-navy) !important;
+  text-shadow:none !important;
+  font-weight:700 !important;
+  letter-spacing:0 !important;
+}
+
+.title i{
+  color:var(--bank-blue) !important;
+  text-shadow:none !important;
+  filter:none !important;
+}
+
+.sub{
+  color:var(--bank-text) !important;
+  opacity:1 !important;
+  text-shadow:none !important;
+  font-weight:400 !important;
+}
+
+.sub b{
+  color:var(--bank-navy) !important;
+  font-weight:700 !important;
+}
+
+.card{
+  background:var(--bank-white) !important;
+  border:1px solid var(--bank-line) !important;
+  box-shadow:0 8px 20px rgba(1,33,105,0.06) !important;
+  color:var(--bank-text) !important;
+}
+
+.plan{
+  background:var(--bank-soft) !important;
+  border:1px solid var(--bank-line) !important;
+  color:var(--bank-navy) !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+
+.plan i{
+  color:var(--bank-blue) !important;
+  text-shadow:none !important;
+}
+
+.plan strong{
+  color:var(--bank-navy) !important;
+}
+
+label{
+  color:var(--bank-navy) !important;
+  font-weight:700 !important;
+  text-shadow:none !important;
+}
+
+input{
+  background:var(--bank-white) !important;
+  color:var(--bank-text) !important;
+  border:1px solid #cfd8e3 !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+
+input::placeholder{
+  color:#9aa4b2 !important;
+}
+
+input:focus{
+  outline:none !important;
+  border-color:var(--bank-cyan) !important;
+  box-shadow:0 0 0 4px rgba(14,165,233,0.12) !important;
+  background:var(--bank-white) !important;
+}
+
+input[readonly]{
+  background:var(--bank-soft-2) !important;
+  color:var(--bank-muted) !important;
+}
+
+#statusBtn,
+#payBtn,
+#exitBtn{
+  color:#ffffff !important;
+  text-shadow:none !important;
+  border:none !important;
+  font-weight:700 !important;
+}
+
+#statusBtn i,
+#payBtn i,
+#exitBtn i{
+  color:#ffffff !important;
+  text-shadow:none !important;
+  filter:none !important;
+}
+
+#statusBtn{
+  background:linear-gradient(135deg,#20bdf5,#2563eb) !important;
+  box-shadow:0 8px 18px rgba(37,99,235,0.18) !important;
+}
+
+#payBtn{
+  background:linear-gradient(135deg,#20bdf5,#6d5df6) !important;
+  box-shadow:0 8px 18px rgba(37,99,235,0.20) !important;
+}
+
+#exitBtn{
+  background:linear-gradient(135deg,#6b7280,#9ca3af) !important;
+  box-shadow:0 8px 16px rgba(107,114,128,0.14) !important;
+}
+
+#statusBtn:hover:not(:disabled),
+#payBtn:hover:not(:disabled),
+#exitBtn:hover:not(:disabled){
+  transform:translateY(-1px) !important;
+  filter:brightness(1.03) !important;
+}
+
+#msg{
+  color:var(--bank-text) !important;
+}
+
+.note{
+  color:var(--bank-muted) !important;
+}
+
+#msg.success,
+.msg.success{
+  background:#ecfdf5 !important;
+  border:1px solid #bbf7d0 !important;
+  color:#166534 !important;
+}
+
+#msg.error,
+.msg.error{
+  background:#fef2f2 !important;
+  border:1px solid #fecaca !important;
+  color:#991b1b !important;
+}
+
+/* Account dropdown still opens/closes exactly the same, only restyled light */
+.subscribe-employer-account-dropdown,
+.subscribe-employer-account-dropdown.is-logged-in,
+.subscribe-employer-account-dropdown.is-logged-out{
+  background:var(--bank-white) !important;
+  border:1px solid var(--bank-line) !important;
+  box-shadow:0 16px 34px rgba(1,33,105,0.12) !important;
+  color:var(--bank-text) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.subscribe-employer-dropdown-profile,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-profile{
+  background:var(--bank-soft) !important;
+  border:1px solid var(--bank-line) !important;
+  box-shadow:none !important;
+}
+
+.subscribe-employer-dropdown-logo-wrap,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logo-wrap{
+  background:var(--bank-white) !important;
+  border:1px solid var(--bank-line) !important;
+  box-shadow:0 6px 14px rgba(1,33,105,0.08) !important;
+}
+
+.subscribe-employer-dropdown-logo-wrap img,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-logo-wrap img,
+#subscribeEmployerDropdownLogo{
+  background:transparent !important;
+}
+
+.subscribe-employer-dropdown-label{
+  color:var(--bank-muted) !important;
+}
+
+.subscribe-employer-dropdown-company,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-company{
+  color:var(--bank-navy) !important;
+  font-weight:700 !important;
+}
+
+.subscribe-employer-dropdown-email{
+  color:var(--bank-muted) !important;
+}
+
+.subscribe-employer-dropdown-item,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item{
+  background:var(--bank-white) !important;
+  border:1px solid var(--bank-line) !important;
+  color:var(--bank-navy) !important;
+  box-shadow:none !important;
+  text-decoration:none !important;
+}
+
+.subscribe-employer-dropdown-item i,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item i{
+  color:var(--bank-blue) !important;
+  text-shadow:none !important;
+  filter:none !important;
+}
+
+.subscribe-employer-dropdown-item:hover,
+.subscribe-employer-dropdown-item:focus,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item:hover,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-item:focus{
+  background:var(--bank-white) !important;
+  color:#000000 !important;
+  border-color:var(--bank-line) !important;
+  text-decoration:underline !important;
+  text-underline-offset:4px !important;
+  transform:none !important;
+  outline:none !important;
+}
+
+.subscribe-employer-dropdown-item:hover i,
+.subscribe-employer-dropdown-item:focus i{
+  color:#000000 !important;
+}
+
+.subscribe-employer-dropdown-login,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login{
+  background:linear-gradient(135deg,#20bdf5,#6d5df6) !important;
+  border-color:rgba(14,165,233,0.26) !important;
+  color:#ffffff !important;
+  box-shadow:0 8px 18px rgba(37,99,235,0.18) !important;
+}
+
+.subscribe-employer-dropdown-login i,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login i{
+  color:#ffffff !important;
+}
+
+.subscribe-employer-dropdown-login:hover,
+.subscribe-employer-dropdown-login:focus,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login:hover,
+.subscribe-employer-account-dropdown.is-logged-out .subscribe-employer-dropdown-login:focus{
+  background:linear-gradient(135deg,#18b8f2,#5d55ee) !important;
+  color:#ffffff !important;
+  text-decoration:none !important;
+}
+
+.subscribe-employer-dropdown-logout{
+  background:linear-gradient(135deg,#6b7280,#9ca3af) !important;
+  border-color:rgba(107,114,128,0.20) !important;
+  color:#ffffff !important;
+}
+
+.subscribe-employer-dropdown-logout i{
+  color:#ffffff !important;
+}
+
+/* Dark-blue final icon color, matching the latest Choose Portal icon patch */
+i.fa-solid,
+i.fa-regular,
+i.fa-brands,
+header nav > a i,
+header nav .nav-main-link i,
+.nav-dropdown-toggle i,
+.nav-dropdown-menu a i,
+.mobile-panel .mnav a i,
+.mobile-panel .mnav-main-link i,
+.mobile-panel .mnav-toggle i,
+.mobile-panel .mnav-left i,
+.title i,
+.plan i,
+header .auth-buttons a i,
+header .auth-buttons button i{
+  text-shadow:none !important;
+  filter:none !important;
+}
+
+/* Responsive tuning so the stronger icons do not crowd the header */
+@media (min-width:1024px) and (max-width:1439px){
+  header nav > a,
+  header nav .nav-main-link{
+    padding-left:5px !important;
+    padding-right:6px !important;
+  }
+
+  header nav > a > i,
+  header nav .nav-main-link > i{
+    width:20px !important;
+    min-width:20px !important;
+    height:20px !important;
+    margin-right:5px !important;
+  }
+
+  header nav > a > i::before,
+  header nav .nav-main-link > i::before{
+    font-size:0.86rem !important;
+  }
+
+  .nav-dropdown-toggle{
+    width:25px !important;
+    min-width:25px !important;
+    height:25px !important;
+  }
+}
+
+@media (min-width:769px) and (max-width:1023px){
+  header nav > a,
+  header nav .nav-main-link{
+    padding-left:3px !important;
+    padding-right:4px !important;
+  }
+
+  header nav > a > i,
+  header nav .nav-main-link > i{
+    width:17px !important;
+    min-width:17px !important;
+    height:17px !important;
+    margin-right:3px !important;
+    border-radius:6px !important;
+  }
+
+  header nav > a > i::before,
+  header nav .nav-main-link > i::before{
+    font-size:0.72rem !important;
+  }
+
+  .nav-dropdown-toggle{
+    width:20px !important;
+    min-width:20px !important;
+    height:20px !important;
+    border-radius:6px !important;
+  }
+}
+
+@media (max-width:768px){
+  .mobile-panel .mnav-left > i{
+    width:23px !important;
+    min-width:23px !important;
+    height:23px !important;
+  }
+}
+
+@media (max-width:480px){
+  .mobile-panel .mnav-left > i{
+    width:21px !important;
+    min-width:21px !important;
+    height:21px !important;
+  }
+}
+</style>
+
+<script id="final-subscribe-loggedin-company-logo-script">
+(function(){
+  "use strict";
+
+  var PROFILE_TABLE = "employer_company_profiles";
+  var EMPLOYERS_TABLE = "employers";
+  var EMAIL_KEYS = [
+    "loggedInEmployerEmail", "employerEmail", "companyEmail", "loginEmployerEmail", "employer_email",
+    "jobspacelinkEmployerEmail", "JSL_EMPLOYER_EMAIL", "JSL_LOGGED_IN_EMPLOYER_EMAIL"
+  ];
+  var COMPANY_KEYS = [
+    "loggedInCompanyName", "companyName", "employerCompanyName", "company_name", "jobspacelinkEmployerCompanyName",
+    "JSL_EMPLOYER_COMPANY", "JSL_LOGGED_IN_COMPANY_NAME"
+  ];
+  var LOGO_KEYS = [
+    "loggedInEmployerLogo", "employerLogo", "companyLogo", "company_logo", "jobspacelinkEmployerLogo",
+    "companyLogoUrl", "company_logo_url", "logo_url", "JSL_EMPLOYER_LOGO", "JSL_LOGGED_IN_COMPANY_LOGO"
+  ];
+  var SESSION_OBJECT_KEYS = [
+    "JSL_EMPLOYER_SESSION", "JSL_EMPLOYER_ACCOUNT", "JSL_LOGGED_IN_EMPLOYER",
+    "jobSpaceLink_employer_session", "jobSpaceLink_employer_account", "jobspacelink_employer_session",
+    "employerSession", "employer_account", "loggedInEmployer", "currentEmployer", "companySession", "employer"
+  ];
+  var EMAIL_COLUMNS = ["employer_email", "company_email", "email", "contact_email"];
+  var USER_ID_COLUMNS = ["employer_user_id", "user_id", "auth_user_id", "uid"];
+  var COMPANY_COLUMNS = ["company_name", "company", "business_name", "legal_name", "employer_company_name", "name"];
+  var LOGO_COLUMNS = [
+    "logo_url", "company_logo", "company_logo_url", "logo", "business_logo", "image_url", "picture",
+    "profile_picture", "company_picture", "company_image", "company_profile_url", "company_profile_image",
+    "company_profile", "profile_url", "profile_image_url", "profile_image", "photo_url", "photo", "image",
+    "company_logo_path", "logo_path", "company_profile_path", "profile_path", "image_path",
+    "company_logo_file", "logo_file", "company_profile_file", "profile_file",
+    "company_logo_filename", "logo_filename", "company_profile_filename", "profile_filename",
+    "company_logo_name", "logo_name", "company_profile_name", "profile_name",
+    "company_logo_storage_path", "logo_storage_path", "company_profile_storage_path", "profile_storage_path",
+    "company_logo_public_url", "logo_public_url", "company_profile_public_url", "profile_public_url",
+    "company_logo_signed_url", "logo_signed_url", "company_profile_signed_url", "profile_signed_url"
+  ];
+  var STORAGE_BUCKETS = [
+    "job_pdfs", "company_logos", "company-logos", "employer_logos", "employer-logos",
+    "logos", "public", "images", "avatars", "applicantfile"
+  ];
+
+  function byId(id){ return document.getElementById(id); }
+  function clean(value){ return String(value == null ? "" : value).trim(); }
+  function lowerEmail(value){
+    var v = clean(value).toLowerCase();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? v : "";
+  }
+  function good(value){
+    var v = clean(value);
+    return !!v && v !== "—" && v.toLowerCase() !== "null" && v.toLowerCase() !== "undefined";
+  }
+  function safeJson(value){
+    if (!value) return null;
+    if (typeof value === "object") return value;
+    try{ return JSON.parse(value); }catch(_err){ return null; }
+  }
+  function getNested(obj, path){
+    try{
+      return path.split(".").reduce(function(acc, key){ return acc && acc[key]; }, obj);
+    }catch(_err){ return ""; }
+  }
+  function pick(obj, keys){
+    obj = obj || {};
+    for (var i = 0; i < keys.length; i++){
+      var key = keys[i];
+      if (Object.prototype.hasOwnProperty.call(obj, key) && good(obj[key])) return obj[key];
+      var nested = getNested(obj, key);
+      if (good(nested)) return nested;
+    }
+    return "";
+  }
+  function readStorageKey(key){
+    var value = "";
+    try{ value = clean(localStorage.getItem(key)); if (value) return value; }catch(_err){}
+    try{ value = clean(sessionStorage.getItem(key)); if (value) return value; }catch(_err){}
+    return "";
+  }
+  function readStorage(keys){
+    for (var i = 0; i < keys.length; i++){
+      var value = readStorageKey(keys[i]);
+      if (good(value)) return value;
+    }
+    return "";
+  }
+  function writeStorage(key, value){
+    try{ if (good(value)) localStorage.setItem(key, clean(value)); }catch(_err){}
+  }
+  function readStoredEmployerObject(){
+    var extraEmailKeys = ["email", "company_email", "contact_email", "employer_email", "user.email", "account.email", "profile.email"];
+    var extraCompanyKeys = ["company", "company_name", "companyName", "business_name", "employer_company_name", "name", "user.company", "account.company"];
+    var extraLogoKeys = LOGO_COLUMNS.concat(["logoUrl", "companyLogo", "companyLogoUrl", "avatar", "avatar_url"]);
+
+    for (var i = 0; i < SESSION_OBJECT_KEYS.length; i++){
+      var raw = readStorageKey(SESSION_OBJECT_KEYS[i]);
+      var obj = safeJson(raw);
+      if (!obj) continue;
+      var email = lowerEmail(pick(obj, extraEmailKeys));
+      var company = clean(pick(obj, extraCompanyKeys));
+      var logo = clean(pick(obj, extraLogoKeys));
+      var userId = clean(pick(obj, ["id", "user_id", "employer_user_id", "auth_user_id", "user.id", "account.id"]));
+      if (email || company || logo || userId) return { email:email, company:company, logo:logo, userId:userId };
+    }
+    return { email:"", company:"", logo:"", userId:"" };
+  }
+  function getClient(){
+    try{ if (typeof resolveSupabaseClient === "function") return resolveSupabaseClient(); }catch(_err){}
+    try{ if (window.supabase && typeof window.supabase.from === "function") return window.supabase; }catch(_err){}
+    try{ if (window.supabaseClient && typeof window.supabaseClient.from === "function") return window.supabaseClient; }catch(_err){}
+    return null;
+  }
+  async function getAuthIdentity(){
+    var client = getClient();
+    if (!client || !client.auth || typeof client.auth.getSession !== "function") return { email:"", userId:"" };
+    try{
+      var result = await client.auth.getSession();
+      var user = result && result.data && result.data.session && result.data.session.user;
+      return {
+        email: lowerEmail(user && user.email),
+        userId: clean(user && user.id)
+      };
+    }catch(_err){ return { email:"", userId:"" }; }
+  }
+  async function queryOne(table, column, value){
+    var client = getClient();
+    if (!client || !table || !column || !good(value)) return null;
+    try{
+      var ordered = await client.from(table).select("*").eq(column, value).order("updated_at", { ascending:false }).limit(1);
+      if (!ordered.error && Array.isArray(ordered.data) && ordered.data.length) return ordered.data[0];
+    }catch(_err){}
+    try{
+      var created = await client.from(table).select("*").eq(column, value).order("created_at", { ascending:false }).limit(1);
+      if (!created.error && Array.isArray(created.data) && created.data.length) return created.data[0];
+    }catch(_err){}
+    try{
+      var plain = await client.from(table).select("*").eq(column, value).limit(1);
+      if (!plain.error && Array.isArray(plain.data) && plain.data.length) return plain.data[0];
+    }catch(_err){}
+    return null;
+  }
+  async function findCompanyProfile(identity){
+    identity = identity || {};
+    if (good(identity.userId)){
+      for (var i = 0; i < USER_ID_COLUMNS.length; i++){
+        var rowById = await queryOne(PROFILE_TABLE, USER_ID_COLUMNS[i], identity.userId);
+        if (rowById) return rowById;
+      }
+    }
+    var emails = [];
+    if (identity.email) emails.push(identity.email);
+    var storedEmail = lowerEmail(readStorage(EMAIL_KEYS));
+    if (storedEmail && emails.indexOf(storedEmail) === -1) emails.push(storedEmail);
+
+    for (var e = 0; e < emails.length; e++){
+      for (var c = 0; c < EMAIL_COLUMNS.length; c++){
+        var row = await queryOne(PROFILE_TABLE, EMAIL_COLUMNS[c], emails[e]);
+        if (row) return row;
+      }
+    }
+    return null;
+  }
+  async function findEmployerRow(email){
+    if (!email) return null;
+    for (var i = 0; i < EMAIL_COLUMNS.length; i++){
+      var row = await queryOne(EMPLOYERS_TABLE, EMAIL_COLUMNS[i], email);
+      if (row) return row;
+    }
+    return null;
+  }
+  function isUrl(value){ return /^(https?:|data:|blob:)/i.test(clean(value)); }
+  function isRelativeUrl(value){ return /^(\.\/|\.\.\/|\/)/.test(clean(value)); }
+  async function resolveLogo(rawLogo){
+    var raw = clean(rawLogo);
+    if (!raw) return "";
+    if (isUrl(raw) || isRelativeUrl(raw)) return raw;
+    if (/\.(png|jpe?g|gif|webp|svg|bmp|avif)(\?.*)?$/i.test(raw) && raw.indexOf("/") === -1) return raw;
+
+    var client = getClient();
+    if (!client || !client.storage || typeof client.storage.from !== "function") return raw;
+
+    var candidates = [raw];
+    ["company_logos", "company-logos", "employer_logos", "employer-logos", "logos", "company", "companies"].forEach(function(prefix){
+      candidates.push(prefix + "/" + raw.replace(/^\/+/, ""));
+    });
+
+    for (var i = 0; i < candidates.length; i++){
+      var match = candidates[i].match(/^([^/]+)\/(.+)$/);
+      if (match){
+        try{
+          var direct = client.storage.from(match[1]).getPublicUrl(match[2]);
+          var directUrl = clean(direct && direct.data && direct.data.publicUrl || direct && direct.publicUrl || "");
+          if (directUrl) return directUrl;
+        }catch(_err){}
+      }
+    }
+    for (var b = 0; b < STORAGE_BUCKETS.length; b++){
+      for (var j = 0; j < candidates.length; j++){
+        try{
+          var result = client.storage.from(STORAGE_BUCKETS[b]).getPublicUrl(candidates[j].replace(/^\/+/, ""));
+          var publicUrl = clean(result && result.data && result.data.publicUrl || result && result.publicUrl || "");
+          if (publicUrl) return publicUrl;
+        }catch(_err){}
+      }
+    }
+    return raw;
+  }
+  function applyButtonLogo(logo, company){
+    var btn = byId("subscribeEmployerAccountBtn");
+    var img = byId("subscribeEmployerAccountLogo");
+    var icon = btn ? btn.querySelector("i.fa-building-user") : null;
+    if (!btn || !img) return;
+    if (good(logo)){
+      img.onerror = function(){
+        btn.classList.remove("has-account-logo");
+        if (icon) icon.style.display = "block";
+      };
+      img.referrerPolicy = "no-referrer";
+      img.alt = (company || "Company") + " logo";
+      if (clean(img.getAttribute("src")) !== logo) img.src = logo;
+      btn.classList.add("has-account-logo");
+      btn.classList.remove("is-logged-out");
+      btn.classList.add("is-logged-in");
+      if (icon) icon.style.display = "none";
+      btn.title = company || "Employer account";
+      btn.setAttribute("aria-label", (company || "Employer") + " account menu");
+    }else{
+      btn.classList.remove("has-account-logo");
+      if (icon) icon.style.display = "block";
+    }
+  }
+  function applyDropdownLogo(logo, company){
+    var wrap = byId("subscribeEmployerDropdownLogoWrap");
+    var img = byId("subscribeEmployerDropdownLogo");
+    var icon = byId("subscribeEmployerDropdownLogoFallback");
+    if (!wrap || !img) return;
+    if (good(logo)){
+      img.onerror = function(){
+        wrap.classList.remove("has-logo");
+        if (icon) icon.style.display = "block";
+      };
+      img.referrerPolicy = "no-referrer";
+      img.alt = (company || "Company") + " logo";
+      if (clean(img.getAttribute("src")) !== logo) img.src = logo;
+      wrap.classList.add("has-logo");
+      if (icon) icon.style.display = "none";
+    }else{
+      wrap.classList.remove("has-logo");
+      if (icon) icon.style.display = "block";
+    }
+  }
+  function applyIdentity(identity){
+    identity = identity || {};
+    var dropdown = byId("subscribeEmployerAccountDropdown");
+    var label = byId("subscribeEmployerDropdownLabel");
+    var companyEl = byId("subscribeEmployerDropdownCompany");
+    var emailEl = byId("subscribeEmployerDropdownEmail");
+    var logged = !!lowerEmail(identity.email);
+    var company = clean(identity.company) || "Company / Employer";
+    var email = lowerEmail(identity.email);
+    var logo = clean(identity.logo);
+
+    if (dropdown){
+      dropdown.classList.toggle("is-logged-in", logged);
+      dropdown.classList.toggle("is-logged-out", !logged);
+    }
+    if (logged){
+      if (label) label.textContent = "Logged in account";
+      if (companyEl) companyEl.textContent = company;
+      if (emailEl) emailEl.textContent = email;
+      applyButtonLogo(logo, company);
+      applyDropdownLogo(logo, company);
+    }
+  }
+  async function refreshLoggedInCompanyLogo(){
+    var stored = readStoredEmployerObject();
+    var auth = await getAuthIdentity();
+    var email = lowerEmail(auth.email || stored.email || readStorage(EMAIL_KEYS));
+    var userId = clean(auth.userId || stored.userId);
+    if (!email && !userId) return;
+
+    var profileRow = await findCompanyProfile({ email:email, userId:userId });
+    var employerRow = null;
+    if (email) employerRow = await findEmployerRow(email);
+
+    var company = clean(pick(profileRow, COMPANY_COLUMNS)) || clean(pick(employerRow, COMPANY_COLUMNS)) || clean(stored.company) || clean(readStorage(COMPANY_KEYS)) || "Company / Employer";
+    var identityEmail = lowerEmail(pick(profileRow, EMAIL_COLUMNS)) || lowerEmail(pick(employerRow, EMAIL_COLUMNS)) || email;
+    var rawLogo = clean(pick(profileRow, LOGO_COLUMNS)) || clean(pick(employerRow, LOGO_COLUMNS)) || clean(stored.logo) || clean(readStorage(LOGO_KEYS));
+    var logo = await resolveLogo(rawLogo);
+
+    if (identityEmail) writeStorage("employerEmail", identityEmail);
+    if (company) writeStorage("employerCompanyName", company);
+    if (logo) writeStorage("employerLogo", logo);
+
+    applyIdentity({ email:identityEmail, company:company, logo:logo });
+  }
+  function scheduleRefresh(){
+    clearTimeout(window.__JSLSubscribeCompanyLogoTimer);
+    window.__JSLSubscribeCompanyLogoTimer = setTimeout(refreshLoggedInCompanyLogo, 80);
+    [220, 600, 1200, 2200].forEach(function(delay){ setTimeout(refreshLoggedInCompanyLogo, delay); });
+  }
+  function boot(){ scheduleRefresh(); }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once:true });
+  else boot();
+  window.addEventListener("load", boot, { passive:true });
+  window.addEventListener("focus", boot, { passive:true });
+  window.addEventListener("storage", boot, { passive:true });
+  document.addEventListener("click", function(event){
+    if (event.target && event.target.closest && event.target.closest("#subscribeEmployerAccountBtn, #subscribeEmployerAccountDropdown")){
+      scheduleRefresh();
+    }
+  }, true);
+  try{
+    var client = getClient();
+    if (client && client.auth && typeof client.auth.onAuthStateChange === "function"){
+      client.auth.onAuthStateChange(function(){ scheduleRefresh(); });
+    }
+  }catch(_err){}
+  try{
+    var observer = new MutationObserver(function(){ scheduleRefresh(); });
+    observer.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:["class", "src", "style"] });
+  }catch(_err){}
+
+  window.refreshSubscribeLoggedInCompanyLogo = refreshLoggedInCompanyLogo;
+})();
+</script>
+
+
+<!-- ============================================================
+   FINAL LOGOUT REDIRECT SAFETY PATCH
+   Ensures the employer account dropdown Log out clears the logged-in
+   account/session data first, then redirects to index.html.
+============================================================ -->
+<script id="final-subscribe-logout-clear-and-redirect-patch">
+(function(){
+  "use strict";
+
+  var LOGOUT_KEYS = [
+    "lastSubscribedEmail",
+    "lastSubscribedCompanyName",
+    "loggedInEmployerEmail",
+    "employerEmail",
+    "companyEmail",
+    "loginEmployerEmail",
+    "employer_email",
+    "jobspacelinkEmployerEmail",
+    "JSL_EMPLOYER_EMAIL",
+    "JSL_LOGGED_IN_EMPLOYER_EMAIL",
+    "loggedInCompanyName",
+    "companyName",
+    "employerCompanyName",
+    "company_name",
+    "jobspacelinkEmployerCompanyName",
+    "JSL_EMPLOYER_COMPANY",
+    "JSL_LOGGED_IN_COMPANY_NAME",
+    "loggedInEmployerLogo",
+    "employerLogo",
+    "companyLogo",
+    "company_logo",
+    "jobspacelinkEmployerLogo",
+    "companyLogoUrl",
+    "company_logo_url",
+    "logo_url",
+    "JSL_EMPLOYER_LOGO",
+    "JSL_LOGGED_IN_COMPANY_LOGO",
+    "JSL_EMPLOYER_SESSION",
+    "JSL_EMPLOYER_ACCOUNT",
+    "JSL_LOGGED_IN_EMPLOYER",
+    "jobSpaceLink_employer_session",
+    "jobSpaceLink_employer_account",
+    "jobspacelink_employer_session",
+    "employerSession",
+    "employer_account",
+    "loggedInEmployer",
+    "currentEmployer",
+    "companySession",
+    "employer",
+    "loggedInEmployerId",
+    "employerId",
+    "employerUserId",
+    "JSL_EMPLOYER_ID",
+    "JSL_LOGGED_IN_EMPLOYER_ID"
+  ];
+
+  function clearKey(key){
+    try{ localStorage.removeItem(key); }catch(_err){}
+    try{ sessionStorage.removeItem(key); }catch(_err){}
+  }
+
+  function setTextOrValue(id, value){
+    var el = document.getElementById(id);
+    if(!el) return;
+    if("value" in el) el.value = value || "";
+    else el.textContent = value || "";
+  }
+
+  function resetAccountDisplay(){
+    var dropdown = document.getElementById("subscribeEmployerAccountDropdown");
+    var btn = document.getElementById("subscribeEmployerAccountBtn");
+    var headerLogo = document.getElementById("subscribeEmployerAccountLogo");
+    var dropdownLogo = document.getElementById("subscribeEmployerDropdownLogo");
+    var logoWrap = document.getElementById("subscribeEmployerDropdownLogoWrap");
+
+    if(dropdown){
+      dropdown.classList.remove("open", "is-logged-in");
+      dropdown.classList.add("is-logged-out");
+      dropdown.setAttribute("aria-hidden", "true");
+    }
+
+    if(btn){
+      btn.classList.remove("has-account-logo", "is-logged-in");
+      btn.classList.add("is-logged-out");
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-label", "Employer account menu");
+      btn.title = "Employer account";
+    }
+
+    if(headerLogo){
+      headerLogo.removeAttribute("src");
+      headerLogo.setAttribute("hidden", "hidden");
+    }
+
+    if(dropdownLogo){
+      dropdownLogo.src = "JOBSPACELINK.png";
+      dropdownLogo.alt = "Job Space Link logo";
+    }
+
+    if(logoWrap){
+      logoWrap.classList.add("has-logo");
+    }
+
+    setTextOrValue("subscribeEmployerDropdownLabel", "");
+    setTextOrValue("subscribeEmployerDropdownCompany", "No login account");
+    setTextOrValue("subscribeEmployerDropdownEmail", "");
+    setTextOrValue("companyName", "");
+    setTextOrValue("companyEmail", "");
+    setTextOrValue("cardName", "");
+    setTextOrValue("cardNumber", "");
+    setTextOrValue("expiry", "");
+    setTextOrValue("cvc", "");
+  }
+
+  async function signOutSupabase(){
+    try{
+      var client = null;
+      if(typeof resolveSupabaseClient === "function") client = resolveSupabaseClient();
+      else if(window.supabaseClient && window.supabaseClient.auth) client = window.supabaseClient;
+      else if(window.supabase && window.supabase.auth) client = window.supabase;
+      if(client && client.auth && typeof client.auth.signOut === "function"){
+        await client.auth.signOut();
+      }
+    }catch(error){
+      console.warn("Employer logout warning:", error);
+    }
+  }
+
+  async function clearEmployerLoginAndRedirect(){
+    var logoutBtn = document.getElementById("subscribeEmployerLogoutBtn");
+    if(logoutBtn){
+      logoutBtn.disabled = true;
+      logoutBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i><span>Logging out</span>';
+    }
+
+    await signOutSupabase();
+
+    LOGOUT_KEYS.forEach(clearKey);
+    try{ localStorage.setItem("JSL_EMPLOYER_LOGOUT_TS", String(Date.now())); }catch(_err){}
+    try{ sessionStorage.setItem("JSL_EMPLOYER_LOGOUT_TS", String(Date.now())); }catch(_err){}
+
+    resetAccountDisplay();
+
+    try{
+      window.dispatchEvent(new CustomEvent("jsl-employer-logout", {
+        detail: { source:"subscribe-dropdown", redirect:"index.html" }
+      }));
+    }catch(_err){}
+
+    window.location.replace("index.html");
+  }
+
+  function bindLogoutRedirect(){
+    var logoutBtn = document.getElementById("subscribeEmployerLogoutBtn");
+    if(!logoutBtn || logoutBtn.__finalSubscribeLogoutRedirectBound) return;
+    logoutBtn.__finalSubscribeLogoutRedirectBound = true;
+
+    logoutBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      if(typeof event.stopImmediatePropagation === "function") event.stopImmediatePropagation();
+      clearEmployerLoginAndRedirect();
+    }, true);
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", bindLogoutRedirect, { once:true });
+  }else{
+    bindLogoutRedirect();
+  }
+
+  window.addEventListener("load", bindLogoutRedirect, { once:true });
+})();
+</script>
+
+
+<!-- ============================================================
+   RESTORE PATCH: logged-in employer account dropdown display/style
+   Restores the logged-in account dropdown without changing the
+   subscribe form, payment, status, exit, or logout behavior.
+============================================================ -->
+<style id="restore-subscribe-logged-in-account-dropdown-style">
+  header,
+  header .auth-buttons.subscribe-employer-auth-shell,
+  .subscribe-employer-account-wrap{
+    overflow:visible !important;
+  }
+
+  header .auth-buttons.subscribe-employer-auth-shell{
+    position:relative !important;
+    z-index:2800 !important;
+  }
+
+  .subscribe-employer-account-wrap{
+    position:relative !important;
+    z-index:2801 !important;
+  }
+
+  #subscribeEmployerAccountBtn.subscribe-employer-icon-btn{
+    position:relative !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    border-radius:14px !important;
+    border:1px solid rgba(56,189,248,0.34) !important;
+    background:linear-gradient(135deg, rgba(0,198,255,0.24), rgba(124,58,237,0.24)) !important;
+    color:#ffffff !important;
+    box-shadow:0 0 14px rgba(0,198,255,0.14) !important;
+    cursor:pointer !important;
+    padding:0 !important;
+    overflow:hidden !important;
+  }
+
+  #subscribeEmployerAccountBtn.subscribe-employer-icon-btn:hover,
+  #subscribeEmployerAccountBtn.subscribe-employer-icon-btn:focus-visible,
+  #subscribeEmployerAccountBtn.subscribe-employer-icon-btn[aria-expanded="true"]{
+    border-color:rgba(56,189,248,0.58) !important;
+    box-shadow:0 0 20px rgba(0,198,255,0.26) !important;
+    outline:none !important;
+    transform:none !important;
+  }
+
+  #subscribeEmployerAccountBtn.subscribe-employer-icon-btn > i{
+    display:block !important;
+    color:#ffffff !important;
+    font-size:1.12rem !important;
+    width:auto !important;
+    min-width:0 !important;
+    height:auto !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    border-radius:0 !important;
+    line-height:1 !important;
+  }
+
+  #subscribeEmployerAccountBtn.is-logged-in{
+    background:linear-gradient(135deg, #020617, #111827) !important;
+    border-color:rgba(0,198,255,0.58) !important;
+    box-shadow:0 0 18px rgba(0,198,255,0.22) !important;
+  }
+
+  #subscribeEmployerAccountBtn.has-account-logo #subscribeEmployerAccountLogo{
+    display:block !important;
+  }
+
+  #subscribeEmployerAccountBtn.has-account-logo > i{
+    display:none !important;
+  }
+
+  #subscribeEmployerAccountLogo{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    padding:4px !important;
+    border-radius:inherit !important;
+    background:#071325 !important;
+  }
+
+  #subscribeEmployerAccountDropdown.subscribe-employer-account-dropdown{
+    position:absolute !important;
+    top:calc(100% + 12px) !important;
+    right:0 !important;
+    z-index:5000 !important;
+  }
+
+  #subscribeEmployerAccountDropdown.subscribe-employer-account-dropdown.open{
+    display:flex !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:auto !important;
+    transform:none !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in{
+    width:min(410px, calc(100vw - 28px)) !important;
+    padding:14px !important;
+    gap:14px !important;
+    border-radius:24px !important;
+    background:linear-gradient(180deg, rgba(7,18,42,0.99), rgba(2,8,24,0.99)) !important;
+    border:1px solid rgba(0,198,255,0.40) !important;
+    box-shadow:0 22px 52px rgba(0,0,0,0.54), 0 0 22px rgba(0,198,255,0.20) !important;
+    backdrop-filter:blur(14px) !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-profile{
+    display:flex !important;
+    align-items:center !important;
+    min-height:94px !important;
+    padding:13px 16px !important;
+    gap:16px !important;
+    border-radius:20px !important;
+    background:linear-gradient(180deg, rgba(8,24,55,0.98), rgba(5,17,39,0.98)) !important;
+    border:1px solid rgba(0,198,255,0.30) !important;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03) !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logo-wrap{
+    width:72px !important;
+    height:72px !important;
+    min-width:72px !important;
+    border-radius:20px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:hidden !important;
+    background:#071325 !important;
+    border:1px solid rgba(0,198,255,0.44) !important;
+    box-shadow:0 10px 24px rgba(0,0,0,0.28) !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logo-wrap img{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    padding:6px !important;
+    border-radius:inherit !important;
+    background:#071325 !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logo-wrap:not(.has-logo) img{
+    display:none !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logo-wrap.has-logo .subscribe-employer-dropdown-logo-fallback{
+    display:none !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logo-fallback{
+    display:block !important;
+    color:#38bdf8 !important;
+    font-size:1.55rem !important;
+    filter:drop-shadow(0 0 10px rgba(56,189,248,0.42)) !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-identity{
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    gap:4px !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-label{
+    display:block !important;
+    color:#7dd3fc !important;
+    font-size:0.72rem !important;
+    font-weight:900 !important;
+    letter-spacing:0.08em !important;
+    text-transform:uppercase !important;
+    line-height:1.15 !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-company{
+    display:block !important;
+    color:#ffffff !important;
+    font-size:1.06rem !important;
+    font-weight:900 !important;
+    line-height:1.16 !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-email{
+    display:block !important;
+    color:#dbeafe !important;
+    font-size:0.86rem !important;
+    font-weight:700 !important;
+    line-height:1.2 !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-menu{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:10px !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-item{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    min-height:50px !important;
+    padding:0 16px !important;
+    border-radius:14px !important;
+    border:1px solid rgba(0,198,255,0.22) !important;
+    background:rgba(2,8,24,0.74) !important;
+    color:#ffffff !important;
+    font-size:0.94rem !important;
+    font-weight:800 !important;
+    gap:12px !important;
+    text-decoration:none !important;
+    width:100% !important;
+    cursor:pointer !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-item:hover,
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-item:focus-visible{
+    background:rgba(0,198,255,0.12) !important;
+    border-color:rgba(0,198,255,0.38) !important;
+    color:#ffffff !important;
+    outline:none !important;
+    transform:none !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-item i{
+    width:20px !important;
+    min-width:20px !important;
+    color:#16c8ff !important;
+    text-align:center !important;
+    filter:drop-shadow(0 0 8px rgba(22,200,255,0.42)) !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-login{
+    display:none !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logout{
+    display:flex !important;
+    background:linear-gradient(180deg, #64748b, #475569) !important;
+    border-color:rgba(203,213,225,0.34) !important;
+    color:#ffffff !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logout:hover,
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logout:focus-visible{
+    background:linear-gradient(180deg, #748399, #536176) !important;
+    border-color:rgba(203,213,225,0.52) !important;
+  }
+
+  #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logout i{
+    color:#ffffff !important;
+    filter:none !important;
+  }
+
+  @media (min-width:1800px){
+    #subscribeEmployerAccountBtn.subscribe-employer-icon-btn{
+      width:46px !important;
+      height:46px !important;
+      min-width:46px !important;
+      border-radius:16px !important;
+    }
+  }
+
+  @media (min-width:1024px) and (max-width:1439px){
+    #subscribeEmployerAccountBtn.subscribe-employer-icon-btn{
+      width:38px !important;
+      height:38px !important;
+      min-width:38px !important;
+      border-radius:13px !important;
+    }
+    #subscribeEmployerAccountDropdown.is-logged-in{
+      width:min(390px, calc(100vw - 22px)) !important;
+    }
+  }
+
+  @media (min-width:769px) and (max-width:1023px){
+    #subscribeEmployerAccountBtn.subscribe-employer-icon-btn{
+      width:34px !important;
+      height:34px !important;
+      min-width:34px !important;
+      border-radius:12px !important;
+    }
+    #subscribeEmployerAccountDropdown.is-logged-in{
+      width:min(360px, calc(100vw - 18px)) !important;
+      right:-2px !important;
+      padding:12px !important;
+    }
+    #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-profile{
+      min-height:82px !important;
+      padding:10px 12px !important;
+      gap:12px !important;
+    }
+    #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-logo-wrap{
+      width:58px !important;
+      height:58px !important;
+      min-width:58px !important;
+      border-radius:16px !important;
+    }
+    #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-company{
+      font-size:0.96rem !important;
+    }
+    #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-email{
+      font-size:0.78rem !important;
+    }
+    #subscribeEmployerAccountDropdown.is-logged-in .subscribe-employer-dropdown-item{
+      min-height:46px !important;
+      font-size:0.84rem !important;
+      padding:0 12px !important;
+    }
+  }
+</style>
+
+<script id="restore-subscribe-logged-in-account-dropdown-behavior">
+(function(){
+  "use strict";
+
+  var EMAIL_KEYS = [
+    "loggedInEmployerEmail", "employerEmail", "companyEmail", "loginEmployerEmail",
+    "employer_email", "jobspacelinkEmployerEmail", "JSL_EMPLOYER_EMAIL",
+    "JSL_LOGGED_IN_EMPLOYER_EMAIL", "lastSubscribedEmail"
+  ];
+
+  var COMPANY_KEYS = [
+    "loggedInCompanyName", "companyName", "employerCompanyName", "company_name",
+    "jobspacelinkEmployerCompanyName", "JSL_EMPLOYER_COMPANY",
+    "JSL_LOGGED_IN_COMPANY_NAME", "lastSubscribedCompanyName"
+  ];
+
+  var LOGO_KEYS = [
+    "loggedInEmployerLogo", "employerLogo", "companyLogo", "company_logo",
+    "jobspacelinkEmployerLogo", "companyLogoUrl", "company_logo_url", "logo_url",
+    "JSL_EMPLOYER_LOGO", "JSL_LOGGED_IN_COMPANY_LOGO"
+  ];
+
+  function byId(id){ return document.getElementById(id); }
+  function clean(value){ return value == null ? "" : String(value).trim(); }
+  function lowerEmail(value){ return clean(value).toLowerCase(); }
+  function good(value){ return !!clean(value) && clean(value).toLowerCase() !== "null" && clean(value).toLowerCase() !== "undefined"; }
+
+  function readOne(key){
+    try{ var v = localStorage.getItem(key); if(good(v)) return clean(v); }catch(_err){}
+    try{ var s = sessionStorage.getItem(key); if(good(s)) return clean(s); }catch(_err){}
+    return "";
+  }
+
+  function readFirst(keys){
+    for(var i = 0; i < keys.length; i++){
+      var v = readOne(keys[i]);
+      if(good(v)) return v;
+    }
+    return "";
+  }
+
+  function getSupabaseClientSafe(){
+    try{
+      if(typeof resolveSupabaseClient === "function") return resolveSupabaseClient();
+    }catch(_err){}
+    try{
+      if(window.supabaseClient && window.supabaseClient.auth) return window.supabaseClient;
+    }catch(_err){}
+    try{
+      if(window.supabase && window.supabase.auth) return window.supabase;
+    }catch(_err){}
+    return null;
+  }
+
+  async function getSessionEmail(){
+    try{
+      var client = getSupabaseClientSafe();
+      if(client && client.auth && typeof client.auth.getSession === "function"){
+        var sessionResult = await client.auth.getSession();
+        var email = lowerEmail(sessionResult && sessionResult.data && sessionResult.data.session && sessionResult.data.session.user && sessionResult.data.session.user.email);
+        if(email) return email;
+      }
+      if(client && client.auth && typeof client.auth.getUser === "function"){
+        var userResult = await client.auth.getUser();
+        var userEmail = lowerEmail(userResult && userResult.data && userResult.data.user && userResult.data.user.email);
+        if(userEmail) return userEmail;
+      }
+    }catch(_err){}
+    return "";
+  }
+
+  function setDropdownOpen(open){
+    var btn = byId("subscribeEmployerAccountBtn");
+    var dropdown = byId("subscribeEmployerAccountDropdown");
+    if(!btn || !dropdown) return;
+    dropdown.classList.toggle("open", !!open);
+    dropdown.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  function setButtonLogo(logo, company){
+    var btn = byId("subscribeEmployerAccountBtn");
+    var img = byId("subscribeEmployerAccountLogo");
+    if(!btn || !img) return;
+
+    btn.classList.add("is-logged-in");
+    btn.classList.remove("is-logged-out");
+    btn.title = company || "Employer account";
+    btn.setAttribute("aria-label", (company || "Employer") + " account menu");
+
+    if(good(logo)){
+      img.hidden = false;
+      img.removeAttribute("hidden");
+      img.referrerPolicy = "no-referrer";
+      img.alt = (company || "Company") + " logo";
+      img.onerror = function(){
+        btn.classList.remove("has-account-logo");
+        img.hidden = true;
+        img.removeAttribute("src");
+      };
+      if(clean(img.getAttribute("src")) !== logo) img.src = logo;
+      btn.classList.add("has-account-logo");
+    }else{
+      btn.classList.remove("has-account-logo");
+      img.hidden = true;
+      img.removeAttribute("src");
+    }
+  }
+
+  function setDropdownLogo(logo, company){
+    var wrap = byId("subscribeEmployerDropdownLogoWrap");
+    var img = byId("subscribeEmployerDropdownLogo");
+    var fallback = byId("subscribeEmployerDropdownLogoFallback");
+    if(!wrap || !img) return;
+
+    if(good(logo)){
+      img.referrerPolicy = "no-referrer";
+      img.alt = (company || "Company") + " logo";
+      img.onerror = function(){
+        wrap.classList.remove("has-logo");
+        if(fallback) fallback.style.display = "block";
+        img.removeAttribute("src");
+      };
+      if(clean(img.getAttribute("src")) !== logo) img.src = logo;
+      wrap.classList.add("has-logo");
+      if(fallback) fallback.style.display = "none";
+    }else{
+      wrap.classList.remove("has-logo");
+      img.removeAttribute("src");
+      if(fallback) fallback.style.display = "block";
+    }
+  }
+
+  function renderLoggedOut(){
+    var btn = byId("subscribeEmployerAccountBtn");
+    var dropdown = byId("subscribeEmployerAccountDropdown");
+    var label = byId("subscribeEmployerDropdownLabel");
+    var companyEl = byId("subscribeEmployerDropdownCompany");
+    var emailEl = byId("subscribeEmployerDropdownEmail");
+    var img = byId("subscribeEmployerAccountLogo");
+    var dLogo = byId("subscribeEmployerDropdownLogo");
+    var dWrap = byId("subscribeEmployerDropdownLogoWrap");
+
+    if(btn){
+      btn.classList.remove("is-logged-in", "has-account-logo");
+      btn.classList.add("is-logged-out");
+      btn.title = "Employer account";
+      btn.setAttribute("aria-label", "Employer account menu");
+    }
+    if(img){ img.hidden = true; img.removeAttribute("src"); }
+    if(dropdown){
+      dropdown.classList.remove("is-logged-in");
+      dropdown.classList.add("is-logged-out");
+    }
+    if(label) label.textContent = "";
+    if(companyEl) companyEl.textContent = "No login account";
+    if(emailEl) emailEl.textContent = "";
+    if(dLogo){ dLogo.src = "JOBSPACELINK.png"; dLogo.alt = "Job Space Link logo"; }
+    if(dWrap) dWrap.classList.add("has-logo");
+    document.body.classList.remove("employer-logged-in");
+  }
+
+  function renderLoggedIn(identity){
+    identity = identity || {};
+    var dropdown = byId("subscribeEmployerAccountDropdown");
+    var label = byId("subscribeEmployerDropdownLabel");
+    var companyEl = byId("subscribeEmployerDropdownCompany");
+    var emailEl = byId("subscribeEmployerDropdownEmail");
+    var company = clean(identity.company) || "Company / Employer";
+    var email = lowerEmail(identity.email) || "Logged in employer";
+    var logo = clean(identity.logo);
+
+    if(dropdown){
+      dropdown.classList.add("is-logged-in");
+      dropdown.classList.remove("is-logged-out");
+    }
+    if(label) label.textContent = "Logged in account";
+    if(companyEl) companyEl.textContent = company;
+    if(emailEl) emailEl.textContent = email;
+    setButtonLogo(logo, company);
+    setDropdownLogo(logo, company);
+    document.body.classList.add("employer-logged-in");
+  }
+
+  async function hydrateEmployerAccount(){
+    try{
+      if(typeof window.refreshSubscribeEmployerDropdown === "function"){
+        var possiblePromise = window.refreshSubscribeEmployerDropdown();
+        if(possiblePromise && typeof possiblePromise.then === "function") await possiblePromise;
+      }
+    }catch(_err){}
+
+    try{
+      if(typeof window.refreshSubscribeLoggedInCompanyLogo === "function"){
+        var logoPromise = window.refreshSubscribeLoggedInCompanyLogo();
+        if(logoPromise && typeof logoPromise.then === "function") await logoPromise;
+      }
+    }catch(_err){}
+
+    var formCompany = clean(byId("companyName") && byId("companyName").value);
+    var formEmail = lowerEmail(byId("companyEmail") && byId("companyEmail").value);
+
+    var email = lowerEmail(readFirst(EMAIL_KEYS)) || formEmail;
+    var sessionEmail = await getSessionEmail();
+    if(sessionEmail) email = sessionEmail;
+
+    var company = clean(readFirst(COMPANY_KEYS)) || formCompany || "Company / Employer";
+    var logo = clean(readFirst(LOGO_KEYS));
+
+    if(email){
+      try{ localStorage.setItem("employerEmail", email); }catch(_err){}
+      try{ localStorage.setItem("companyEmail", email); }catch(_err){}
+      if(company){ try{ localStorage.setItem("employerCompanyName", company); }catch(_err){} }
+      renderLoggedIn({ email:email, company:company, logo:logo });
+      return { loggedIn:true, email:email, company:company, logo:logo };
+    }
+
+    renderLoggedOut();
+    return { loggedIn:false };
+  }
+
+  function bindRestoredDropdown(){
+    var btn = byId("subscribeEmployerAccountBtn");
+    var dropdown = byId("subscribeEmployerAccountDropdown");
+    if(!btn || !dropdown || btn.__restoreSubscribeLoggedInDropdownBound) return;
+    btn.__restoreSubscribeLoggedInDropdownBound = true;
+
+    btn.addEventListener("click", async function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      if(typeof event.stopImmediatePropagation === "function") event.stopImmediatePropagation();
+      var shouldOpen = !dropdown.classList.contains("open");
+      await hydrateEmployerAccount();
+      setDropdownOpen(shouldOpen);
+    }, true);
+
+    dropdown.addEventListener("click", function(event){
+      event.stopPropagation();
+    }, true);
+
+    document.addEventListener("click", function(event){
+      if(event.target && event.target.closest && event.target.closest("#subscribeEmployerAccountBtn, #subscribeEmployerAccountDropdown")) return;
+      setDropdownOpen(false);
+    }, true);
+
+    document.addEventListener("keydown", function(event){
+      if(event.key === "Escape") setDropdownOpen(false);
+    });
+  }
+
+  async function boot(){
+    bindRestoredDropdown();
+    await hydrateEmployerAccount();
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", boot, { once:true });
+  }else{
+    boot();
+  }
+
+  window.addEventListener("load", function(){
+    boot();
+    setTimeout(boot, 250);
+    setTimeout(boot, 900);
+  }, { once:true });
+  window.addEventListener("focus", boot, { passive:true });
+  window.addEventListener("storage", boot, { passive:true });
+
+  try{
+    var client = getSupabaseClientSafe();
+    if(client && client.auth && typeof client.auth.onAuthStateChange === "function"){
+      client.auth.onAuthStateChange(function(){ setTimeout(boot, 80); });
+    }
+  }catch(_err){}
+
+  window.restoreSubscribeLoggedInAccountDropdown = boot;
+})();
+</script>
+
+</body>
+</html>

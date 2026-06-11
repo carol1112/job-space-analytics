@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reset Password | Job Space Link</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="jobspacelink.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase_config.js"></script>
+
+<style>
+/* ============================================================
+   GLOBAL STYLE — MATCHES CHOOSE PORTAL / ATTACHED IMAGE
+============================================================ */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins","Inter","Segoe UI",Arial,sans-serif;
+}
+
+:root{
+  --header-h:86px;
+  --page-bg:#ffffff;
+  --soft-bg:#f8fbff;
+  --navy:#00256f;
+  --navy-dark:#001846;
+  --text:#0f172a;
+  --muted:#475569;
+  --line:#e5edf7;
+  --icon-blue:#0580bd;
+  --icon-bg:#e9f8ff;
+  --accent:#38bdf8;
+  --purple:#4f46e5;
+  --card-shadow:0 18px 42px rgba(15,23,42,0.08);
+}
+
+html, body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  overflow-x:hidden;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--header-h) + 16px);
+}
+
+body{
+  min-height:100vh;
+  padding-top:var(--header-h);
+  background:var(--page-bg);
+  color:var(--text);
+}
+
+/* ============================================================
+   HEADER — WHITE CHOOSE PORTAL STYLE
+============================================================ */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:var(--header-h);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:0 22px 0 12px;
+  background:#ffffff;
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 12px rgba(15,23,42,0.04);
+  z-index:1500;
+}
+
+header .logo{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+header .logo img{
+  height:74px;
+  width:auto;
+  display:block;
+  object-fit:contain;
+}
+
+header nav{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:42px;
+  margin-left:18px;
+  white-space:nowrap;
+}
+
+header nav > a,
+header nav .nav-main-link{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-width:0;
+  height:40px;
+  padding:0 2px;
+  color:var(--navy);
+  text-decoration:none;
+  font-size:0.91rem;
+  font-weight:500;
+  line-height:1;
+  letter-spacing:-0.01em;
+  background:transparent;
+  border:none;
+  transition:color 0.22s ease;
+}
+
+header nav > a::after,
+header nav .nav-main-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:3px;
+  height:2px;
+  border-radius:999px;
+  background:var(--navy-dark);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform 0.22s ease;
+}
+
+header nav > a:hover,
+header nav > a:focus-visible,
+header nav .nav-main-link:hover,
+header nav .nav-main-link:focus-visible,
+.nav-dropdown.open .nav-main-link{
+  color:#000000;
+  outline:none;
+}
+
+header nav > a:hover::after,
+header nav > a:focus-visible::after,
+header nav .nav-main-link:hover::after,
+header nav .nav-main-link:focus-visible::after,
+.nav-dropdown.open .nav-main-link::after{
+  transform:scaleX(1);
+}
+
+header nav > a i,
+header nav .nav-main-link i{
+  width:22px;
+  height:22px;
+  min-width:22px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:7px;
+  color:var(--icon-blue);
+  background:linear-gradient(180deg,#eefbff,#dff5ff);
+  border:1px solid #cfeeff;
+  box-shadow:0 2px 5px rgba(14,165,233,0.12);
+  font-size:0.82rem;
+  transition:color 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+header nav > a:hover i,
+header nav > a:focus-visible i,
+header nav .nav-main-link:hover i,
+header nav .nav-main-link:focus-visible i,
+.nav-dropdown.open .nav-main-link i{
+  color:#000000;
+  border-color:#b7e5fb;
+  background:#edf9ff;
+}
+
+header nav .nav-text,
+.mobile-panel .nav-text{
+  display:inline-block;
+  min-width:0;
+}
+
+/* Header dropdown */
+.nav-dropdown{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  height:40px;
+  flex:0 0 auto;
+}
+
+.nav-dropdown-trigger{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  height:100%;
+}
+
+.nav-dropdown-toggle{
+  appearance:none;
+  -webkit-appearance:none;
+  width:30px;
+  height:30px;
+  min-width:30px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  border:1px solid #cfeeff;
+  outline:none;
+  background:#e9f8ff;
+  color:var(--icon-blue);
+  cursor:pointer;
+  transition:color 0.22s ease, border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+}
+
+.nav-dropdown-toggle i{
+  pointer-events:none;
+  color:inherit;
+  font-size:0.82rem;
+}
+
+.nav-dropdown-toggle:hover,
+.nav-dropdown.open .nav-dropdown-toggle{
+  color:#000000;
+  background:#f2fbff;
+  border-color:#b7e5fb;
+}
+
+.nav-dropdown.open .nav-dropdown-toggle{
+  transform:rotate(180deg);
+}
+
+.nav-dropdown-menu{
+  position:absolute;
+  top:calc(100% + 13px);
+  left:0;
+  min-width:230px;
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  padding:10px;
+  border-radius:16px;
+  background:#ffffff;
+  border:1px solid var(--line);
+  box-shadow:0 16px 36px rgba(15,23,42,0.12);
+  z-index:1600;
+}
+
+.nav-dropdown.open .nav-dropdown-menu{
+  display:flex;
+}
+
+.nav-dropdown-menu a{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 12px;
+  border-radius:12px;
+  color:var(--navy);
+  text-decoration:none;
+  white-space:nowrap;
+  font-size:0.88rem;
+  font-weight:500;
+  transition:color 0.22s ease;
+}
+
+.nav-dropdown-menu a::after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:5px;
+  height:2px;
+  border-radius:999px;
+  background:#000000;
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.22s ease;
+}
+
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a:focus-visible{
+  color:#000000;
+  outline:none;
+}
+
+.nav-dropdown-menu a:hover::after,
+.nav-dropdown-menu a:focus-visible::after{
+  transform:scaleX(1);
+}
+
+.nav-dropdown-menu a i{
+  width:22px;
+  height:22px;
+  min-width:22px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:7px;
+  color:var(--icon-blue);
+  background:#e9f8ff;
+  border:1px solid #cfeeff;
+  font-size:0.8rem;
+}
+
+.nav-dropdown-menu a:hover i,
+.nav-dropdown-menu a:focus-visible i{
+  color:#000000;
+}
+
+/* Login button */
+header .auth-buttons{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  white-space:nowrap;
+}
+
+header .auth-buttons a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  height:38px;
+  padding:0 16px;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:0.86rem;
+  font-weight:700;
+  color:#ffffff;
+  border:1px solid rgba(255,255,255,0.22);
+  background:linear-gradient(135deg,#39c8ff 0%,#3b82f6 48%,#6d5dfc 100%);
+  box-shadow:0 8px 20px rgba(59,130,246,0.22);
+  transition:transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+header .auth-buttons a i{
+  width:16px;
+  height:16px;
+  min-width:16px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:999px;
+  color:#ffffff;
+  font-size:0.78rem;
+  line-height:1;
+}
+
+header .auth-buttons a:hover,
+header .auth-buttons a:focus-visible{
+  transform:translateY(-1px);
+  filter:saturate(1.07);
+  box-shadow:0 10px 24px rgba(59,130,246,0.30);
+  outline:none;
+}
+
+/* Mobile hamburger */
+.nav-toggle{
+  display:none;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:11px;
+  background:#e9f8ff;
+  color:var(--icon-blue);
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  flex:0 0 auto;
+  border:1px solid #cfeeff;
+  box-shadow:0 4px 12px rgba(14,165,233,0.10);
+  transition:color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus-visible{
+  color:#000000;
+  background:#f2fbff;
+  transform:translateY(-1px);
+  outline:none;
+}
+
+.nav-toggle i{
+  font-size:1rem;
+}
+
+.mobile-panel{
+  position:fixed;
+  top:var(--header-h);
+  left:0;
+  right:0;
+  background:#ffffff;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 16px 36px rgba(15,23,42,0.12);
+  padding:14px 16px 18px;
+  transform:translateY(-10px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s ease, transform 0.25s ease;
+  z-index:1400;
+  max-height:calc(100vh - var(--header-h));
+  overflow-y:auto;
+}
+
+.mobile-panel.open{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.mobile-panel .mnav{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.mobile-panel .mnav a,
+.mobile-panel .mnav-main-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:13px;
+  text-decoration:none;
+  color:var(--navy);
+  background:#ffffff;
+  border:1px solid var(--line);
+  font-weight:600;
+  font-size:0.92rem;
+  transition:color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+
+.mobile-panel .mnav a:hover,
+.mobile-panel .mnav-main-link:hover,
+.mobile-panel .mnav a:focus-visible,
+.mobile-panel .mnav-main-link:focus-visible{
+  color:#000000;
+  border-color:#cfeeff;
+  transform:translateX(3px);
+  outline:none;
+}
+
+.mobile-panel .mnav-group{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.mobile-panel .mnav-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 48px;
+  align-items:stretch;
+  gap:8px;
+}
+
+.mobile-panel .mnav-toggle{
+  width:48px;
+  min-width:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:#ffffff;
+  color:var(--icon-blue);
+  font-weight:600;
+  font-size:0.96rem;
+  cursor:pointer;
+  transition:color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+
+.mobile-panel .mnav-toggle:hover,
+.mobile-panel .mnav-toggle:focus-visible{
+  color:#000000;
+  border-color:#cfeeff;
+  transform:translateX(3px);
+  outline:none;
+}
+
+.mobile-panel .mnav-toggle .mnav-caret{
+  transition:transform 0.25s ease;
+}
+
+.mobile-panel .mnav-group.open .mnav-toggle .mnav-caret{
+  transform:rotate(180deg);
+}
+
+.mobile-panel .mnav-submenu{
+  display:none;
+  flex-direction:column;
+  gap:8px;
+  padding-left:14px;
+}
+
+.mobile-panel .mnav-group.open .mnav-submenu{
+  display:flex;
+}
+
+.mobile-panel .mnav-left{
+  display:inline-flex;
+  align-items:center;
+  gap:11px;
+  min-width:0;
+}
+
+.mobile-panel .mnav-left i{
+  width:24px;
+  height:24px;
+  min-width:24px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:8px;
+  color:var(--icon-blue);
+  background:#e9f8ff;
+  border:1px solid #cfeeff;
+  font-size:0.84rem;
+}
+
+.mobile-panel .mnav a:hover .mnav-left i,
+.mobile-panel .mnav-main-link:hover .mnav-left i{
+  color:#000000;
+}
+
+.mobile-panel .mnav a .fa-arrow-right,
+.mobile-panel .mnav-main-link .fa-arrow-right{
+  flex:0 0 auto;
+  color:#94a3b8;
+}
+
+/* ============================================================
+   RESET PASSWORD CONTENT — LIGHT CARD STYLE
+============================================================ */
+.reset-wrap{
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:84px 18px 60px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(56,189,248,0.08), transparent 34%),
+    radial-gradient(circle at 85% 25%, rgba(79,70,229,0.06), transparent 30%),
+    #ffffff;
+}
+
+.reset-container{
+  width:min(100%, 460px);
+  background:#ffffff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:44px 40px 38px;
+  text-align:center;
+  box-shadow:var(--card-shadow);
+}
+
+.reset-icon-badge{
+  width:58px;
+  height:58px;
+  margin:0 auto 18px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  color:var(--icon-blue);
+  background:linear-gradient(180deg,#effbff,#e5f7ff);
+  border:1px solid #cfeeff;
+  box-shadow:0 10px 24px rgba(14,165,233,0.10);
+}
+
+.reset-icon-badge i{
+  font-size:1.35rem;
+}
+
+.reset-container h2{
+  font-size:2rem;
+  line-height:1.15;
+  margin-bottom:10px;
+  color:var(--navy);
+  font-weight:800;
+  letter-spacing:-0.035em;
+}
+
+.reset-container p{
+  color:var(--muted);
+  margin-bottom:26px;
+  font-size:0.95rem;
+  line-height:1.55;
+}
+
+#resetForm{
+  width:100%;
+}
+
+.input-group{
+  margin-bottom:18px;
+  text-align:left;
+  position:relative;
+}
+
+label{
+  font-size:0.88rem;
+  margin-bottom:7px;
+  color:var(--navy);
+  display:block;
+  font-weight:700;
+}
+
+.reset-container input{
+  width:100%;
+  height:46px;
+  padding:12px 45px 12px 14px;
+  border-radius:12px;
+  border:1.5px solid #d7e2ee;
+  background:#ffffff;
+  color:var(--text);
+  font-size:0.96rem;
+  outline:none;
+  transition:border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.reset-container input::placeholder{
+  color:#94a3b8;
+}
+
+.reset-container input:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 0 4px rgba(56,189,248,0.14);
+}
+
+.eye-toggle{
+  position:absolute;
+  right:14px;
+  top:39px;
+  cursor:pointer;
+  color:var(--icon-blue);
+  font-size:1rem;
+  transition:color 0.22s ease, transform 0.22s ease;
+}
+
+.eye-toggle:hover{
+  color:#000000;
+  transform:scale(1.05);
+}
+
+.reset-container button{
+  width:100%;
+  height:46px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 14px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#39c8ff 0%,#3b82f6 48%,#6d5dfc 100%);
+  color:#ffffff;
+  font-size:1rem;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(59,130,246,0.24);
+  transition:transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.reset-container button:hover,
+.reset-container button:focus-visible{
+  transform:translateY(-1px);
+  filter:saturate(1.07);
+  box-shadow:0 14px 30px rgba(59,130,246,0.32);
+  outline:none;
+}
+
+.message{
+  margin:14px 0 0 !important;
+  font-size:0.9rem !important;
+  color:#16a34a !important;
+  display:none;
+  font-weight:700;
+}
+
+.error{
+  color:#dc2626 !important;
+  margin:12px 0 0 !important;
+  font-size:0.9rem !important;
+  font-weight:700;
+}
+
+/* ============================================================
+   RESPONSIVE HEADER + PAGE
+============================================================ */
+@media (min-width:1800px){
+  :root{ --header-h:90px; }
+  header{ padding:0 30px 0 18px; gap:24px; }
+  header .logo img{ height:80px; }
+  header nav{ gap:54px; margin-left:26px; }
+  header nav > a,
+  header nav .nav-main-link{ font-size:0.98rem; }
+  header .auth-buttons a{ height:40px; padding:0 18px; font-size:0.9rem; }
+  .reset-wrap{ padding-top:110px; }
+  .reset-container{ width:min(100%, 520px); padding:54px 52px 46px; }
+  .reset-container h2{ font-size:2.18rem; }
+}
+
+@media (min-width:1440px) and (max-width:1799px){
+  :root{ --header-h:86px; }
+  header{ padding:0 24px 0 14px; gap:20px; }
+  header .logo img{ height:76px; }
+  header nav{ gap:44px; margin-left:20px; }
+}
+
+@media (min-width:1024px) and (max-width:1439px){
+  :root{ --header-h:78px; }
+  header{ padding:0 14px 0 8px; gap:12px; }
+  header .logo img{ height:66px; }
+  header nav{ gap:24px; margin-left:10px; }
+  header nav > a,
+  header nav .nav-main-link{ font-size:0.82rem; gap:6px; }
+  header nav > a i,
+  header nav .nav-main-link i{ width:20px; height:20px; min-width:20px; font-size:0.74rem; }
+  .nav-dropdown-trigger{ gap:6px; }
+  .nav-dropdown-toggle{ width:28px; height:28px; min-width:28px; }
+  header .auth-buttons a{ height:34px; padding:0 12px; font-size:0.78rem; }
+  .reset-wrap{ padding-top:72px; }
+}
+
+@media (min-width:769px) and (max-width:1023px){
+  :root{ --header-h:74px; }
+  header{ padding:0 10px 0 6px; gap:8px; }
+  header .logo img{ height:58px; }
+  header nav{ gap:12px; margin-left:4px; }
+  header nav > a,
+  header nav .nav-main-link{ font-size:0.67rem; gap:4px; }
+  header nav > a i,
+  header nav .nav-main-link i{ width:17px; height:17px; min-width:17px; border-radius:6px; font-size:0.62rem; }
+  .nav-dropdown-trigger{ gap:4px; }
+  .nav-dropdown-toggle{ width:24px; height:24px; min-width:24px; border-radius:7px; }
+  .nav-dropdown-toggle i{ font-size:0.68rem; }
+  header .auth-buttons a{ height:30px; padding:0 8px; border-radius:8px; font-size:0.62rem; gap:4px; }
+  header .auth-buttons a i{ width:13px; height:13px; min-width:13px; font-size:0.62rem; }
+  .reset-wrap{ padding:48px 14px 44px; }
+  .reset-container{ width:min(100%, 430px); padding:30px 28px; border-radius:20px; }
+  .reset-icon-badge{ width:50px; height:50px; border-radius:15px; margin-bottom:14px; }
+  .reset-container h2{ font-size:1.55rem; }
+  .reset-container p{ font-size:0.86rem; margin-bottom:20px; }
+}
+
+@media (max-width:768px){
+  :root{ --header-h:72px; }
+  header{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    column-gap:10px;
+    padding:0 12px 0 8px;
+  }
+  header .logo{ grid-column:1; justify-self:start; }
+  header .logo img{ height:54px; }
+  header nav,
+  header .auth-buttons{ display:none; }
+  .nav-toggle{ grid-column:3; display:inline-flex; justify-self:end; }
+  .mobile-panel{ top:var(--header-h); }
+  .reset-wrap{ min-height:calc(100vh - var(--header-h)); padding:54px 16px 42px; }
+  .reset-container{ width:min(100%, 440px); padding:32px 24px; border-radius:20px; }
+  .reset-container h2{ font-size:1.58rem; }
+  .reset-container p{ font-size:0.88rem; margin-bottom:20px; }
+}
+
+@media (max-width:480px){
+  :root{ --header-h:70px; }
+  header{ padding:0 9px 0 8px; }
+  header .logo img{ height:48px; }
+  .nav-toggle{ width:38px; height:38px; border-radius:9px; }
+  .mobile-panel{ padding:12px; }
+  .mobile-panel .mnav-row{ grid-template-columns:minmax(0,1fr) 42px; gap:7px; }
+  .mobile-panel .mnav a,
+  .mobile-panel .mnav-main-link{ padding:10px 11px; border-radius:11px; font-size:0.84rem; }
+  .mobile-panel .mnav-toggle{ width:42px; min-width:42px; border-radius:11px; }
+  .mobile-panel .mnav-submenu{ padding-left:10px; }
+  .mobile-panel .mnav-left{ gap:9px; }
+  .mobile-panel .mnav-left i{ width:21px; height:21px; min-width:21px; font-size:0.76rem; }
+  .reset-wrap{ padding:44px 12px 36px; }
+  .reset-container{ padding:28px 20px; border-radius:18px; }
+  .reset-icon-badge{ width:48px; height:48px; border-radius:14px; margin-bottom:13px; }
+  .reset-container h2{ font-size:1.38rem; }
+  .reset-container p{ font-size:0.82rem; }
+  .reset-container input,
+  .reset-container button{ height:44px; font-size:0.9rem; }
+  label{ font-size:0.82rem; }
+  .eye-toggle{ top:38px; }
+  .message,
+  .error{ font-size:0.82rem !important; }
+}
+
+/* ============================================================
+   FINAL HEADER HOVER PATCH — NAVY TEXT / BLACK HOVER / NO BG-SHADOW
+   Keeps all dropdown/mobile behavior, but removes hover background,
+   shadow, glow, transform, and text-shadow effects from header nav
+   links and dropdown menu items. Hover is font color + underline only.
+============================================================ */
+header nav > a,
+header nav .nav-main-link,
+.nav-dropdown-menu a,
+.mobile-panel .mnav a,
+.mobile-panel .mnav-main-link{
+  color:var(--navy) !important;
+  background:#ffffff !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  transform:none !important;
+}
+
+header nav > a:hover,
+header nav > a:focus-visible,
+header nav .nav-main-link:hover,
+header nav .nav-main-link:focus-visible,
+.nav-dropdown.open .nav-main-link,
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a:focus-visible,
+.mobile-panel .mnav a:hover,
+.mobile-panel .mnav-main-link:hover,
+.mobile-panel .mnav a:focus-visible,
+.mobile-panel .mnav-main-link:focus-visible{
+  color:#000000 !important;
+  background:#ffffff !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  transform:none !important;
+  filter:none !important;
+  outline:none !important;
+}
+
+header nav > a::before,
+header nav .nav-main-link::before,
+.nav-dropdown-menu a::before,
+.mobile-panel .mnav a::before,
+.mobile-panel .mnav-main-link::before{
+  display:none !important;
+  opacity:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+header nav > a i,
+header nav .nav-main-link i,
+.nav-dropdown-menu a i,
+.mobile-panel .mnav-left i{
+  color:var(--icon-blue) !important;
+  background:#e9f8ff !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  transform:none !important;
+}
+
+header nav > a:hover i,
+header nav > a:focus-visible i,
+header nav .nav-main-link:hover i,
+header nav .nav-main-link:focus-visible i,
+.nav-dropdown.open .nav-main-link i,
+.nav-dropdown-menu a:hover i,
+.nav-dropdown-menu a:focus-visible i,
+.mobile-panel .mnav a:hover .mnav-left i,
+.mobile-panel .mnav-main-link:hover .mnav-left i,
+.mobile-panel .mnav a:focus-visible .mnav-left i,
+.mobile-panel .mnav-main-link:focus-visible .mnav-left i{
+  color:#000000 !important;
+  background:#e9f8ff !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  transform:none !important;
+  filter:none !important;
+}
+
+.nav-dropdown-toggle,
+.mobile-panel .mnav-toggle{
+  color:var(--icon-blue) !important;
+  background:#e9f8ff !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  filter:none !important;
+}
+
+.nav-dropdown-toggle:hover,
+.nav-dropdown-toggle:focus-visible,
+.nav-dropdown.open .nav-dropdown-toggle,
+.mobile-panel .mnav-toggle:hover,
+.mobile-panel .mnav-toggle:focus-visible{
+  color:#000000 !important;
+  background:#e9f8ff !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  filter:none !important;
+  outline:none !important;
+}
+
+.nav-dropdown.open .nav-dropdown-toggle{
+  transform:rotate(180deg) !important;
+}
+
+.nav-dropdown-menu,
+.nav-dropdown.open .nav-dropdown-menu,
+.mobile-panel{
+  background:#ffffff !important;
+}
+
+.nav-dropdown-menu a:hover::after,
+.nav-dropdown-menu a:focus-visible::after,
+header nav > a:hover::after,
+header nav > a:focus-visible::after,
+header nav .nav-main-link:hover::after,
+header nav .nav-main-link:focus-visible::after,
+.nav-dropdown.open .nav-main-link::after{
+  background:#000000 !important;
+}
+
+.mobile-panel .mnav a .fa-arrow-right,
+.mobile-panel .mnav-main-link .fa-arrow-right{
+  color:#94a3b8 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <img src="JOBSPACELINK.png" alt="Job Space Link Logo" />
+  </div>
+
+  <nav>
+    <a href="index.html"><i class="fa-solid fa-house"></i><span class="nav-text">Home</span></a>
+
+    <div class="nav-dropdown" id="aboutNavDropdown">
+      <div class="nav-dropdown-trigger">
+        <a href="about.html" id="aboutNavLink" class="nav-main-link"><i class="fa-solid fa-circle-info"></i><span class="nav-text">About</span></a>
+        <button
+          type="button"
+          class="nav-dropdown-toggle"
+          id="aboutNavToggle"
+          aria-expanded="false"
+          aria-controls="aboutNavMenu"
+          aria-label="Toggle About menu"
+        >
+          <i class="fa-solid fa-caret-down nav-caret"></i>
+        </button>
+      </div>
+
+      <div class="nav-dropdown-menu" id="aboutNavMenu">
+        <a href="why choose us.html"><i class="fa-solid fa-circle-check"></i><span class="nav-text">Why Choose Us</span></a>
+        <a href="how it works.html"><i class="fa-solid fa-diagram-project"></i><span class="nav-text">How It Works</span></a>
+      </div>
+    </div>
+
+    <a href="postedhiring1.html"><i class="fa-solid fa-briefcase"></i><span class="nav-text">Job Hiring</span></a>
+    <a href="dashboard.html"><i class="fa-solid fa-users"></i><span class="nav-text">Jobseeker</span></a>
+    <a href="postjob.html"><i class="fa-solid fa-square-plus"></i><span class="nav-text">Post Jobs</span></a>
+    <a href="applicantform1.html?source=jobspacelink"><i class="fa-solid fa-file-arrow-up"></i><span class="nav-text">Post Resume</span></a>
+  </nav>
+
+  <div class="auth-buttons">
+    <a href="index1.html" class="admin login-auth"><i class="fa-solid fa-right-to-bracket"></i><span class="auth-text">Login</span></a>
+  </div>
+
+  <button
+    type="button"
+    class="nav-toggle"
+    id="navToggle"
+    aria-label="Open mobile menu"
+    aria-expanded="false"
+  >
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</header>
+
+<!-- Mobile panel -->
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+  <div class="mnav">
+    <a href="index.html"><span class="mnav-left"><i class="fa-solid fa-house"></i><span class="nav-text">Home</span></span><i class="fa-solid fa-arrow-right"></i></a>
+
+    <div class="mnav-group" id="mobileAboutGroup">
+      <div class="mnav-row">
+        <a href="about.html" class="mnav-main-link"><span class="mnav-left"><i class="fa-solid fa-circle-info"></i><span class="nav-text">About</span></span><i class="fa-solid fa-arrow-right"></i></a>
+        <button
+          type="button"
+          class="mnav-toggle"
+          id="mobileAboutToggle"
+          aria-expanded="false"
+          aria-controls="mobileAboutMenu"
+          aria-label="Toggle About submenu"
+        >
+          <i class="fa-solid fa-caret-down mnav-caret"></i>
+        </button>
+      </div>
+
+      <div class="mnav-submenu" id="mobileAboutMenu">
+        <a href="why choose us.html"><span class="mnav-left"><i class="fa-solid fa-circle-check"></i><span class="nav-text">Why Choose Us</span></span><i class="fa-solid fa-arrow-right"></i></a>
+        <a href="how it works.html"><span class="mnav-left"><i class="fa-solid fa-diagram-project"></i><span class="nav-text">How It Works</span></span><i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <a href="postjob.html"><span class="mnav-left"><i class="fa-solid fa-square-plus"></i><span class="nav-text">Post Jobs</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="postedhiring1.html"><span class="mnav-left"><i class="fa-solid fa-briefcase"></i><span class="nav-text">Job Hiring</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="dashboard.html"><span class="mnav-left"><i class="fa-solid fa-users"></i><span class="nav-text">Jobseeker Directory</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="applicantform1.html?source=jobspacelink"><span class="mnav-left"><i class="fa-solid fa-file-arrow-up"></i><span class="nav-text">Post Resume</span></span><i class="fa-solid fa-arrow-right"></i></a>
+    <a href="index1.html"><span class="mnav-left"><i class="fa-solid fa-right-to-bracket"></i><span class="nav-text">Login</span></span><i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</div>
+
+<main class="reset-wrap">
+  <div class="reset-container">
+    <div class="reset-icon-badge">
+      <i class="fa-solid fa-lock"></i>
+    </div>
+
+    <h2>Reset Password</h2>
+    <p>Enter your new password below.</p>
+
+    <form id="resetForm">
+      <div class="input-group">
+        <label for="newPassword">New Password</label>
+        <input type="password" id="newPassword" required>
+        <i class="fa-solid fa-eye eye-toggle" onclick="togglePassword('newPassword', this)"></i>
+      </div>
+
+      <div class="input-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" required>
+        <i class="fa-solid fa-eye eye-toggle" onclick="togglePassword('confirmPassword', this)"></i>
+      </div>
+
+      <button type="submit"><i class="fa-solid fa-key"></i> Update Password</button>
+
+      <p class="error" id="errorMsg"></p>
+      <p class="message" id="successMsg">Password updated! Redirecting...</p>
+    </form>
+  </div>
+</main>
+
+<script>
+function resolveSupabaseClient(){
+  const directCandidates = [
+    window.sb,
+    window.sbClient,
+    window.supabaseClient,
+    window._supabaseClient,
+    window.client
+  ];
+
+  for (const c of directCandidates){
+    if (c && c.auth && typeof c.auth.updateUser === "function"){
+      return c;
+    }
+  }
+
+  const ctor = window.supabase && typeof window.supabase.createClient === "function"
+    ? window.supabase.createClient
+    : null;
+
+  const url =
+    window.SUPABASE_URL ||
+    window.supabaseUrl ||
+    window.__SUPABASE_URL ||
+    (typeof SUPABASE_URL !== "undefined" ? SUPABASE_URL : "") ||
+    (typeof supabaseUrl !== "undefined" ? supabaseUrl : "");
+
+  const key =
+    window.SUPABASE_ANON_KEY ||
+    window.supabaseAnonKey ||
+    window.__SUPABASE_ANON_KEY ||
+    (typeof SUPABASE_ANON_KEY !== "undefined" ? SUPABASE_ANON_KEY : "") ||
+    (typeof supabaseAnonKey !== "undefined" ? supabaseAnonKey : "");
+
+  if (ctor && url && key){
+    const created = ctor(url, key);
+    window.supabaseClient = created;
+    return created;
+  }
+
+  return null;
+}
+
+const sb = resolveSupabaseClient();
+
+function initHeaderMenus(){
+  const dd = document.getElementById("aboutNavDropdown");
+  const toggle = document.getElementById("aboutNavToggle");
+  const menu = document.getElementById("aboutNavMenu");
+
+  if(dd && toggle && menu){
+    function closeAboutMenu(){
+      dd.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+    function openAboutMenu(){
+      dd.classList.add("open");
+      toggle.setAttribute("aria-expanded", "true");
+    }
+
+    toggle.addEventListener("click", function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+      const isOpen = dd.classList.contains("open");
+      if(isOpen){
+        closeAboutMenu();
+      }else{
+        openAboutMenu();
+      }
+    });
+
+    document.addEventListener("click", function(e){
+      if(!dd.contains(e.target)){
+        closeAboutMenu();
+      }
+    });
+
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape"){
+        closeAboutMenu();
+      }
+    });
+
+    menu.querySelectorAll("a").forEach(function(a){
+      a.addEventListener("click", function(){
+        closeAboutMenu();
+      });
+    });
+  }
+
+  const btn = document.getElementById("navToggle");
+  const panel = document.getElementById("mobilePanel");
+  const aboutGroup = document.getElementById("mobileAboutGroup");
+  const aboutToggle = document.getElementById("mobileAboutToggle");
+
+  if(btn && panel){
+    function closeAbout(){
+      if(!aboutGroup || !aboutToggle) return;
+      aboutGroup.classList.remove("open");
+      aboutToggle.setAttribute("aria-expanded","false");
+    }
+
+    function toggleAbout(){
+      if(!aboutGroup || !aboutToggle) return;
+      const open = aboutGroup.classList.toggle("open");
+      aboutToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    function closeMobilePanel(){
+      panel.classList.remove("open");
+      panel.setAttribute("aria-hidden","true");
+      btn.setAttribute("aria-expanded","false");
+      closeAbout();
+    }
+
+    btn.addEventListener("click", ()=>{
+      const open = panel.classList.toggle("open");
+      panel.setAttribute("aria-hidden", open ? "false" : "true");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if(!open) closeAbout();
+    });
+
+    if(aboutToggle){
+      aboutToggle.addEventListener("click", (e)=>{
+        e.preventDefault();
+        e.stopPropagation();
+        toggleAbout();
+      });
+    }
+
+    panel.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMobilePanel));
+
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape") closeMobilePanel();
+    });
+
+    document.addEventListener("click", (e)=>{
+      if(panel.classList.contains("open")){
+        const header = document.querySelector("header");
+        if(header && header.contains(e.target)) return;
+        if(panel.contains(e.target)) return;
+        closeMobilePanel();
+      }
+    });
+
+    window.addEventListener("resize", ()=>{
+      if(window.innerWidth >= 769) closeMobilePanel();
+    }, { passive:true });
+  }
+}
+
+function togglePassword(id, icon){
+  const input = document.getElementById(id);
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  icon.classList.toggle("fa-eye");
+  icon.classList.toggle("fa-eye-slash");
+}
+
+document.getElementById("resetForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const pw = document.getElementById("newPassword").value.trim();
+  const cpw = document.getElementById("confirmPassword").value.trim();
+  const error = document.getElementById("errorMsg");
+  const success = document.getElementById("successMsg");
+
+  error.textContent = "";
+  success.style.display = "none";
+
+  if(!sb){
+    error.textContent = "Supabase client is not initialized. Check supabase_config.js.";
+    return;
+  }
+
+  if(pw !== cpw){
+    error.textContent = "Passwords do not match.";
+    return;
+  }
+
+  if(pw.length < 6){
+    error.textContent = "Password must be at least 6 characters.";
+    return;
+  }
+
+  const { error: updateErr } = await sb.auth.updateUser({ password: pw });
+
+  if(updateErr){
+    error.textContent = "Error: " + updateErr.message;
+    return;
+  }
+
+  success.style.display = "block";
+  setTimeout(() => window.location.href = "index1.html", 2000);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  initHeaderMenus();
+});
+</script>
+
+</body>
+</html>
